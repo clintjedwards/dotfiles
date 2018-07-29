@@ -34,3 +34,6 @@ rice:
 	sudo apt install scrot -y
 	sudo apt install imagemagick -y
 	#move lock script to proper folder
+
+	#install better i3status bar
+	sudo apt isntall i3blocks
