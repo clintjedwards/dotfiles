@@ -177,3 +177,7 @@ exec compton -f
 
 # Set i3lock
 bindsym $mod+Shift+l exec $home/.config/i3/lock.sh
+
+# Turn off window borders
+default_border none
+default_floating_border none
