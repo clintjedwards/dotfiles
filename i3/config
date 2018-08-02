@@ -163,7 +163,7 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3blocks -c $home/.config/i3/i3blocks.conf
         position top
-        font pango:Monaco 8
+        font pango:Monaco 9
 }
 
 # Load wallpaper
@@ -172,12 +172,12 @@ exec_always feh --bg-scale $home/Downloads/wallpaper.jpg
 # Load firefox on start
 exec firefox
 
-# Load compton on start
-exec compton -f
+# Load compton for opacity
+exec compton
 
 # Set i3lock
 bindsym $mod+Shift+l exec $home/.config/i3/lock.sh
 
 # Turn off window borders
-default_border none
-default_floating_border none
+default_border pixel 1
+default_floating_border pixel 1
