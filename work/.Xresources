@@ -1,0 +1,20 @@
+!-------------
+!Xft settings
+!-------------
+
+Xft.dpi: 128
+Xft.antialias: true
+
+!-------------
+!URxvt settings
+!-------------
+
+URxvt.loginShell: true
+URxvt.allow_bold: false
+URxvt.font: xft:Inconsolata:size=11:minspace=False
+URxvt.boldFont: xft:Inconsolata:size=11:minspace=False
+
+! Scrollbar
+URxvt.scrollStyle: rxvt
+URxvt.scrollBar: false
+

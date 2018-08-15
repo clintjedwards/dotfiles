@@ -1,0 +1,37 @@
+{
+  "editor.fontFamily": "Monaco, 'Courier New', monospace",
+  "editor.minimap.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.renderIndentGuides": false,
+  "editor.cursorStyle": "line-thin",
+  "editor.occurrencesHighlight": false,
+  "editor.cursorBlinking": "smooth",
+  "workbench.editor.showTabs": false,
+  "workbench.iconTheme": "material-icon-theme",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/*.pyc": true,
+    "**/venv": true,
+    "**/.terraform": true
+  },
+  "files.associations": {
+    "*.tf": "terraform",
+    "*.tfstate": "json",
+    "*.tfvars": "terraform"
+  },
+  "python.linting.pylintPath": "${workspaceRoot}/venv/bin/pylint",
+  "python.pythonPath": "${workspaceRoot}/venv/bin/python",
+  "docker.showExplorer": false,
+  "terraform.telemetry.enabled": false,
+  "terraform.path": "/usr/local/bin/terraform",
+  "go.playground": {
+    "openbrowser": false,
+    "share": false,
+    "run": false
+  }
+}

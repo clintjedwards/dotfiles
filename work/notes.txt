@@ -1,0 +1,1 @@
+nmcli device wifi connect Kings LANding -a
