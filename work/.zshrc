@@ -96,3 +96,4 @@ source $ZSH/oh-my-zsh.sh
 #
 # Make go packages executable
 export PATH=$PATH:~/go/bin
+export GPG_TTY=$(tty)
