@@ -1,7 +1,7 @@
 [user]
         name = Clint Edwards
         email = clint.edwards@petalcard.com
-	signingkey = F144C62E
+        signingkey = F144C62E
 [core]
         editor = vim
 [alias]
