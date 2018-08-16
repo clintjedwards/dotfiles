@@ -18,3 +18,41 @@ URxvt.boldFont: xft:Inconsolata:size=11:minspace=False
 URxvt.scrollStyle: rxvt
 URxvt.scrollBar: false
 
+!! Colors
+
+*background: #424242
+*foreground: #e9e6dc
+*cursorColor: #d3d0c8
+
+
+! Black dark/light
+*color0: #424242
+*color8: #424242
+
+! Red dark/light
+*color1: #dd464c
+*color9: #dd464c
+
+! Green dark/light
+*color2: #8fc13e
+*color10: #8fc13e
+
+! Yellow dark/light
+*color3: #fdcc59
+*color11: #fdcc59
+
+! Blue dark/light
+*color4: #1290bf
+*color12: #1290bf
+
+! Magenta dark/light
+*color5: #c85e7c
+*color13: #c85e7c
+
+! Cyan dark/light
+*color6: #149b93
+*color14: #149b93
+
+! White dark/light
+*color7: #d3d0c8
+*color15: #d3d0c8

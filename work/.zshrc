@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/clintedwards/.oh-my-zsh"
+export ZSH="/home/clintedwards/.oh-my-zsh"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -61,7 +61,7 @@ ZSH_THEME="miloshadzic"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git go docker terraform ssh-agent)
+plugins=(git go docker terraform ssh-agent gpg-agent pass ansible)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -96,4 +96,7 @@ source $ZSH/oh-my-zsh.sh
 #
 # Make go packages executable
 export PATH=$PATH:~/go/bin
+
+#GPG settings
 export GPG_TTY=$(tty)
+export GPG_AGENT_INFO=/run/user/$(id -u)/gnupg/S.gpg-agent:0:1
