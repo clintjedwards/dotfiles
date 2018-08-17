@@ -172,7 +172,7 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3blocks -c $home/.config/i3/i3blocks.conf
         position top
-        font pango:Monaco 9
+        font pango:Monaco 10
 }
 
 # Load wallpaper
