@@ -26,33 +26,33 @@ URxvt.scrollBar: false
 
 
 ! Black dark/light
-*color0: #424242
-*color8: #424242
+*color0: #2d3436
+*color8: #2d3436
 
 ! Red dark/light
-*color1: #dd464c
-*color9: #dd464c
+*color1: #ff7675
+*color9: #ff7675
 
 ! Green dark/light
-*color2: #8fc13e
-*color10: #8fc13e
+*color2: #badc58
+*color10: #badc58
 
 ! Yellow dark/light
-*color3: #fdcc59
-*color11: #fdcc59
+*color3: #ffeaa7
+*color11: #ffeaa7
 
 ! Blue dark/light
-*color4: #1290bf
-*color12: #1290bf
+*color4: #74b9ff
+*color12: #74b9ff
 
 ! Magenta dark/light
-*color5: #c85e7c
-*color13: #c85e7c
+*color5: #cc99cc
+*color13: #cc99cc
 
 ! Cyan dark/light
-*color6: #149b93
-*color14: #149b93
+*color6: #81ecec
+*color14: #81ecec
 
 ! White dark/light
-*color7: #d3d0c8
-*color15: #d3d0c8
+*color7: #dfe6e9
+*color15: #dfe6e9

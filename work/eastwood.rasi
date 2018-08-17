@@ -1,0 +1,9 @@
+/* copy this file to ~/.local/share/rofi/themes or /usr/share/rofi/themes */
+/* add `theme: "tnekcir-no-sidebar";` to config.rasi */
+
+*{
+	background-color:      Black;
+	text-color:            White;
+	border-color:          White;
+	font:            	   "SNSF Display 20";
+}
