@@ -172,7 +172,7 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3blocks -c $home/.config/i3/i3blocks.conf
         position top
-        font pango:Monaco 10
+        font pango:SNSF Display 10
 }
 
 # Load wallpaper
@@ -180,6 +180,9 @@ exec_always feh --bg-scale $home/Downloads/wallpaper.jpg
 
 # Load firefox on start
 exec firefox
+
+#Load slack on start
+exec slack
 
 # Load compton for opacity
 exec compton
