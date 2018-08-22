@@ -1,5 +1,4 @@
 /* copy this file to ~/.local/share/rofi/themes or /usr/share/rofi/themes */
-/* add `theme: "tnekcir-no-sidebar";` to config.rasi */
 
 * {
 	base00: #263238;
