@@ -96,6 +96,10 @@ source $ZSH/oh-my-zsh.sh
 #
 # Make go packages executable
 export PATH=$PATH:~/go/bin
+export PATH=$PATH:/usr/local/go/bin
+
+# Make python packages executable
+export PATH=$PATH:~/.local/bin
 
 #GPG settings
 export GPG_TTY=$(tty)
