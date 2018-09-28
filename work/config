@@ -176,9 +176,9 @@ bar {
 }
 
 # Load wallpaper
-exec_always feh --bg-scale $home/Downloads/wallpaper.jpg
+exec_always feh --bg-scale $home/Downloads/wallpaper.png
 
-# Load firefox on start
+# Load chrome on start
 exec google-chrome
 
 #Load slack on start
@@ -186,9 +186,6 @@ exec slack
 
 # Load compton for opacity
 exec compton
-
-# Load clip it clipboard manager
-exec --no-startup-id clipit
 
 # Set i3lock
 bindsym $mod+Shift+z exec $home/.config/i3/lock.sh

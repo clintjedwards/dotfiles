@@ -61,7 +61,7 @@ ZSH_THEME="miloshadzic"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git go docker terraform ssh-agent gpg-agent pass ansible)
+plugins=(git go docker terraform ssh-agent gpg-agent pass ansible httpie)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,3 +104,9 @@ export PATH=$PATH:~/.local/bin
 #GPG settings
 export GPG_TTY=$(tty)
 export GPG_AGENT_INFO=/run/user/$(id -u)/gnupg/S.gpg-agent:0:1
+
+#Replace boring top
+alias top='gotop'
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /home/clintedwards/go/bin/nomad nomad

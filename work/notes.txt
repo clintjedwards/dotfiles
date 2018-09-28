@@ -1,5 +1,6 @@
 #Connecting to a new wifi
 nmcli device wifi connect Kings LANding -a
+nmcli device wifi list
+nmcli device wifi rescan
 
-#Better gtk theme
-sudo dnf install numix-icon-theme numix-icon-theme-circle numix-gtk-theme
+
