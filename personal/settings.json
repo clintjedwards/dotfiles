@@ -1,0 +1,34 @@
+{
+  "editor.fontFamily": "Monaco, 'Courier New', monospace",
+  "editor.minimap.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.renderIndentGuides": false,
+  "editor.cursorStyle": "line-thin",
+  "editor.occurrencesHighlight": false,
+  "editor.cursorBlinking": "smooth",
+  "explorer.openEditors.visible": 0,
+  "workbench.editor.showTabs": false,
+  "workbench.showEditorTabs": false,
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Eastwood Dark",
+  "window.zoomLevel": 0.5,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/*.pyc": true,
+    "**/venv": true,
+    "**/.terraform": true
+  },
+  "python.linting.pylintPath": "${workspaceRoot}/venv/bin/pylint",
+  "python.pythonPath": "${workspaceRoot}/venv/bin/python",
+  "python.formatting.provider": "none",
+  "go.playground": {
+    "openbrowser": false,
+    "share": false,
+    "run": false
+  }
+}
