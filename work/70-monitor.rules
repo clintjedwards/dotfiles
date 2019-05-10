@@ -1,1 +1,0 @@
-SUBSYSTEM=="drm", ACTION=="change", RUN+="su clintedwards -c \"/usr/bin/autorandr --change\""
