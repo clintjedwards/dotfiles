@@ -1,3 +1,0 @@
-Host *
-  User clint.edwards
-  IdentityFile ~/.ssh/id_rsa

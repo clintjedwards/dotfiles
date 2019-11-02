@@ -1,0 +1,76 @@
+[/]
+default='22d44cff-9115-4eed-8abe-d76359edd6dd'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '22d44cff-9115-4eed-8abe-d76359edd6dd']
+
+[:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '22d44cff-9115-4eed-8abe-d76359edd6dd']
+use-theme-colors=false
+scrollbar-policy='never'
+scroll-on-output=false
+scrollback-unlimited=true
+default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
+cursor-shape='ibeam'
+use-theme-transparency=true
+
+[:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/:22d44cff-9115-4eed-8abe-d76359edd6dd]
+foreground-color='rgb(232,230,223)'
+use-system-font=false
+allow-bold=false
+palette=['rgb(66,66,66)', 'rgb(255,118,117)', 'rgb(186,220,88)', 'rgb(255,234,167)', 'rgb(116,185,255)', 'rgb(204,153,204)', 'rgb(129,236,236)', 'rgb(232,230,223)', 'rgb(211,208,200)', 'rgb(255,118,117)', 'rgb(186,220,88)', 'rgb(255,234,167)', 'rgb(116,185,255)', 'rgb(204,153,204)', 'rgb(129,236,236)', 'rgb(242,240,236)']
+scrollbar-policy='never'
+use-theme-colors=false
+visible-name='Main'
+background-color='rgb(66,66,66)'
+font='DejaVu Sans Mono 11'
+cjk-utf8-ambiguous-width='narrow'
+cursor-shape='ibeam'
+
+[:22d44cff-9115-4eed-8abe-d76359edd6dd]
+foreground-color='rgb(232,230,223)'
+use-system-font=false
+allow-bold=false
+palette=['rgb(66,66,66)', 'rgb(255,118,117)', 'rgb(186,220,88)', 'rgb(255,234,167)', 'rgb(116,185,255)', 'rgb(204,153,204)', 'rgb(129,236,236)', 'rgb(232,230,223)', 'rgb(211,208,200)', 'rgb(255,118,117)', 'rgb(186,220,88)', 'rgb(255,234,167)', 'rgb(116,185,255)', 'rgb(204,153,204)', 'rgb(129,236,236)', 'rgb(242,240,236)']
+scrollbar-policy='never'
+use-theme-colors=false
+visible-name='Main'
+background-color='rgb(66,66,66)'
+scrollback-unlimited=true
+cjk-utf8-ambiguous-width='narrow'
+font='DejaVu Sans Mono 11'
+cursor-shape='ibeam'
+
+[:55782ecb-289d-413e-be37-93b657045983/:22d44cff-9115-4eed-8abe-d76359edd6dd]
+foreground-color='rgb(232,230,223)'
+use-system-font=false
+allow-bold=false
+palette=['rgb(66,66,66)', 'rgb(255,118,117)', 'rgb(186,220,88)', 'rgb(255,234,167)', 'rgb(116,185,255)', 'rgb(204,153,204)', 'rgb(129,236,236)', 'rgb(232,230,223)', 'rgb(211,208,200)', 'rgb(255,118,117)', 'rgb(186,220,88)', 'rgb(255,234,167)', 'rgb(116,185,255)', 'rgb(204,153,204)', 'rgb(129,236,236)', 'rgb(242,240,236)']
+scrollbar-policy='never'
+use-theme-colors=false
+visible-name='Main'
+background-color='rgb(66,66,66)'
+font='DejaVu Sans Mono 11'
+cjk-utf8-ambiguous-width='narrow'
+cursor-shape='ibeam'
+
+[:55782ecb-289d-413e-be37-93b657045983]
+default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '22d44cff-9115-4eed-8abe-d76359edd6dd']
+use-theme-colors=true
+visible-name='Default'
+
+[:1430663d-083b-4737-a7f5-8378cc8226d1/:22d44cff-9115-4eed-8abe-d76359edd6dd]
+foreground-color='rgb(232,230,223)'
+use-system-font=false
+allow-bold=false
+palette=['rgb(66,66,66)', 'rgb(255,118,117)', 'rgb(186,220,88)', 'rgb(255,234,167)', 'rgb(116,185,255)', 'rgb(204,153,204)', 'rgb(129,236,236)', 'rgb(232,230,223)', 'rgb(211,208,200)', 'rgb(255,118,117)', 'rgb(186,220,88)', 'rgb(255,234,167)', 'rgb(116,185,255)', 'rgb(204,153,204)', 'rgb(129,236,236)', 'rgb(242,240,236)']
+scrollbar-policy='never'
+use-theme-colors=false
+visible-name='Main'
+background-color='rgb(66,66,66)'
+font='DejaVu Sans Mono 11'
+cjk-utf8-ambiguous-width='narrow'
+cursor-shape='ibeam'
+
+[:1430663d-083b-4737-a7f5-8378cc8226d1]
+default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '22d44cff-9115-4eed-8abe-d76359edd6dd']

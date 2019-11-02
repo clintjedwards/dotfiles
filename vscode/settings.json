@@ -1,0 +1,50 @@
+{
+    "window.menuBarVisibility": "default",
+    "editor.minimap.enabled": false,
+    "editor.formatOnSave": true,
+    "editor.renderIndentGuides": false,
+    "editor.cursorStyle": "line-thin",
+    "editor.occurrencesHighlight": false,
+    "editor.cursorBlinking": "smooth",
+    "explorer.openEditors.visible": 0,
+    "workbench.editor.showTabs": false,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Eastwood Dark",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "javascript.updateImportsOnFileMove.enabled": "never",
+    "go.useCodeSnippetsOnFunctionSuggest": true,
+    "go.useLanguageServer": true,
+    "go.alternateTools": {
+        "go-languageserver": "gopls"
+    },
+    "go.languageServerExperimentalFeatures": {
+        "format": true,
+        "autoComplete": true,
+        "goToDefinition": true,
+        "hover": true,
+        "signatureHelp": true,
+        "goToTypeDefinition": true,
+        "goToImplementation": true,
+        "documentSymbols": true,
+        "workspaceSymbols": true,
+        "findReferences": true,
+        "documentLink": true
+    },
+    "go.buildOnSave": "off",
+    "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "[go]": {
+        "editor.snippetSuggestions": "none",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "gopls": {
+        "usePlaceholders": true // add parameter placeholders when completing a function
+    },
+    "files.eol": "\n", // formatting only supports LF line endings
+}
