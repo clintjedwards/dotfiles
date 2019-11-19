@@ -4,7 +4,7 @@ set $home ${HOME}
 font pango:monospace 8
 
 #hide_edge_borders both
-for_window [class="^.*"] border pixel 0
+#for_window [class="^.*"] border pixel 0
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
@@ -184,3 +184,6 @@ bindsym XF86AudioMute exec --no-startup-id /usr/bin/pactl set-sink-mute @DEFAULT
 
 # Display controls
 bindsym XF86Display exec --no-startup-id /usr/bin/autorandr --change
+
+# Set up custom lock screen
+bindsym $mod+Shift+z exec $home/.config/i3/lock.sh

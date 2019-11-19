@@ -6,4 +6,8 @@ sudo apt install vim \
 	git \
 	fonts-font-awesome \
 	xbacklight \
+	compton \
+	feh \
+	scrot \
+	imagemagick \
 snap install code --classic
