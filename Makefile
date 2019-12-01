@@ -26,13 +26,10 @@ i3blocks:
 github:
 	# Set up keys, gpg, config etc
 
+power-management:
+	sudo apt install xfce4-power-manager
+
 # gitstatus is a custom prompt that remains minimal while allowing you to keep track of the status of your git workspace
 # Requires oh-my-zsh
 gitstatus:
 	ln -s ~/Documents/dotfiles/zsh/gitstatus ~/.oh-my-zsh/plugins/gitstatus
-
-# turn off middle and right click for lenovo touchpads
-# This needs to go into the startup scripts somehow so its not implemented
-# correctly yet
-touchpad-map:
-	/bin/bash -c "sleep 15 && xinput set-button-map 11 1 1 1 4 5 6 7"

@@ -187,3 +187,10 @@ bindsym XF86Display exec --no-startup-id /usr/bin/autorandr --change
 
 # Set up custom lock screen
 bindsym $mod+Shift+z exec $home/.config/i3/lock.sh
+
+# Turn on power management
+exec --no-startup-id xfce4-power-manager
+
+# Turn off left and right click for lenovo touchpad
+# You can lookup device id by using `xinput list`
+exec --no-startup-id xinput set-button-map "SynPS/2 Synaptics TouchPad" 1 1 1 4 5 6 7
