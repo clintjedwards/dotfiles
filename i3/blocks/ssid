@@ -40,9 +40,9 @@ echo $ESSID # short text
 
 # color
 if [[ $QUALITY -ge 80 ]]; then
-    echo "#00FF00"
+    echo "#badc58"
 elif [[ $QUALITY -lt 50 ]]; then
-    echo "#FFF600"
+    echo "#ffeaa7"
 elif [[ $QUALITY -lt 30 ]]; then
-    echo "#FF0000"
+    echo "#ff7675"
 fi
