@@ -29,3 +29,4 @@ export NODE_PATH="$NODE_PATH:$HOME/npm/lib/node_modules"
 #Use VScode for any quick edits
 export EDITOR="code --new-window --wait"
 export VISUAL="code --new-window --wait"
+if [ /snap/bin/kubectl ]; then source <(kubectl completion zsh); fi
