@@ -20,7 +20,7 @@ export PATH=$PATH:~/go/bin
 export PATH=$PATH:/usr/local/go/bin
 
 # Make rust packages executable
-export PATH=$PATH:~/.cargo/bin
+# export PATH=$PATH:~/.cargo/bin
 
 # Make python packages executable
 # export PATH=$PATH:~/.local/bin
