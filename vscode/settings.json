@@ -1,52 +1,53 @@
 {
-    "window.menuBarVisibility": "default",
-    "editor.minimap.enabled": false,
+  "window.menuBarVisibility": "default",
+  "editor.minimap.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.renderIndentGuides": false,
+  "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Brands', 'Font Awesome 5 Free', 'Font Awesome 5 Free Solid'",
+  "editor.cursorStyle": "line-thin",
+  "editor.occurrencesHighlight": false,
+  "editor.cursorBlinking": "smooth",
+  "explorer.openEditors.visible": 0,
+  "workbench.editor.showTabs": false,
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Eastwood Dark",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "prettier.useTabs": false,
+  "go.useCodeSnippetsOnFunctionSuggest": true,
+  "go.useLanguageServer": true,
+  "go.alternateTools": {
+    "go-languageserver": "gopls"
+  },
+  "go.languageServerExperimentalFeatures": {
+    "format": true,
+    "autoComplete": true,
+    "goToDefinition": true,
+    "hover": true,
+    "signatureHelp": true,
+    "goToTypeDefinition": true,
+    "goToImplementation": true,
+    "documentSymbols": true,
+    "workspaceSymbols": true,
+    "findReferences": true,
+    "documentLink": true
+  },
+  "go.buildOnSave": "off",
+  "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "[go]": {
+    "editor.snippetSuggestions": "none",
     "editor.formatOnSave": true,
-    "editor.renderIndentGuides": false,
-    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Brands', 'Font Awesome 5 Free', 'Font Awesome 5 Free Solid'",
-    "editor.cursorStyle": "line-thin",
-    "editor.occurrencesHighlight": false,
-    "editor.cursorBlinking": "smooth",
-    "explorer.openEditors.visible": 0,
-    "workbench.editor.showTabs": false,
-    "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Eastwood Dark",
-    "files.trimTrailingWhitespace": true,
-    "files.insertFinalNewline": true,
-    "javascript.updateImportsOnFileMove.enabled": "never",
-    "go.useCodeSnippetsOnFunctionSuggest": true,
-    "go.useLanguageServer": true,
-    "go.alternateTools": {
-        "go-languageserver": "gopls"
-    },
-    "go.languageServerExperimentalFeatures": {
-        "format": true,
-        "autoComplete": true,
-        "goToDefinition": true,
-        "hover": true,
-        "signatureHelp": true,
-        "goToTypeDefinition": true,
-        "goToImplementation": true,
-        "documentSymbols": true,
-        "workspaceSymbols": true,
-        "findReferences": true,
-        "documentLink": true
-    },
-    "go.buildOnSave": "off",
-    "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true
-    },
-    "[go]": {
-        "editor.snippetSuggestions": "none",
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true
-        }
-    },
-    "gopls": {
-        "usePlaceholders": true // add parameter placeholders when completing a function
-    },
-    "files.eol": "\n",
-    "window.zoomLevel": 0, // formatting only supports LF line endings
+      "source.organizeImports": true
+    }
+  },
+  "gopls": {
+    "usePlaceholders": true // add parameter placeholders when completing a function
+  },
+  "files.eol": "\n",
+  "explorer.compactFolders": false // formatting only supports LF line endings
 }
