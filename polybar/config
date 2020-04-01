@@ -6,6 +6,10 @@ foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
+red = #ff7675
+green = #badc58
+blue = #74b9ff
+yellow = #ffeaa7
 
 [bar/main]
 width = 100%
@@ -15,7 +19,7 @@ fixed-center = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
+line-size = 1
 line-color = #f00
 
 border-size = 4
@@ -29,10 +33,12 @@ module-margin-right = 2
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
+font-2 = Font Awesome 5 Free:pixelsize=10;1
+font-3 = Font Awesome 5 Free Solid:pixelsize=10;1
+font-4 = Font Awesome 5 Brands:pixelsize=10;1
 
 modules-left = bspwm i3
-modules-right = filesystem xbacklight pulseaudio memory cpu wlan eth battery2 battery temperature date
+modules-right = xbacklight pulseaudio filesystem memory cpu battery1 battery2 wlan eth date
 
 tray-position = right
 tray-padding = 0
@@ -66,9 +72,14 @@ interval = 25
 
 mount-0 = /
 
-label-mounted = %{F#0a81f5}Disk%{F-}: %percentage_used%%
+format-mounted = <ramp-capacity> <label-mounted>
+label-mounted = %{F#555}Disk%{F-} %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
+
+ramp-capacity-0 = %{u#ff7675}
+ramp-capacity-1 = %{u#ffeaa7}
+ramp-capacity-2 = %{u#badc58}
 
 [module/bspwm]
 type = internal/bspwm
@@ -170,18 +181,27 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format = <ramp-load> <label>
+format-prefix =
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
-label = %percentage:2%%
+;format-underline = #f90000
+label = %{F#555}CPU%{F-} %percentage:2%%
+
+ramp-load-2 = %{u#ff7675}
+ramp-load-1 = %{u#ffeaa7}
+ramp-load-0 = %{u#badc58}
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format = <ramp-used> <label>
+format-prefix =
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
-label = %percentage_used%%
+label = %{F#555}Mem%{F-} %percentage_used%%
+
+ramp-used-2 = %{u#ff7675}
+ramp-used-1 = %{u#badc58}
+ramp-used-0 = %{u#badc58}
 
 [module/wlan]
 type = internal/network
@@ -189,7 +209,7 @@ interface = wlp58s0
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
+;format-connected-underline = #9f78e1
 label-connected = %essid%
 
 format-disconnected =
@@ -202,7 +222,7 @@ ramp-signal-0 = 
 ramp-signal-1 = 
 ramp-signal-2 = 
 ramp-signal-3 = 
-ramp-signal-4 = 
+ramp-signal-4 =
 ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
@@ -231,9 +251,9 @@ date-alt = " %Y-%m-%d"
 time = %H:%M
 time-alt = %H:%M:%S
 
-format-prefix = 
+format-prefix =
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+;format-underline = #0a6cf5
 
 label = %date% %time%
 
@@ -241,10 +261,10 @@ label = %date% %time%
 type = internal/pulseaudio
 
 format-volume = <label-volume> <bar-volume>
-label-volume = VOL %percentage%%
+label-volume = Vol %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = 🔇 muted
+label-muted = muted
 label-muted-foreground = #666
 
 bar-volume-width = 10
@@ -268,7 +288,7 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 type = internal/alsa
 
 format-volume = <label-volume> <bar-volume>
-label-volume = VOL
+label-volume = Vol
 label-volume-foreground = ${root.foreground}
 
 format-muted-prefix = " "
@@ -292,71 +312,48 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
-[module/battery]
+[module/battery2]
 type = internal/battery
 battery = BAT0
 adapter = AC
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
+format-charging = <ramp-capacity> <label-charging>
+format-charging-underline = ${colors.blue}
 
-format-discharging = <animation-discharging> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+format-discharging = <ramp-capacity> <label-discharging>
 
-format-full-prefix = " "
+; We name this bat2 because its discharges last
+format-full-prefix =
 format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
+format-full-underline = #badc58
+label-charging = %{F#555}Bat2 %{F-} %percentage%%
+label-discharging = %{F#555}Bat2 %{F-} %percentage%%
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
+ramp-capacity-0 = %{u#ff7675}
+ramp-capacity-1 = %{u#ffeaa7}
+ramp-capacity-2 = %{u#badc58}
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
-
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-foreground = ${colors.foreground-alt}
-animation-discharging-framerate = 750
-
-[module/battery2]
+[module/battery1]
 type = internal/battery
 battery = BAT1
 adapter = AC
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
+format-charging = <ramp-capacity> <label-charging>
+format-charging-underline = ${colors.blue}
 
-format-discharging = <animation-discharging> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+format-discharging = <ramp-capacity> <label-discharging>
 
-format-full-prefix = " "
+format-full-prefix =
 format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
+format-full-underline = #badc58
+label-charging = %{F#555}Bat1 %{F-} %percentage%%
+label-discharging = %{F#555}Bat1 %{F-} %percentage%%
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
-
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-foreground = ${colors.foreground-alt}
-animation-discharging-framerate = 750
+ramp-capacity-0 = %{u#ff7675}
+ramp-capacity-1 = %{u#ffeaa7}
+ramp-capacity-2 = %{u#badc58}
 
 [module/temperature]
 type = internal/temperature
@@ -415,7 +412,9 @@ screenchange-reload = true
 ;pseudo-transparency = false
 
 [global/wm]
-;margin-top = 5
-;margin-bottom = 5
+margin-top = 0
+margin-bottom = 0
+margin-right = 0
+margin-left = 0
 
 ; vim:ft=dosini
