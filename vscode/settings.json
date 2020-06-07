@@ -49,5 +49,22 @@
     "usePlaceholders": true // add parameter placeholders when completing a function
   },
   "files.eol": "\n",
-  "explorer.compactFolders": false // formatting only supports LF line endings
+  "explorer.compactFolders": false,
+  "window.zoomLevel": 0, // formatting only supports LF line endings
+  "editor.rulers": [120],
+  "protoc": {
+    "options": ["--proto_path=proto"]
+  },
+  "todohighlight.include": [
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.html",
+    "**/*.php",
+    "**/*.css",
+    "**/*.scss",
+    "**/*.go"
+  ],
+  "todohighlight.keywordsPattern": "TODO(.*):"
 }
