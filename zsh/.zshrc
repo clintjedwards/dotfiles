@@ -26,8 +26,7 @@ export PATH=$PATH:/usr/local/go/bin
 # export PATH=$PATH:~/.local/bin
 
 # Make node packages executable
-export PATH="$PATH:$HOME/npm/bin"
-export NODE_PATH="$NODE_PATH:$HOME/npm/lib/node_modules"
+export PATH=$PATH:~/.npm-global/bin
 
 #Use VScode for any quick edits
 export EDITOR="code --new-window --wait"

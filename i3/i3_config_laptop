@@ -196,3 +196,6 @@ exec --no-startup-id xfce4-power-manager
 # Turn off left and right click for lenovo touchpad
 # You can lookup device id by using `xinput list`
 exec --no-startup-id xinput set-button-map "SynPS/2 Synaptics TouchPad" 1 1 1 4 5 6 7
+
+# Increase keyboard repeat rate
+exec_always --no-startup-id xset r rate 300 25
