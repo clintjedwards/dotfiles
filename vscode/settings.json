@@ -51,7 +51,7 @@
   "files.eol": "\n",
   "explorer.compactFolders": false,
   "window.zoomLevel": 0, // formatting only supports LF line endings
-  "editor.rulers": [120],
+  "editor.rulers": [100],
   "protoc": {
     "options": ["--proto_path=proto"]
   },

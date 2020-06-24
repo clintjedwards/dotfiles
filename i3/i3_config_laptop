@@ -199,3 +199,6 @@ exec --no-startup-id xinput set-button-map "SynPS/2 Synaptics TouchPad" 1 1 1 4 
 
 # Increase keyboard repeat rate
 exec_always --no-startup-id xset r rate 300 25
+
+# Make sure compton starts, i dunno why the fuck this works, but if this is not here electron apps will freeze/lag
+exec --no-startup-id compton
