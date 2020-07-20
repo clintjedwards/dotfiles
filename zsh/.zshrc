@@ -34,3 +34,4 @@ export VISUAL="code --new-window --wait"
 
 #aliases
 alias ls='exa'
+alias cat='bat'

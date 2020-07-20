@@ -66,15 +66,5 @@
     "**/*.scss",
     "**/*.go"
   ],
-  "todohighlight.keywordsPattern": "TODO(.*):",
-  // Allow movement to the explorer easily
-  "vim.leader": "<space>",
-  "vim.normalModeKeyBindings": [
-    {
-      "before": ["<leader>", "a"],
-      "commands": ["workbench.view.explorer"]
-    }
-  ],
-  "vim.useCtrlKeys": false,
-  "extensions.ignoreRecommendations": true
+  "todohighlight.keywordsPattern": "TODO(.*):"
 }

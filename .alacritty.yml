@@ -4,7 +4,7 @@ colors:
   # Default colors
   primary:
     background: '0x424242'
-    foreground: '0xdfe6e9'
+    foreground: '0xd3d0c8'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
