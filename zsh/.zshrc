@@ -20,7 +20,7 @@ export PATH=$PATH:~/go/bin
 export PATH=$PATH:/usr/local/go/bin
 
 # Make rust packages executable
-# export PATH=$PATH:~/.cargo/bin
+export PATH=$PATH:~/.cargo/bin
 
 # Make python packages executable
 # export PATH=$PATH:~/.local/bin
@@ -31,4 +31,6 @@ export PATH=$PATH:~/.npm-global/bin
 #Use VScode for any quick edits
 export EDITOR="code --new-window --wait"
 export VISUAL="code --new-window --wait"
-if [ /snap/bin/kubectl ]; then source <(kubectl completion zsh); fi
+
+#aliases
+alias ls='exa'
