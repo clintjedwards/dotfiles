@@ -3,40 +3,57 @@
 colors:
   # Default colors
   primary:
-    background: '0x424242'
-    foreground: '0xd3d0c8'
+    background: "0x424242"
+    foreground: "0xd3d0c8"
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
-    text: '0x424242'
-    cursor: '0xdfe6e9'
+    text: "0x424242"
+    cursor: "0xdfe6e9"
 
   # Normal colors
   normal:
-    black:   '0x424242'
-    red:     '0xff7675'
-    green:   '0xbadc58'
-    yellow:  '0xffeaa7'
-    blue:    '0x74b9ff'
-    magenta: '0xcc99cc'
-    cyan:    '0x81ecec'
-    white:   '0xd5c4a1'
+    black: "0x424242"
+    red: "0xff7675"
+    green: "0xbadc58"
+    yellow: "0xffeaa7"
+    blue: "0x74b9ff"
+    magenta: "0xcc99cc"
+    cyan: "0x81ecec"
+    white: "0xd5c4a1"
 
   # Bright colors
   bright:
-    black:   '0x665c54'
-    red:     '0xff7675'
-    green:   '0xbadc58'
-    yellow:  '0xffeaa7'
-    blue:    '0x74b9ff'
-    magenta: '0xcc99cc'
-    cyan:    '0x81ecec'
-    white:   '0xdfe6e9'
+    black: "0x665c54"
+    red: "0xff7675"
+    green: "0xbadc58"
+    yellow: "0xffeaa7"
+    blue: "0x74b9ff"
+    magenta: "0xcc99cc"
+    cyan: "0x81ecec"
+    white: "0xdfe6e9"
 
   indexed_colors:
-    - { index: 16, color: '0xfe8019' }
-    - { index: 17, color: '0xd65d0e' }
-    - { index: 18, color: '0x2d3436' }
-    - { index: 19, color: '0x504945' }
-    - { index: 20, color: '0xbdae93' }
-    - { index: 21, color: '0xe9e6dc' }
+    - { index: 16, color: "0xfe8019" }
+    - { index: 17, color: "0xd65d0e" }
+    - { index: 18, color: "0x2d3436" }
+    - { index: 19, color: "0x504945" }
+    - { index: 20, color: "0xbdae93" }
+    - { index: 21, color: "0xe9e6dc" }
+
+# Font configuration
+font:
+  # Normal (roman) font face
+  normal:
+    family: "Droid Sans Mono"
+    style: Regular
+
+  # Bold font face
+  bold:
+    family: "Droid Sans Mono"
+    style: Regular
+
+  # Bold italic font face
+  bold_italic:
+    family: "Droid Sans Mono"
+    style: Regular

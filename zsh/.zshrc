@@ -34,4 +34,5 @@ export VISUAL="code --new-window --wait"
 
 #aliases
 alias ls='exa'
-alias cat='bat'
+alias cat='bat -p'
+alias grep='rg -p'
