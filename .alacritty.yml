@@ -57,3 +57,6 @@ font:
   bold_italic:
     family: "Droid Sans Mono"
     style: Regular
+
+cursor:
+  style: Beam
