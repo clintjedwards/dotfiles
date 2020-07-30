@@ -38,7 +38,7 @@ font-3 = Font Awesome 5 Free Solid:pixelsize=10;1
 font-4 = Font Awesome 5 Brands:pixelsize=10;1
 
 modules-left = bspwm i3
-modules-right = xbacklight pulseaudio filesystem memory cpu battery1 battery2 wlan eth date
+modules-right = xbacklight pulseaudio updates filesystem memory cpu battery1 battery2 wlan eth date
 
 tray-position = right
 tray-padding = 0
@@ -402,6 +402,12 @@ menu-2-0 = power off
 menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
+
+[module/updates]
+type = custom/script
+label = %output%
+exec = ~/.config/polybar/updates.sh
+interval = 600
 
 [settings]
 screenchange-reload = true
