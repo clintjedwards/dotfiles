@@ -30,6 +30,9 @@ export PATH=$PATH:~/.cargo/bin
 # Make node packages executable
 export PATH=$PATH:~/.npm-global/bin
 
+# Add personal bin path to path
+export PATH=$PATH:~/.bin
+
 #Use VScode for any quick edits
 export EDITOR="code --new-window --wait"
 export VISUAL="code --new-window --wait"
