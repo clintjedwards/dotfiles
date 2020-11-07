@@ -82,5 +82,8 @@
   "extensions.ignoreRecommendations": true,
   "editor.renderWhitespace": "none",
   "rust-analyzer.lens.enable": false,
-  "rust-analyzer.inlayHints.enable": false
+"rust-analyzer.inlayHints.enable": false,
+"[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
 }
