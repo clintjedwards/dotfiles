@@ -41,3 +41,4 @@ export VISUAL="code --new-window --wait"
 alias ls='exa'
 alias cat='bat -p'
 alias grep='rg -p'
+alias printscr='i3-scrot -s'

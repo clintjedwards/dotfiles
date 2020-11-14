@@ -85,5 +85,11 @@
 "rust-analyzer.inlayHints.enable": false,
 "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-}
+},
+"cSpell.enableFiletypes": [
+    "vue"
+],
+"cSpell.userWords": [
+    "schedulable"
+]
 }

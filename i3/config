@@ -109,7 +109,7 @@ bindsym Mod1+r mode "resize"
 ##### Application Keybindings
 
 bindsym Mod1+Return exec alacritty
-bindsym $mod+d exec ulauncher
+bindsym $mod+d exec rofi -show run
 bindsym XF86Display exec --no-startup-id /usr/bin/autorandr --change
 
 bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
@@ -135,6 +135,11 @@ exec --no-startup-id clipit
 exec --no-startup-id blueman-applet
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
+
+# Volume controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 ##### Window Bindings
 
