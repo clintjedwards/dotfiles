@@ -314,27 +314,6 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/battery1]
 type = internal/battery
-battery = BAT1
-adapter = AC
-full-at = 98
-
-format-charging = <label-charging>
-format-charging-underline = ${colors.blue}
-
-format-discharging = <ramp-capacity> <label-discharging>
-
-format-full-prefix =
-format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = #badc58
-label-charging = %{F#555}Bat1 %{F-} %percentage%%
-label-discharging = %{F#555}Bat1 %{F-} %percentage%%
-
-ramp-capacity-0 = %{u#ff7675}
-ramp-capacity-1 = %{u#ffeaa7}
-ramp-capacity-2 = %{u#badc58}
-
-[module/battery2]
-type = internal/battery
 battery = BAT0
 adapter = AC
 full-at = 98
@@ -344,12 +323,11 @@ format-charging-underline = ${colors.blue}
 
 format-discharging = <ramp-capacity> <label-discharging>
 
-; We name this bat2 because its discharges last
 format-full-prefix =
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = #badc58
-label-charging = %{F#555}Bat2 %{F-} %percentage%%
-label-discharging = %{F#555}Bat2 %{F-} %percentage%%
+label-charging = %{F#555}Bat %{F-} %percentage%%
+label-discharging = %{F#555}Bat %{F-} %percentage%%
 
 ramp-capacity-0 = %{u#ff7675}
 ramp-capacity-1 = %{u#ffeaa7}

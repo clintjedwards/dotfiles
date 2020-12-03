@@ -45,17 +45,17 @@ colors:
 font:
   # Normal (roman) font face
   normal:
-    family: "Droid Sans Mono"
+    family: "Droid Sans Mono Nerd Font"
     style: Regular
 
   # Bold font face
   bold:
-    family: "Droid Sans Mono"
+    family: "Droid Sans Mono Nerd Font"
     style: Regular
 
   # Bold italic font face
   bold_italic:
-    family: "Droid Sans Mono"
+    family: "Droid Sans Mono Nerd Font"
     style: Regular
 
 cursor:
