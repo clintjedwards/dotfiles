@@ -1,63 +1,69 @@
 {
-  "window.menuBarVisibility": "default",
-  "editor.minimap.enabled": false,
-  "editor.formatOnSave": true,
-  "editor.renderIndentGuides": false,
-  "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Brands', 'Font Awesome 5 Free', 'Font Awesome 5 Free Solid'",
-  "editor.cursorStyle": "line-thin",
-  "editor.occurrencesHighlight": false,
-  "editor.cursorBlinking": "smooth",
-  "editor.insertSpaces": true,
-  "editor.tabSize": 4,
-  "editor.detectIndentation": false,
-  "explorer.openEditors.visible": 0,
-  "workbench.editor.showTabs": false,
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "Eastwood Dark",
-  "files.trimTrailingWhitespace": true,
-  "files.insertFinalNewline": true,
-  "javascript.updateImportsOnFileMove.enabled": "never",
-  "prettier.useTabs": false,
-  "go.useCodeSnippetsOnFunctionSuggest": true,
-  "go.useLanguageServer": true,
-  "go.alternateTools": {
-    "go-languageserver": "gopls"
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "go.languageServerExperimentalFeatures": {
-    "format": true,
-    "autoComplete": true,
-    "goToDefinition": true,
-    "hover": true,
-    "signatureHelp": true,
-    "goToTypeDefinition": true,
-    "goToImplementation": true,
-    "documentSymbols": true,
-    "workspaceSymbols": true,
-    "findReferences": true,
-    "documentLink": true
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
   },
-  "go.buildOnSave": "off",
-  "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
+  "cSpell.enableFiletypes": [
+    "vue"
+  ],
+  "cSpell.userWords": [
+    "gohcl",
+    "grpc",
+    "hashicorp",
+    "pluggable",
+    "rpcs",
+    "schedulable",
+    "semver"
+  ],
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-  "[go]": {
-    "editor.snippetSuggestions": "none",
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    }
-  },
-  "gopls": {
-    "usePlaceholders": true // add parameter placeholders when completing a function
-  },
-  "files.eol": "\n",
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorStyle": "line-thin",
+  "editor.detectIndentation": false,
+  "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Brands', 'Font Awesome 5 Free', 'Font Awesome 5 Free Solid'",
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.minimap.enabled": false,
+  "editor.occurrencesHighlight": false,
+  "editor.renderIndentGuides": false,
+  "editor.renderWhitespace": "none",
+  "editor.rulers": [
+    100
+  ],
+  "editor.snippetSuggestions": "none",
+  "editor.tabSize": 4,
   "explorer.compactFolders": false,
-  "window.zoomLevel": 0, // formatting only supports LF line endings
-  "editor.rulers": [100],
-  "protoc": {
-    "options": ["--proto_path=proto"]
+  "explorer.openEditors.visible": 0,
+  "extensions.ignoreRecommendations": true,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "go.alternateTools": {
+    "go-languageserver": "gopls"
   },
+  "go.buildOnSave": "off",
+  "go.lintFlags": [
+    "--enable", "golint"
+  ],
+  "go.lintTool": "golangci-lint",
+  "go.useCodeSnippetsOnFunctionSuggest": true,
+  "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
+  "go.useLanguageServer": true,
+  "gopls": {
+    "usePlaceholders": true
+  },
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "prettier.useTabs": false,
+  "protoc": {
+    "options": [
+      "--proto_path=proto"
+    ]
+  },
+  "rust-analyzer.inlayHints.enable": false,
+  "rust-analyzer.lens.enable": false,
   "todohighlight.include": [
     "**/*.js",
     "**/*.jsx",
@@ -70,26 +76,9 @@
     "**/*.go"
   ],
   "todohighlight.keywordsPattern": "TODO(.*):",
-  // Allow movement to the explorer easily
-  "vim.leader": "<space>",
-  "vim.normalModeKeyBindings": [
-    {
-      "before": ["<leader>", "a"],
-      "commands": ["workbench.view.explorer"]
-    }
-  ],
-  "vim.useCtrlKeys": false,
-  "extensions.ignoreRecommendations": true,
-  "editor.renderWhitespace": "none",
-  "rust-analyzer.lens.enable": false,
-"rust-analyzer.inlayHints.enable": false,
-"[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-},
-"cSpell.enableFiletypes": [
-    "vue"
-],
-"cSpell.userWords": [
-    "schedulable"
-]
+  "window.menuBarVisibility": "default",
+  "window.zoomLevel": 0,
+  "workbench.colorTheme": "Eastwood Dark",
+  "workbench.editor.showTabs": false,
+  "workbench.iconTheme": "material-icon-theme"
 }
