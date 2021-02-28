@@ -7,7 +7,7 @@
   },
   "cSpell.enableFiletypes": [
     "vue"
-  ],
+],
   "cSpell.userWords": [
     "gohcl",
     "grpc",
@@ -41,8 +41,8 @@
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
-  "go.alternateTools": {
-    "go-languageserver": "gopls"
+  "files.associations": {
+    "*.tf": "terraform"
   },
   "go.buildOnSave": "off",
   "go.lintFlags": [
@@ -80,5 +80,8 @@
   "window.zoomLevel": 0,
   "workbench.colorTheme": "Eastwood Dark",
   "workbench.editor.showTabs": false,
-  "workbench.iconTheme": "material-icon-theme"
+"workbench.iconTheme": "material-icon-theme",
+"[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+},
 }
