@@ -2,21 +2,20 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[vue]": {
-    "editor.defaultFormatter": "octref.vetur"
-  },
-  "cSpell.enableFiletypes": [
-    "vue"
-],
   "cSpell.userWords": [
+    "awesome",
+    "brands",
     "gohcl",
     "grpc",
     "hashicorp",
+    "mono",
+    "monospace",
     "pluggable",
     "rpcs",
     "schedulable",
-    "semver"
-  ],
+    "semver",
+    "solid"
+],
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
@@ -31,7 +30,7 @@
   "editor.renderIndentGuides": false,
   "editor.renderWhitespace": "none",
   "editor.rulers": [
-    100
+    120
   ],
   "editor.snippetSuggestions": "none",
   "editor.tabSize": 4,
@@ -53,7 +52,11 @@
   "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
   "go.useLanguageServer": true,
   "gopls": {
-    "usePlaceholders": true
+    "usePlaceholders": true,
+    "analyses": {
+        "unusedparams": true,
+        "unusedwrite": true
+    }
   },
   "javascript.updateImportsOnFileMove.enabled": "never",
   "prettier.useTabs": false,
@@ -84,4 +87,5 @@
 "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
 },
+"go.toolsManagement.autoUpdate": true,
 }
