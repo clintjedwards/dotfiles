@@ -67,6 +67,7 @@
   },
   "rust-analyzer.inlayHints.enable": false,
   "rust-analyzer.lens.enable": false,
+  "rust-analyzer.checkOnSave.command": "clippy",
   "todohighlight.include": [
     "**/*.js",
     "**/*.jsx",
@@ -79,7 +80,7 @@
     "**/*.go"
   ],
   "todohighlight.keywordsPattern": "TODO(.*):",
-  "window.menuBarVisibility": "default",
+  "window.menuBarVisibility": "hidden",
   "window.zoomLevel": 0,
   "workbench.colorTheme": "Eastwood Dark",
   "workbench.editor.showTabs": false,
