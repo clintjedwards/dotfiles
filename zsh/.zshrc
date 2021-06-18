@@ -42,5 +42,7 @@ alias ls='exa'
 alias cat='bat -p'
 alias grep='rg -p'
 alias printscr='i3-scrot -s'
+alias df='duf'
+alias du='gdu'
 # This fixes the issue where remote servers don't have alacritty terminfo
 alias ssh='TERM=xterm-256color ssh'

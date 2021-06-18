@@ -89,4 +89,7 @@
     "editor.defaultFormatter": "vscode.html-language-features"
 },
 "go.toolsManagement.autoUpdate": true,
+"workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb"
+},
 }
