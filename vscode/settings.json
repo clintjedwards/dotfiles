@@ -41,7 +41,7 @@
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "files.associations": {
-    "*.tf": "terraform"
+    "*.tf": "tf"
   },
   "go.buildOnSave": "off",
   "go.lintFlags": [
