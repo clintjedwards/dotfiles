@@ -41,13 +41,14 @@
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "files.associations": {
-    "*.tf": "tf"
+    "*.tf": "terraform"
   },
   "go.buildOnSave": "off",
-  "go.lintFlags": [
-    "--enable", "golint"
-  ],
   "go.lintTool": "golangci-lint",
+  "go.lintFlags": [
+    "--enable", "revive",
+    "--enable", "gocritic",
+  ],
   "go.useCodeSnippetsOnFunctionSuggest": true,
   "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
   "go.useLanguageServer": true,
