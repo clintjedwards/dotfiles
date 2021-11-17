@@ -27,11 +27,11 @@
   "editor.insertSpaces": true,
   "editor.minimap.enabled": false,
   "editor.occurrencesHighlight": false,
-  "editor.renderIndentGuides": false,
   "editor.renderWhitespace": "none",
   "editor.rulers": [
     120
   ],
+  "editor.guides.indentation": false,
   "editor.snippetSuggestions": "none",
   "editor.tabSize": 4,
   "explorer.compactFolders": false,
@@ -48,15 +48,18 @@
   "go.lintFlags": [
     "--enable", "revive",
     "--enable", "gocritic",
+    "--enable", "exhaustive", "-default-signifies-exhaustive",
   ],
   "go.useCodeSnippetsOnFunctionSuggest": true,
   "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
   "go.useLanguageServer": true,
   "gopls": {
+    "formatting.gofumpt": true,
     "usePlaceholders": true,
     "analyses": {
         "unusedparams": true,
-        "unusedwrite": true
+        "unusedwrite": true,
+        "nilness": true
     }
   },
   "javascript.updateImportsOnFileMove.enabled": "never",
@@ -85,6 +88,7 @@
   "window.zoomLevel": 0,
   "workbench.colorTheme": "Eastwood Dark",
   "workbench.editor.showTabs": false,
+  "workbench.editor.openSideBySideDirection": "right",
 "workbench.iconTheme": "material-icon-theme",
 "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
