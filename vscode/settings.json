@@ -48,7 +48,6 @@
   "go.lintFlags": [
     "--enable", "revive",
     "--enable", "gocritic",
-    "--enable", "exhaustive", "-default-signifies-exhaustive",
   ],
   "go.useCodeSnippetsOnFunctionSuggest": true,
   "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
