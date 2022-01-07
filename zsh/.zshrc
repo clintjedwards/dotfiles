@@ -17,6 +17,9 @@ source $ZSH/oh-my-zsh.sh
 source $ZSH/plugins/gitstatus/gitstatus.prompt.zsh
 PROMPT='%{$fg[cyan]%}%1~%{$reset_color%}%{$fg[red]%}|%{$reset_color%}$GITSTATUS_PROMPT%{$fg[cyan]%}⇒%{$reset_color%} '
 
+# Add personal bin path to path
+export PATH=$PATH:~/.bin
+
 # Make go packages executable
 export PATH=$PATH:~/go/bin
 export PATH=$PATH:/usr/local/go/bin
@@ -29,9 +32,6 @@ export PATH=$PATH:~/.cargo/bin
 
 # Make node packages executable
 export PATH=$PATH:~/.npm-global/bin
-
-# Add personal bin path to path
-export PATH=$PATH:~/.bin
 
 #Use VScode for any quick edits
 export EDITOR="code --new-window --wait"

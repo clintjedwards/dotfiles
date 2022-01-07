@@ -52,6 +52,10 @@
   "go.useCodeSnippetsOnFunctionSuggest": true,
   "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
   "go.useLanguageServer": true,
+  "go.enableCodeLens": {
+    "references": false,
+    "runtest": false
+  },
   "gopls": {
     "formatting.gofumpt": true,
     "usePlaceholders": true,
@@ -83,8 +87,7 @@
     "**/*.go"
   ],
   "todohighlight.keywordsPattern": "TODO(.*):",
-  "window.menuBarVisibility": "hidden",
-  "window.zoomLevel": 0,
+"window.menuBarVisibility": "hidden",
   "workbench.colorTheme": "Eastwood Dark",
   "workbench.editor.showTabs": false,
   "workbench.editor.openSideBySideDirection": "right",
