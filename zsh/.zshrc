@@ -41,7 +41,7 @@ export VISUAL="code --new-window --wait"
 alias ls='exa'
 alias cat='bat -p'
 alias grep='rg -p'
-alias printscr='i3-scrot -s'
+alias printscr='flameshot gui'
 alias df='duf'
 alias du='gdu'
 # This fixes the issue where remote servers don't have alacritty terminfo
