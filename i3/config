@@ -108,31 +108,24 @@ bindsym Mod1+r mode "resize"
 
 ##### Application Keybindings
 
-bindsym Mod1+Return exec alacritty
+bindsym Mod1+Return exec kitty
 bindsym $mod+d exec rofi -show run
 bindsym XF86Display exec --no-startup-id /usr/bin/autorandr --change
-
-bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-bindsym $mod+t exec --no-startup-id pkill compton
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b
-bindsym Print exec --no-startup-id i3-scrot
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
-bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
-bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
-bindsym $mod+Shift+z exec $home/.i3/lock.sh
+bindsym $mod+Shift+z exec $home/.config/i3/lock.sh
 
 ##### Application Launch
 
+# speeds up keyboard repeat rate
 exec_always --no-startup-id xset r rate 300 25
 exec_always --no-startup-id ~/.config/polybar/polybar.sh &
 exec --no-startup-id xinput set-button-map "SynPS/2 Synaptics TouchPad" 1 1 1 4 5 6 7
 exec --no-startup-id volumeicon
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id compton
-exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id clipit
 exec --no-startup-id blueman-applet
+exec_always --no-startup-id autorandr --change
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 

@@ -3,10 +3,10 @@ Description=i3lock on suspend
 Before=sleep.target
 
 [Service]
-User=<USERNAME>
+User=clintjedwards
 Environment=DISPLAY=:0
 Type=forking
-ExecStart=<PWD>/config/i3/lock.sh
+ExecStart=/home/clintjedwards/.config/i3/lock.sh
 
 [Install]
 WantedBy=sleep.target

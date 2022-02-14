@@ -4,7 +4,6 @@ plugins=(
          git-auto-fetch # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-auto-fetch
          docker # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
          httpie # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/httpie
-         zsh-syntax-highlighting # https://github.com/zsh-users/zsh-syntax-highlighting
 	 ssh-agent
 	 gpg-agent
 	 )

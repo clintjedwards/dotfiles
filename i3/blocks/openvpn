@@ -1,3 +1,0 @@
-#!/bin/bash
-result=$(nmcli -t -f NAME,TYPE,STATE connection show | egrep ":tun:activated" | awk -F':' '{print $1}')
-[[ -z $result ]] || echo "OpenVPN Connected"
