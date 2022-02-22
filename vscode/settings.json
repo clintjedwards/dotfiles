@@ -1,102 +1,104 @@
 {
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "cSpell.userWords": [
-    "awesome",
-    "brands",
-    "gohcl",
-    "grpc",
-    "hashicorp",
-    "mono",
-    "monospace",
-    "pluggable",
-    "rpcs",
-    "schedulable",
-    "semver",
-    "solid"
-],
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  },
-  "editor.cursorBlinking": "smooth",
-  "editor.cursorStyle": "line-thin",
-  "editor.detectIndentation": false,
-  "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Brands', 'Font Awesome 5 Free', 'Font Awesome 5 Free Solid'",
-  "editor.formatOnSave": true,
-  "editor.insertSpaces": true,
-  "editor.minimap.enabled": false,
-  "editor.occurrencesHighlight": false,
-  "editor.renderWhitespace": "none",
-  "editor.rulers": [
-    120
-  ],
-  "editor.guides.indentation": false,
-  "editor.snippetSuggestions": "none",
-  "editor.tabSize": 4,
-  "explorer.compactFolders": false,
-  "explorer.openEditors.visible": 0,
-  "extensions.ignoreRecommendations": true,
-  "files.eol": "\n",
-  "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true,
-  "files.associations": {
-    "*.tf": "terraform"
-  },
-  "go.buildOnSave": "off",
-  "go.lintTool": "golangci-lint",
-  "go.lintFlags": [
-    "--enable", "revive",
-    "--enable", "gocritic",
-  ],
-  "go.useCodeSnippetsOnFunctionSuggest": true,
-  "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
-  "go.useLanguageServer": true,
-  "go.enableCodeLens": {
-    "references": false,
-    "runtest": false
-  },
-  "gopls": {
-    "formatting.gofumpt": true,
-    "usePlaceholders": true,
-    "analyses": {
-        "unusedparams": true,
-        "unusedwrite": true,
-        "nilness": true
-    }
-  },
-  "javascript.updateImportsOnFileMove.enabled": "never",
-  "prettier.useTabs": false,
-  "protoc": {
-    "options": [
-      "--proto_path=proto"
-    ]
-  },
-  "rust-analyzer.inlayHints.enable": false,
-  "rust-analyzer.lens.enable": false,
-  "rust-analyzer.checkOnSave.command": "clippy",
-  "todohighlight.include": [
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.html",
-    "**/*.php",
-    "**/*.css",
-    "**/*.scss",
-    "**/*.go"
-  ],
-  "todohighlight.keywordsPattern": "TODO(.*):",
-"window.menuBarVisibility": "hidden",
-  "workbench.colorTheme": "Eastwood Dark",
-  "workbench.editor.showTabs": false,
-  "workbench.editor.openSideBySideDirection": "right",
-"workbench.iconTheme": "material-icon-theme",
-"[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-},
-"go.toolsManagement.autoUpdate": true,
-"workbench.editorAssociations": {
-    "*.ipynb": "jupyter.notebook.ipynb"
-},
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "cSpell.userWords": [
+        "awesome",
+        "brands",
+        "gohcl",
+        "grpc",
+        "hashicorp",
+        "mono",
+        "monospace",
+        "pluggable",
+        "rpcs",
+        "schedulable",
+        "semver",
+        "solid"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorStyle": "line-thin",
+    "editor.detectIndentation": false,
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Brands', 'Font Awesome 5 Free', 'Font Awesome 5 Free Solid'",
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": true,
+    "editor.minimap.enabled": false,
+    "editor.occurrencesHighlight": false,
+    "editor.renderWhitespace": "none",
+    "editor.rulers": [
+        120
+    ],
+    "editor.guides.indentation": false,
+    "editor.snippetSuggestions": "none",
+    "editor.tabSize": 4,
+    "explorer.compactFolders": false,
+    "explorer.openEditors.visible": 0,
+    "extensions.ignoreRecommendations": true,
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.associations": {
+        "*.tf": "terraform"
+    },
+    "go.buildOnSave": "off",
+    "go.lintTool": "golangci-lint",
+    "go.lintFlags": [
+        "--enable",
+        "revive",
+        "--enable",
+        "gocritic",
+    ],
+    "go.useCodeSnippetsOnFunctionSuggest": true,
+    "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
+    "go.useLanguageServer": true,
+    "go.enableCodeLens": {
+        "references": false,
+        "runtest": false
+    },
+    "gopls": {
+        "formatting.gofumpt": true,
+        "usePlaceholders": true,
+        "analyses": {
+            "unusedparams": true,
+            "unusedwrite": true,
+            "nilness": true
+        }
+    },
+    "javascript.updateImportsOnFileMove.enabled": "never",
+    "prettier.useTabs": false,
+    "protoc": {
+        "options": [
+            "--proto_path=proto"
+        ]
+    },
+    "rust-analyzer.inlayHints.enable": false,
+    "rust-analyzer.lens.enable": false,
+    "rust-analyzer.checkOnSave.command": "clippy",
+    "todohighlight.include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.html",
+        "**/*.php",
+        "**/*.css",
+        "**/*.scss",
+        "**/*.go"
+    ],
+    "todohighlight.keywordsPattern": "TODO(.*):",
+    "window.menuBarVisibility": "hidden",
+    "workbench.colorTheme": "Eastwood Dark",
+    "workbench.editor.showTabs": false,
+    "workbench.editor.openSideBySideDirection": "right",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "go.toolsManagement.autoUpdate": true,
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
+    "workbench.iconTheme": "material-icon-theme",
 }
