@@ -55,3 +55,9 @@
 ### ngrok
 
 `ngrok http https://localhost:8081`
+
+### curl
+
+Time a request
+
+`curl -o /dev/null -s -w %{time_total}\\n  10.109.128.3:3005/v1/events/`
