@@ -61,3 +61,8 @@
 Time a request
 
 `curl -o /dev/null -s -w %{time_total}\\n  10.109.128.3:3005/v1/events/`
+
+### proxmox
+* Storage space for the containers is done through LVM. Proxmox allows you to create 'thinpools'. Thin pools are kinda like virtual memory where it's possible to overcommit on this space as long as all applications don't need the full amount of space.
+* Adding storage to this pool is as easy as normal LVM resizing operations.
+* The server has two network cards and if not careful will default to the regular network card which is only 1G. Make sure the 10G card is being used.
