@@ -30,7 +30,7 @@ export PATH=$PATH:~/.cargo/bin
 # export PATH=$PATH:~/.local/bin
 
 # Make node packages executable
-export PATH=$PATH:~/.npm-global/bin
+export PATH=$PATH:~/.bin/node/bin
 
 #Use VScode for any quick edits
 export EDITOR="code --new-window --wait"
@@ -45,3 +45,6 @@ alias df='duf'
 alias du='gdu'
 # This fixes the issue where remote servers don't have alacritty terminfo
 alias ssh='TERM=xterm-256color ssh'
+
+# Remove this after we add the ability to have local config files
+export HOST=http://todo.clintjedwards.home
