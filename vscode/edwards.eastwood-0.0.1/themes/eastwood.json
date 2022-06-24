@@ -4,8 +4,8 @@
   "type": "dark",
   "colors": {
     // Contrast colors
-    // "contrastActiveBorder": "#f00", //7
-    // "contrastBorder": "#f00", //6
+    //"contrastActiveBorder": "#f00", //7
+    //"contrastBorder": "#f00", //6
 
     // Base colors
     // "focusBorder": "#f00", //7
@@ -238,8 +238,8 @@
     "editorSuggestWidget.foreground": "#d3d0c8", //5
     "editorSuggestWidget.highlightForeground": "#74b9ff", //D
     "editorSuggestWidget.selectedBackground": "#747369", //2
-    "editorHoverWidget.background": "#424242", //1
-    // "editorHoverWidget.border": "#f00",
+    "editorHoverWidget.background": "#393939", //1
+    "editorHoverWidget.border": "#d3d0c8",
     // "editorHoverWidget.statusBarBackground": "#f00",
     "debugExceptionWidget.background": "#393939", //1
     // "debugExceptionWidget.border": "#f00",
@@ -337,20 +337,6 @@
     "notificationsErrorIcon.foreground": "#ff7675", //8
     "notificationsWarningIcon.foreground": "#ffeaa7", //A
     "notificationsInfoIcon.foreground": "#74b9ff", //D
-
-    // Below is no longer supported as of 1.21
-    "notification.background": "#747369", //2
-    "notification.foreground": "#d3d0c8", //5
-    "notification.buttonBackground": "#74b9ff", //D
-    "notification.buttonHoverBackground": "#747369", //2
-    "notification.buttonForeground": "#d3d0c8", //7
-    "notification.infoBackground": "#81ecec", //C
-    "notification.infoForeground": "#d3d0c8", //7
-    "notification.warningBackground": "#ffeaa7", //A
-    "notification.warningForeground": "#d3d0c8", //7
-    "notification.errorBackground": "#ff7675", //8
-    "notification.errorForeground": "#d3d0c8", //7
-    // Above is no longer supported as of 1.21
 
     // Extensions
     "extensionButton.prominentBackground": "#badc58", //B
