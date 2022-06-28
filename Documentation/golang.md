@@ -59,3 +59,17 @@ Great for testing things from branches
 ```bash
 GOPROXY=direct go get -u github.com/clintjedwards/gofer/gofer_sdk/go@rust-rewrite
 ```
+
+# Google testing package
+
+```go
+import (
+	"testing"
+
+	"github.com/google/go-cmp/cmp"
+)
+
+if diff := cmp.Diff(expected, mergeMaps(first, second, third)); diff != "" {
+    t.Errorf("unexpected map values (-want +got):\n%s", diff)
+}
+```
