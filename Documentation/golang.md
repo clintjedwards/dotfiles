@@ -51,3 +51,11 @@ for name, test := range tests {
     })
 }
 ```
+
+# You can tell go proxy to attempt to download the dependency directly
+
+Great for testing things from branches
+
+```bash
+GOPROXY=direct go get -u github.com/clintjedwards/gofer/gofer_sdk/go@rust-rewrite
+```
