@@ -87,5 +87,5 @@
   "rust-analyzer.imports.granularity.enforce": true,
   "rust-analyzer.imports.granularity.group": "crate",
   "rust-analyzer.imports.group.enable": true,
-  "editor.inlayHints.enabled": "offUnlessPressed"
+"editor.inlayHints.enabled": "offUnlessPressed"
 }
