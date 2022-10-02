@@ -43,6 +43,7 @@ alias grep='rg -p'
 alias printscr='flameshot gui'
 alias df='duf'
 alias du='gdu'
+alias top='btop'
 # This fixes the issue where remote servers don't have alacritty terminfo
 alias ssh='TERM=xterm-256color ssh'
 
