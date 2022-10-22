@@ -4,32 +4,15 @@
 # config starts here: #
 #######################
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Noto Sans Regular 10
-
-set $mod Mod1
-
-#####################
-# workspace layout: #
-#####################
+font pango:Inconsolata Light 11
 
 # default i3 tiling mode:
 workspace_layout default
 
-# i3 stacking layout:
-# Each window will be fullscreen and tabbed top to bottom.
-#workspace_layout stacking
-
-# i3 tabbed layout:
-# Each new window will open fullscreen as a tab (left to right)
-#workspace_layout tabbed
-
 ##############################
 # extra options for windows: #
 ##############################
+set $mod Mod1
 
 #border indicator on windows:
 new_window pixel 1
@@ -129,20 +112,20 @@ mode "resize" {
 # Pressing right will grow the window's width.
 # Pressing up will shrink the window's height.
 # Pressing down will grow the window's height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym ntilde resize grow width 10 px or 10 ppt
+    bindsym j resize shrink width 10 px or 10 ppt
+    bindsym k resize grow height 10 px or 10 ppt
+    bindsym l resize shrink height 10 px or 10 ppt
+    bindsym ntilde resize grow width 10 px or 10 ppt
 
 # same bindings, but for the arrow keys
 	bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
 
 # back to normal: Enter or Escape
 	bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym Escape mode "default"
 	bindsym $mod+r mode "default"
 }
 
@@ -159,7 +142,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+q kill
 
 # exit-menu
-bindsym $mod+Shift+e exec ~/.config/i3/scripts/powermenu
+bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 
 # Lock the system
 bindsym $mod+Shift+z exec ~/.config/i3/lock.sh
@@ -170,15 +153,9 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to update i3)
 bindsym $mod+Shift+r restart
 
-# keybinding in fancy rofi (automated):
-bindsym F1 exec ~/.config/i3/scripts/keyhint-2
-# alternative
-# keybinding list in editor:
-# bindsym $mod+F1 exec xed ~/.config/i3/keybindings
-
 # Backlight control
-bindsym XF86MonBrightnessUp exec xbacklight +5 && notify-send "Brightness - ${$(xbacklight -get)%.*}%" 
-bindsym XF86MonBrightnessDown exec xbacklight -5 && notify-send "Brightness - ${$(xbacklight -get)%.*}%" 
+bindsym XF86MonBrightnessUp exec xbacklight +5 && notify-send "Brightness - ${$(xbacklight -get)%.*}%"
+bindsym XF86MonBrightnessDown exec xbacklight -5 && notify-send "Brightness - ${$(xbacklight -get)%.*}%"
 
 # change focus
 bindsym $mod+j focus left
@@ -249,14 +226,8 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-# Redirect sound to headphones
-bindsym $mod+p exec /usr/local/bin/switch-audio-port
-
 ## App shortcuts
 bindsym Print exec flameshot gui
-
-# Power Profiles menu switcher (rofi)
-bindsym $mod+Shift+p exec ~/.config/i3/scripts/power-profiles
 
 ##########################################
 # configuration for workspace behaviour: #
@@ -275,48 +246,9 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# use workspaces on different displays:
-# where you have to replace VGA-0/HDMI-0 with the names for your displays
-# you can get from xrandr command
-#workspace $ws1 output VGA-0
-#workspace $ws2 output VGA-0
-#workspace $ws3 output HDMI-0
-#workspace $ws4 output HDMI-0
-#workspace $ws5 output HDMI-0
-
-##############
-# compositor #
-##############
-
-# transparency
-# uncomment one of them to be used (picom package is installed per default)
-# options could need changes, related to used GPU and drivers.
-# to find the right setting consult the archwiki or ask at the forum.
-#
-# xcompmgr: https://wiki.archlinux.org/title/Xcompmgr
-# manpage: https://man.archlinux.org/man/xcompmgr.1.en
-#exec --no-startup-id xcompmgr -C -n &
-# or an more specialized config like this:
-#exec --no-startup-id xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 &
-#
-# or:
-#
-# picom: https://wiki.archlinux.org/title/Picom
-# manpage: https://man.archlinux.org/man/picom.1.en
-#exec_always --no-startup-id picom -b
-#exec_always --no-startup-id killall picom && picom -b
-#exec_always --no-startup-id picom --config ~/.config/picom.conf
-
 #############################################
 # autostart applications/services on login: #
 #############################################
-
-#get auth work with polkit-gnome
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
-# set wallpaper
-exec --no-startup-id sleep 2 && nitrogen --restore
-#exec --no-startup-id feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros_i3.png
 
 # set powersavings for display:
 exec --no-startup-id xset s 480 dpms 600 600 600
@@ -347,7 +279,7 @@ for_window [class="urxvt"] border pixel 1
 
 # set size of floating window
 #for_window [window_role="(?i)GtkFileChooserDialog"] resize set 640 480 #to set size of file choose dialog
-#for_window [class=".*"] resize set 640 480 #to change size of all floating windows 
+#for_window [class=".*"] resize set 640 480 #to change size of all floating windows
 
 # set position of floating window
 for_window [class=".*"] move position center
@@ -383,26 +315,17 @@ client.urgent		    $urgentred	$urgentred	$white		$purple		$yellowbrown
 # Start i3bar to display a workspace bar
 # (plus the system information i3status finds out, if available)
 bar {
-		font pango:Noto Sans Regular 10, FontAwesome 10
+		font pango:Droid Sans Mono Regular 10
 		status_command i3blocks -c ~/.config/i3/i3blocks.conf
-	    	position top
-#	    	i3bar_command i3bar --transparency
-# it could be that you have no primary display set: set one (xrandr --output <output> --primary)
-# reference: https://i3wm.org/docs/userguide.html#_tray_output
-		    tray_output primary
-		    tray_padding 0
+	    position top
+		tray_output primary
+		tray_padding 0
 
-# When strip_workspace_numbers is set to yes,
-# any workspace that has a name of the form
-# “[n][:][NAME]” will display only the name.
 strip_workspace_numbers yes
-##strip_workspace_name no
-
 		    colors {
 		    separator          $purple
 		    background         $darkgrey
 		    statusline         $white
-#                          		border 		        bg		txt		indicator
 		focused_workspace	$mediumgrey	   	$grey		$darkgrey	$purple
 		active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
 		inactive_workspace	$darkgrey   		$darkgrey	$grey		$purple
@@ -417,7 +340,7 @@ strip_workspace_numbers yes
 ## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
 
 bindsym $mod+d exec rofi -modi drun -show drun \
-		-config ~/.config/rofi/rofidmenu.rasi
+		-config ~/.config/rofi/launchers/type-4/style-6.rasi
 
 bindsym $mod+t exec rofi -show window \
-		-config ~/.config/rofi/rofidmenu.rasi
+		-config ~/.config/rofi/config.rasi
