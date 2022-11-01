@@ -58,6 +58,12 @@
   "rust-analyzer.lens.enable": false,
   "rust-analyzer.completion.autoimport.enable": true,
   "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.imports.granularity.enforce": true,
+  "rust-analyzer.imports.granularity.group": "crate",
+  "rust-analyzer.imports.group.enable": true,
+  "rust-analyzer.inlayHints.chainingHints.enable": true,
+  "rust-analyzer.inlayHints.typeHints.enable": true,
+  "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "always",
   "todohighlight.include": [
     "**/*.js",
     "**/*.jsx",
@@ -84,8 +90,5 @@
   "[proto3]": {
     "editor.defaultFormatter": "xaver.clang-format"
   },
-  "rust-analyzer.imports.granularity.enforce": true,
-  "rust-analyzer.imports.granularity.group": "crate",
-  "rust-analyzer.imports.group.enable": true,
-"editor.inlayHints.enabled": "offUnlessPressed"
+  "editor.inlayHints.enabled": "offUnlessPressed"
 }
