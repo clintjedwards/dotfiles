@@ -31,7 +31,9 @@ hide_edge_borders none
 #title_align center
 
 # Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+# Changed this to mod+shift because it interferes with alt+click for
+# multiline selection in vscode.
+floating_modifier $mod+shift
 
 # switch to workspace
 bindsym $mod+1    workspace  $ws1

@@ -21,6 +21,7 @@
   "editor.guides.indentation": false,
   "editor.snippetSuggestions": "none",
   "editor.tabSize": 4,
+  "editor.multiCursorModifier": "alt",
   "explorer.compactFolders": false,
   "explorer.openEditors.visible": 0,
   "extensions.ignoreRecommendations": true,
@@ -37,7 +38,6 @@
   "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
   "go.useLanguageServer": true,
   "go.enableCodeLens": {
-    "references": false,
     "runtest": false
   },
   "gopls": {
@@ -90,5 +90,5 @@
   "[proto3]": {
     "editor.defaultFormatter": "xaver.clang-format"
   },
-  "editor.inlayHints.enabled": "offUnlessPressed"
+"editor.inlayHints.enabled": "offUnlessPressed"
 }
