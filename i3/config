@@ -156,8 +156,8 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # Backlight control
-bindsym XF86MonBrightnessUp exec xbacklight +5 && notify-send "Brightness - ${$(xbacklight -get)%.*}%"
-bindsym XF86MonBrightnessDown exec xbacklight -5 && notify-send "Brightness - ${$(xbacklight -get)%.*}%"
+bindsym XF86MonBrightnessUp exec light -A 5 && notify-send "Brightness - ${$(xbacklight -get)%.*}%"
+bindsym XF86MonBrightnessDown exec light -U 5 && notify-send "Brightness - ${$(xbacklight -get)%.*}%"
 
 # change focus
 bindsym $mod+j focus left
