@@ -32,9 +32,12 @@ export PATH=$PATH:~/.cargo/bin
 # Make node packages executable
 export PATH=$PATH:~/.bin/node/bin
 
-#Use VScode for any quick edits
+# Use VScode for any quick edits
 export EDITOR="code --new-window --wait"
 export VISUAL="code --new-window --wait"
+
+# Use Chrome for default browser
+export BROWSER="google-chrome-stable"
 
 #aliases
 alias ls='exa'
