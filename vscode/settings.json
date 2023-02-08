@@ -90,5 +90,8 @@
   "[proto3]": {
     "editor.defaultFormatter": "xaver.clang-format"
   },
-"editor.inlayHints.enabled": "offUnlessPressed"
+"editor.inlayHints.enabled": "offUnlessPressed",
+"[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+}
 }
