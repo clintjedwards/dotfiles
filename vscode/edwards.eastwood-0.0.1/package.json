@@ -4,7 +4,7 @@
 	"description": "Custom Color Theme",
 	"version": "0.0.1",
 	"publisher": "clintjedwards",
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"author": {
 		"name": "Clint J Edwards",
 		"url": "http://github.com/clintjedwards"
@@ -20,7 +20,7 @@
 	"bugs": {
 		"url": ""
 	},
-	"icon": "images/logo.png",
+	"icon": "images/eastwood.jpg",
 	"galleryBanner": {
 		"color": "#d5d3d5"
 	},
