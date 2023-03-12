@@ -1,97 +1,106 @@
 {
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
-  },
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  },
-  "editor.cursorBlinking": "smooth",
-  "editor.cursorStyle": "line-thin",
-  "editor.detectIndentation": false,
-  "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Brands', 'Font Awesome 5 Free', 'Font Awesome 5 Free Solid'",
-  "editor.formatOnSave": true,
-  "editor.insertSpaces": true,
-  "editor.minimap.enabled": false,
-  "editor.occurrencesHighlight": false,
-  "editor.renderWhitespace": "none",
-  "editor.rulers": [120],
-  "editor.guides.indentation": false,
-  "editor.snippetSuggestions": "none",
-  "editor.tabSize": 4,
-  "editor.multiCursorModifier": "alt",
-  "explorer.compactFolders": false,
-  "explorer.openEditors.visible": 0,
-  "extensions.ignoreRecommendations": true,
-  "files.eol": "\n",
-  "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true,
-  "files.associations": {
-    "*.tf": "terraform"
-  },
-  "go.buildOnSave": "off",
-  "go.lintTool": "golangci-lint",
-  "go.lintFlags": ["--enable", "revive", "--enable", "gocritic"],
-  "go.useCodeSnippetsOnFunctionSuggest": true,
-  "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
-  "go.useLanguageServer": true,
-  "go.enableCodeLens": {
-    "runtest": false
-  },
-  "gopls": {
-    "staticcheck": true,
-    "formatting.gofumpt": true,
-    "usePlaceholders": true,
-    "analyses": {
-      "unusedparams": true,
-      "unusedwrite": true,
-      "nilness": true
-    }
-  },
-  "javascript.updateImportsOnFileMove.enabled": "never",
-  "prettier.useTabs": false,
-  "protoc": {
-    "options": ["--proto_path=proto"]
-  },
-  "rust-analyzer.lens.enable": false,
-  "rust-analyzer.completion.autoimport.enable": true,
-  "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.imports.granularity.enforce": true,
-  "rust-analyzer.imports.granularity.group": "crate",
-  "rust-analyzer.imports.group.enable": true,
-  "rust-analyzer.inlayHints.chainingHints.enable": true,
-  "rust-analyzer.inlayHints.typeHints.enable": true,
-  "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "always",
-  "todohighlight.include": [
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.html",
-    "**/*.php",
-    "**/*.css",
-    "**/*.scss",
-    "**/*.go"
-  ],
-  "todohighlight.keywordsPattern": "(TODO(.*):|todo!())",
-  "editor.bracketPairColorization.enabled": false,
-  "svelte.enable-ts-plugin": true,
-  "window.menuBarVisibility": "hidden",
-  "workbench.colorTheme": "Eastwood Dark",
-  "workbench.editor.showTabs": false,
-  "workbench.editor.openSideBySideDirection": "right",
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "go.toolsManagement.autoUpdate": true,
-  "workbench.iconTheme": "material-icon-theme",
-  "[proto3]": {
-    "editor.defaultFormatter": "xaver.clang-format"
-  },
-"editor.inlayHints.enabled": "offUnlessPressed",
-"[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-}
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[svelte]": {
+        "editor.defaultFormatter": "svelte.svelte-vscode"
+    },
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorStyle": "line-thin",
+    "editor.detectIndentation": false,
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Brands', 'Font Awesome 5 Free', 'Font Awesome 5 Free Solid'",
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": true,
+    "editor.minimap.enabled": false,
+    "editor.occurrencesHighlight": false,
+    "editor.renderWhitespace": "none",
+    "editor.rulers": [
+        120
+    ],
+    "editor.guides.indentation": false,
+    "editor.snippetSuggestions": "none",
+    "editor.tabSize": 4,
+    "editor.multiCursorModifier": "alt",
+    "explorer.compactFolders": false,
+    "explorer.openEditors.visible": 0,
+    "extensions.ignoreRecommendations": true,
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.associations": {
+        "*.tf": "terraform"
+    },
+    "go.buildOnSave": "off",
+    "go.lintTool": "golangci-lint",
+    "go.lintFlags": [
+        "--enable",
+        "revive",
+        "--enable",
+        "gocritic"
+    ],
+    "go.useCodeSnippetsOnFunctionSuggest": true,
+    "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
+    "go.useLanguageServer": true,
+    "go.enableCodeLens": {
+        "runtest": false
+    },
+    "gopls": {
+        "staticcheck": true,
+        "formatting.gofumpt": true,
+        "usePlaceholders": true,
+        "analyses": {
+            "unusedparams": true,
+            "unusedwrite": true,
+            "nilness": true
+        }
+    },
+    "javascript.updateImportsOnFileMove.enabled": "never",
+    "prettier.useTabs": false,
+    "protoc": {
+        "options": [
+            "--proto_path=proto"
+        ]
+    },
+    "rust-analyzer.lens.enable": false,
+    "rust-analyzer.completion.autoimport.enable": true,
+    "rust-analyzer.checkOnSave.command": "clippy",
+    "rust-analyzer.imports.granularity.enforce": true,
+    "rust-analyzer.imports.granularity.group": "crate",
+    "rust-analyzer.imports.group.enable": true,
+    "rust-analyzer.inlayHints.chainingHints.enable": true,
+    "rust-analyzer.inlayHints.typeHints.enable": true,
+    "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "always",
+    "todohighlight.include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.html",
+        "**/*.php",
+        "**/*.css",
+        "**/*.scss",
+        "**/*.go"
+    ],
+    "todohighlight.keywordsPattern": "(TODO(.*):|todo!())",
+    "editor.bracketPairColorization.enabled": false,
+    "svelte.enable-ts-plugin": true,
+    "window.menuBarVisibility": "hidden",
+    "workbench.editor.showTabs": false,
+    "workbench.editor.openSideBySideDirection": "right",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "go.toolsManagement.autoUpdate": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "[proto3]": {
+        "editor.defaultFormatter": "bufbuild.vscode-buf"
+    },
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "workbench.colorTheme": "Eastwood Dark"
 }
