@@ -3,6 +3,7 @@
         email = clint.j.edwards@gmail.com
         signingkey = 98CB4A5207195923
 [alias]
+	amend = commit --amend -C HEAD
         logp = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 [commit]
         gpgsign = true

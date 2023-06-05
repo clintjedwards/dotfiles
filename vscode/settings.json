@@ -102,5 +102,6 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "workbench.colorTheme": "Eastwood Dark"
+    "workbench.colorTheme": "Eastwood Dark",
+    "git.openRepositoryInParentFolders": "never"
 }
