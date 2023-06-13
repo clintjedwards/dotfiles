@@ -6,6 +6,7 @@ plugins=(
          httpie # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/httpie
 	 ssh-agent
 	 gpg-agent
+	 fzf
 	 )
 
 source $ZSH/oh-my-zsh.sh
@@ -49,6 +50,8 @@ alias du='gdu'
 alias top='btop'
 # This fixes the issue where remote servers don't have alacritty terminfo
 alias ssh='TERM=xterm-256color ssh'
+
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border=none --no-separator --no-scrollbar --no-info'
 
 # Remove this after we add the ability to have local config files
 export HOST=http://todo.clintjedwards.home
