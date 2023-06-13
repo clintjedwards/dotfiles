@@ -73,18 +73,22 @@
     "rust-analyzer.inlayHints.chainingHints.enable": true,
     "rust-analyzer.inlayHints.typeHints.enable": true,
     "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "always",
-    "todohighlight.include": [
-        "**/*.js",
-        "**/*.jsx",
-        "**/*.ts",
-        "**/*.tsx",
-        "**/*.html",
-        "**/*.php",
-        "**/*.css",
-        "**/*.scss",
-        "**/*.go"
-    ],
-    "todohighlight.keywordsPattern": "(TODO(.*):|todo!())",
+    "highlight.regexFlags": "gi",
+    "highlight.regexes": {
+        "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *TODO(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
+            "filterFileRegex": ".*(?<!CHANGELOG.md)$",
+            "decorations": [
+                {
+                    "backgroundColor": "#bfaf7c",
+                    "color": "#45443f",
+                },
+                {
+                    "backgroundColor": "#bfaf7c",
+                    "color": "#45443f",
+                }
+            ]
+        }
+    },
     "editor.bracketPairColorization.enabled": false,
     "svelte.enable-ts-plugin": true,
     "window.menuBarVisibility": "hidden",
@@ -103,5 +107,5 @@
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "workbench.colorTheme": "Eastwood Dark",
-    "git.openRepositoryInParentFolders": "never"
+    "git.openRepositoryInParentFolders": "never",
 }
