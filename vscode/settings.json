@@ -33,7 +33,6 @@
     "files.associations": {
         "*.tf": "terraform"
     },
-    "go.buildOnSave": "off",
     "go.lintTool": "golangci-lint",
     "go.lintFlags": [
         "--enable",
@@ -41,8 +40,6 @@
         "--enable",
         "gocritic"
     ],
-    "go.useCodeSnippetsOnFunctionSuggest": true,
-    "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
     "go.useLanguageServer": true,
     "go.enableCodeLens": {
         "runtest": false
@@ -66,7 +63,7 @@
     },
     "rust-analyzer.lens.enable": false,
     "rust-analyzer.completion.autoimport.enable": true,
-    "rust-analyzer.checkOnSave.command": "clippy",
+    "rust-analyzer.check.command": "clippy",
     "rust-analyzer.imports.granularity.enforce": true,
     "rust-analyzer.imports.granularity.group": "crate",
     "rust-analyzer.imports.group.enable": true,
