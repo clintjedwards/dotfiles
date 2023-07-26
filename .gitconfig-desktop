@@ -1,7 +1,7 @@
 [user]
         name = Clint J Edwards
         email = clint.j.edwards@gmail.com
-        signingkey = 43FB73CAF86F0AAA
+        signingkey = 1AA907A8A9E6282D
 [alias]
 	amend = commit --amend -C HEAD
     logp = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
