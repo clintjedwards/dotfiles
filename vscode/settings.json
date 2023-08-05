@@ -31,7 +31,7 @@
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
     "files.associations": {
-        "*.tf": "terraform"
+        "*.tf": "hcl"
     },
     "go.lintTool": "golangci-lint",
     "go.lintFlags": [
