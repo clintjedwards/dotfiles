@@ -2,9 +2,6 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "[svelte]": {
-        "editor.defaultFormatter": "svelte.svelte-vscode"
-    },
     "editor.codeActionsOnSave": {
         "source.organizeImports": true
     },
@@ -54,6 +51,7 @@
             "nilness": true
         }
     },
+    "git.openRepositoryInParentFolders": "always",
     "javascript.updateImportsOnFileMove.enabled": "never",
     "prettier.useTabs": false,
     "protoc": {
@@ -87,7 +85,6 @@
         }
     },
     "editor.bracketPairColorization.enabled": false,
-    "svelte.enable-ts-plugin": true,
     "window.menuBarVisibility": "hidden",
     "workbench.editor.showTabs": false,
     "workbench.editor.openSideBySideDirection": "right",
@@ -104,5 +101,7 @@
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "workbench.colorTheme": "Eastwood Dark",
-    "git.openRepositoryInParentFolders": "never",
+    "cSpell.userWords": [
+        "Astra"
+    ],
 }
