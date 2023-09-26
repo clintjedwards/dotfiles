@@ -22,7 +22,6 @@
           - bat
           - btop
           - cifs-utils
-          - code
           - duf
           - exa
           - flameshot
@@ -43,6 +42,7 @@
           - sysstat
           - vim
           - vlc
+          - visual-studio-code-bin
           - wget
           - xfce4-power-manager
           - zsh
@@ -72,6 +72,10 @@
         opts: user=home,pass={{mount_password}}
         state: mounted
       become: yes
+    - name: Create ssh directory
+      file:
+        path: /home/clintjedwards/.ssh
+        state: directory    
     - name: Copy personal ssh key file
       ansible.builtin.copy:
         src: /mnt/safe/software/id_rsa.gpg
@@ -103,3 +107,7 @@
                     --pinentry-mode loopback
                     --import /tmp/gpg.key"
       ignore_errors: True
+    - name: Create i3 config symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/i3/config
+        dest: /home/clintjedwards/.config/i3/config

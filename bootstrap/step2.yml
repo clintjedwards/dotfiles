@@ -1,0 +1,90 @@
+- hosts: localhost
+  tasks:
+    - name: Create i3 config symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/i3/config
+        dest: /home/clintjedwards/.config/i3/config
+        state: link
+        force: yes
+    - name: Ensure the i3 scripts dir is empty
+      file:
+        path: /home/clintjedwards/.config/i3/scripts
+        state: absent
+    - name: Create i3 scripts dir symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/i3/scripts
+        dest: /home/clintjedwards/.config/i3/scripts
+        state: link
+        force: yes
+    - name: Create i3 blocks symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/i3/i3blocks.conf
+        dest: /home/clintjedwards/.config/i3/i3blocks.conf
+        state: link
+        force: yes
+    - name: Create i3 lock.png
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/i3/lock.png
+        dest: /home/clintjedwards/.config/i3/lock.png
+        state: link
+    - name: Create i3 lock.sh
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/i3/lock.sh
+        dest: /home/clintjedwards/.config/i3/lock.sh
+        state: link
+    - name: Create alacritty symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/.alacritty.yml
+        dest: /home/clintjedwards/.alacritty.yml
+        state: link
+    - name: Create Xresources symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/.Xresources
+        dest: /home/clintjedwards/.Xresources
+        state: link
+        force: yes
+    - name: Create Gitconfig symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/.gitconfig
+        dest: /home/clintjedwards/.gitconfig
+        state: link
+    - name: Create zshrc symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/zsh/.zshrc
+        dest: /home/clintjedwards/.zshrc
+        state: link
+    # - name: Create gitstatus symlink
+    #   file:
+    #     src: /home/clintjedwards/Documents/dotfiles/zsh/gitstatus
+    #     dest: /home/clintjedwards/.oh-my-zsh/plugins/gitstatus
+    #     state: link 
+    - name: Create 30-touchpad symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/30-touchpad.conf
+        dest: /usr/share/X11/xorg.conf.d/30-touchpad.conf
+        state: link
+        force: yes
+      become: yes
+    - name: Create vscode dir
+      file:
+        path: /home/clintjedwards/.config/Code/User/
+        state: directory
+    - name: Create vscode settings.json symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/vscode/settings.json
+        dest: /home/clintjedwards/.config/Code/User/settings.json
+        state: link
+    - name: Create cert symlink
+      file:
+        src: /home/clintjedwards/Documents/dotfiles/wildcard.clintjedwards.home.crt
+        dest: /home/clintjedwards/wildcard.clintjedwards.home.crt
+        state: link
+    - name: Trust cert
+      command: trust anchor --store /home/clintjedwards/wildcard.clintjedwards.home.crt
+      become: yes
+    - name: Create node bin directory
+      file:
+        path: /home/clintjedwards/.bin/node
+        state: directory
+    - name: Set node prefix
+      command: npm config set prefix /home/clintjedwards/.bin/node
