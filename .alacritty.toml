@@ -1,0 +1,69 @@
+[[colors.indexed_colors]]
+color = "0xfe8019"
+index = 16
+
+[[colors.indexed_colors]]
+color = "0xd65d0e"
+index = 17
+
+[[colors.indexed_colors]]
+color = "0x2d3436"
+index = 18
+
+[[colors.indexed_colors]]
+color = "0x504945"
+index = 19
+
+[[colors.indexed_colors]]
+color = "0xbdae93"
+index = 20
+
+[[colors.indexed_colors]]
+color = "0xe9e6dc"
+index = 21
+
+[colors.bright]
+black = "0x665c54"
+blue = "0x74b9ff"
+cyan = "0x81ecec"
+green = "0xbadc58"
+magenta = "0xcc99cc"
+red = "0xff7675"
+white = "0xdfe6e9"
+yellow = "0xffeaa7"
+
+[colors.cursor]
+cursor = "0xdfe6e9"
+text = "0x424242"
+
+[colors.normal]
+black = "0x424242"
+blue = "0x74b9ff"
+cyan = "0x81ecec"
+green = "0xbadc58"
+magenta = "0xcc99cc"
+red = "0xff7675"
+white = "0xd5c4a1"
+yellow = "0xffeaa7"
+
+[colors.primary]
+background = "0x424242"
+foreground = "0xd3d0c8"
+
+[cursor]
+style = "Beam"
+
+[font]
+size = 10
+
+[font.bold]
+family = "Droid Sans Mono Nerd Font"
+style = "Regular"
+
+[font.bold_italic]
+family = "Droid Sans Mono Nerd Font"
+style = "Regular"
+
+[font.normal]
+family = "Droid Sans Mono Nerd Font"
+style = "Regular"
