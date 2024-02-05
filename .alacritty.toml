@@ -67,3 +67,6 @@ style = "Regular"
 [font.normal]
 family = "Droid Sans Mono Nerd Font"
 style = "Regular"
+
+[scrolling]
+history = 10000
