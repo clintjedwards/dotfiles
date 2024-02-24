@@ -1,20 +1,29 @@
+# https://jvns.ca/blog/2024/02/16/popular-git-config-options/#pull-ff-only-or-pull-rebase-true
 [user]
-        name = Clint J Edwards
-        email = clint.j.edwards@gmail.com
-        signingkey = 98CB4A5207195923
+    name = Clint J Edwards
+    email = clint.j.edwards@gmail.com
+    signingkey = 98CB4A5207195923
 [alias]
 	amend = commit --amend -C HEAD
     logp = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    icommit = !~/.bin/commit.sh    
+    icommit = !~/.bin/commit.sh
 [commit]
-        gpgsign = true
+    gpgsign = true
 [gpg]
-        program = gpg
+    program = gpg
 [url "git@github.com:"]
     insteadOf = https://github.com/
 [pull]
 	rebase = true
 [protocol "file"]
 	allow = always
+[merge]
+    conflictstyle = zdiff3
 [push]
 	autoSetupRemote = true
+[rebase]
+    autostash = true
+[help]
+    autocorrect = prompt
+[core]
+    pager = less -F -X
