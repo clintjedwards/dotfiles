@@ -52,6 +52,3 @@ alias top='btop'
 alias ssh='TERM=xterm-256color ssh'
 
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border=none --no-separator --no-scrollbar --no-info'
-
-# Remove this after we add the ability to have local config files
-export HOST=http://todo.clintjedwards.home
