@@ -34,8 +34,8 @@
         state: link
     - name: Create alacritty symlink
       file:
-        src: /home/clintjedwards/Documents/dotfiles/.alacritty.yml
-        dest: /home/clintjedwards/.alacritty.yml
+        src: /home/clintjedwards/Documents/dotfiles/.alacritty.toml
+        dest: /home/clintjedwards/.alacritty.toml
         state: link
     - name: Create Xresources symlink
       file:

@@ -111,3 +111,5 @@
       file:
         src: /home/clintjedwards/Documents/dotfiles/i3/config
         dest: /home/clintjedwards/.config/i3/config
+        state: link
+        force: true

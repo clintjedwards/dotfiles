@@ -3,7 +3,7 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true
+        "source.organizeImports": "explicit"
     },
     "editor.cursorBlinking": "smooth",
     "editor.cursorStyle": "line-thin",
@@ -12,7 +12,7 @@
     "editor.formatOnSave": true,
     "editor.insertSpaces": true,
     "editor.minimap.enabled": false,
-    "editor.occurrencesHighlight": false,
+    "editor.occurrencesHighlight": "off",
     "editor.renderWhitespace": "none",
     "editor.rulers": [
         120
