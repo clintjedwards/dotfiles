@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Check for Wi-Fi connection and strength
+if iwconfig 2>/dev/null | grep -q "ESSID"; then
+    # Extract the current SSID and signal strength
+    SSID=$(iwgetid -r)
+    SIGNAL=$(grep "^\s*w" /proc/net/wireless | awk '{ print int($3 * 100 / 70) "%" }')
+
+    # Output the Wi-Fi SSID and signal strength
+    echo " $SSID ($SIGNAL)"
+else
+    # Check for Ethernet connection
+    if [[ "$(cat /sys/class/net/en*/operstate 2>/dev/null)" = "up" ]]; then
+        echo " Ethernet"
+    else
+        echo " No network connection"
+    fi
+fi
+

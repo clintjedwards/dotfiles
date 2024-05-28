@@ -150,6 +150,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 
 # Lock the system
+exec_always --no-startup-id xss-lock -- ~/.config/i3/lock.sh
 bindsym $mod+Shift+z exec ~/.config/i3/lock.sh
 
 # reload the configuration file
