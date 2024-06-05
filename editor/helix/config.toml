@@ -1,0 +1,32 @@
+theme = "eastwood"
+
+[editor]
+rulers = [120]
+color-modes = true
+text-width = 120
+true-color = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.lsp]
+auto-signature-help = true
+display-messages = true
+
+[editor.statusline]
+left = ["mode", "spinner", "version-control", "file-name"]
+
+[keys.insert]
+C-s = ["normal_mode", ":w", "insert_mode"]
+
+[keys.normal]
+C-s = [":w"]
+A-x = "extend_to_line_bounds"
+X = ["extend_line_up", "extend_to_line_bounds"]
+
+[keys.select]
+A-x = "extend_to_line_bounds"
+X = ["extend_line_up", "extend_to_line_bounds"]
+

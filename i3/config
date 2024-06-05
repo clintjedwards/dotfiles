@@ -157,7 +157,7 @@ bindsym $mod+Shift+z exec ~/.config/i3/lock.sh
 bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to update i3)
-bindsym $mod+Shift+r restart
+bindsym $mod+Shift+r restart, exec --no-startup-id autorandr -c
 
 # Backlight control
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
