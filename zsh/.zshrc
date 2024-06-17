@@ -41,13 +41,15 @@ export VISUAL="code --new-window --wait"
 export BROWSER="google-chrome-stable"
 
 #aliases
-alias ls='exa'
+alias ls='eza'
 alias cat='bat -p'
 alias grep='rg -p'
 alias printscr='flameshot gui'
 alias df='duf'
 alias du='gdu'
 alias top='btop'
+alias dig='dog'
+
 # This fixes the issue where remote servers don't have alacritty terminfo
 alias ssh='TERM=xterm-256color ssh'
 
