@@ -9,6 +9,7 @@
     "editor.cursorStyle": "line-thin",
     "editor.detectIndentation": false,
     "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Brands', 'Font Awesome 5 Free', 'Font Awesome 5 Free Solid'",
+    "editor.fontSize": 14,
     "editor.formatOnSave": true,
     "editor.insertSpaces": true,
     "editor.minimap.enabled": false,
@@ -22,13 +23,14 @@
     "editor.tabSize": 4,
     "editor.multiCursorModifier": "alt",
     "explorer.compactFolders": false,
-    "explorer.openEditors.visible": 0,
+    "explorer.openEditors.visible": 1,
     "extensions.ignoreRecommendations": true,
     "files.eol": "\n",
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
     "files.associations": {
-        "*.tf": "hcl"
+        "*.tf": "hcl",
+        "*.hurl": "ruby"
     },
     "go.lintTool": "golangci-lint",
     "go.lintFlags": [
@@ -54,11 +56,6 @@
     "git.openRepositoryInParentFolders": "always",
     "javascript.updateImportsOnFileMove.enabled": "never",
     "prettier.useTabs": false,
-    "protoc": {
-        "options": [
-            "--proto_path=proto"
-        ]
-    },
     "rust-analyzer.lens.enable": false,
     "rust-analyzer.completion.autoimport.enable": true,
     "rust-analyzer.check.command": "clippy",
@@ -68,6 +65,9 @@
     "rust-analyzer.inlayHints.chainingHints.enable": true,
     "rust-analyzer.inlayHints.typeHints.enable": true,
     "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "always",
+    "rust-analyzer.showUnlinkedFileNotification": false,
+    "rust-analyzer.hover.documentation.enable": true,
+    "rust-analyzer.hover.show.structFields": 100,
     "highlight.regexFlags": "gi",
     "highlight.regexes": {
         "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *TODO(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
@@ -91,17 +91,22 @@
     "[html]": {
         "editor.defaultFormatter": "vscode.html-language-features"
     },
+    "[TOML]": {
+        "editor.defaultFormatter": null,
+    },
     "go.toolsManagement.autoUpdate": true,
     "workbench.iconTheme": "material-icon-theme",
-    "[proto3]": {
-        "editor.defaultFormatter": "bufbuild.vscode-buf"
-    },
     "editor.inlayHints.enabled": "offUnlessPressed",
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "workbench.colorTheme": "Eastwood Dark",
     "cSpell.userWords": [
-        "Astra"
+        "apikey",
+        "Astra",
+        "automagically",
+        "configurability",
+        "Regexes",
+        "subnetting"
     ],
 }
