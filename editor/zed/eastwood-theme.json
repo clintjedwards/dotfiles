@@ -9,9 +9,6 @@
       "style": {
         "border": "#4f4f4f",
         "border.variant": "#ffeaa7",
-        "border.focused": "#babbf1",
-        "border.selected": "#d3d0c8",
-        "border.transparent": "#badc58",
         "border.disabled": "#626880",
         "elevated_surface.background": "#393939",
         "surface.background": "#424242",

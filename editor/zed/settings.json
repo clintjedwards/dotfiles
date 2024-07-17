@@ -7,13 +7,77 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "features": {
+    "inline_completion_provider": "none"
+  },
   "ui_font_size": 16,
   "buffer_font_family": "Droid Sans Mono",
   "buffer_font_size": 14,
   "buffer_line_height": "standard",
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "lens": {
+          "enable": false
+        },
+        "completion": {
+          "autoimport": {
+            "enable": true
+          }
+        },
+        "inlayHints": {
+          "chainingHints": {
+            "enable": true
+          },
+          "typeHints": {
+            "enable": true
+          },
+          "lifetimeElisionHits": {
+            "enable": true
+          }
+        },
+        "imports": {
+          "group": {
+            "enable": true
+          },
+          "granularity": {
+            "enable": true,
+            "enforce": true
+          }
+        },
+        "check": {
+          "command": "clippy"
+        },
+        "showUnlinkedFileNotification": false,
+        "hover": {
+          "documentation": {
+            "enable": true
+          },
+          "show": {
+            "structFields": 100
+          }
+        }
+      }
+    }
+  },
+  "use_autoclose": false,
+  "git": {
+    "inline_blame": {
+      "enabled": false
+    }
+  },
+  "indent_guides": {
+    "enabled": false
+  },
+  "inlay_hints": {
+    "enabled": false
+  },
+  "preferred_line_length": 10000,
+  "soft_wrap": "none",
+  "wrap_guides": [120],
   "theme": {
     "mode": "dark",
-    "light": "Solarized Dark",
+    "light": "Eastwood",
     "dark": "Eastwood"
   }
 }
