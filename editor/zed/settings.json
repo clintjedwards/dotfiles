@@ -54,7 +54,8 @@
             "enable": true
           },
           "show": {
-            "structFields": 100
+            "fields": 100,
+            "enumVariants": 100
           }
         }
       }

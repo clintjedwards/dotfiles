@@ -33,12 +33,12 @@ export PATH=$PATH:~/.cargo/bin
 # Make node packages executable
 export PATH=$PATH:~/.bin/node/bin
 
-# Use VScode for any quick edits
-export EDITOR="code --new-window --wait"
-export VISUAL="code --new-window --wait"
+# Use $EDITOR for any quick edits
+export EDITOR="zeditor --new --wait"
+export VISUAL="zeditor --new --wait"
 
-# Use Chrome for default browser
-export BROWSER="google-chrome-stable"
+# Use Firefox for default browser
+export BROWSER="firefox"
 
 #aliases
 alias ls='eza'
@@ -49,6 +49,7 @@ alias df='duf'
 alias du='gdu'
 alias top='btop'
 alias dig='dog'
+alias code='zeditor'
 
 # This fixes the issue where remote servers don't have alacritty terminfo
 alias ssh='TERM=xterm-256color ssh'
