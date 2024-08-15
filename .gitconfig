@@ -4,9 +4,19 @@
     email = clint.j.edwards@gmail.com
     signingkey = 98CB4A5207195923
 [alias]
-	amend = commit --amend -C HEAD
+    amend = commit --amend -C HEAD
     logp = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     icommit = !~/.bin/commit.sh
+    squash = "!f() { \
+        MAIN_BRANCH=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5); \
+        if [ -z \"$MAIN_BRANCH\" ]; then \
+            echo 'Could not determine main branch.'; \
+            exit 1; \
+        fi; \
+        git reset $(git merge-base HEAD master) && \
+        git add -A && \
+        git commit; \
+    }; f"
 [commit]
     gpgsign = true
 [gpg]
