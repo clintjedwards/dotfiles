@@ -13,7 +13,7 @@
             echo 'Could not determine main branch.'; \
             exit 1; \
         fi; \
-        git reset $(git merge-base HEAD master) && \
+        git reset $(git merge-base HEAD $MAIN_BRANCH) && \
         git add -A && \
         git commit; \
     }; f"
