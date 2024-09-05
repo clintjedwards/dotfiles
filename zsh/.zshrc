@@ -40,8 +40,6 @@ export VISUAL="helix"
 # Use Firefox for default browser
 export BROWSER="firefox"
 
-export GPG_TTY=$(tty)
-
 #aliases
 alias ls='eza'
 alias cat='bat -p'
