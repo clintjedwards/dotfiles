@@ -54,7 +54,7 @@ foreground = "0xd3d0c8"
 style = "Beam"
 
 [font]
-size = 10
+size = 9
 
 [font.bold]
 family = "Droid Sans Mono Nerd Font"
