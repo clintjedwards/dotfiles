@@ -16,6 +16,10 @@
   "buffer_line_height": "standard",
   "lsp": {
     "rust-analyzer": {
+      "binary": {
+        "path": "/usr/lib/rustup/bin/rust-analyzer",
+        "args": []
+      },
       "initialization_options": {
         "lens": {
           "enable": false
