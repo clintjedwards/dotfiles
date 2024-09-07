@@ -25,6 +25,7 @@ C-s = ["normal_mode", ":w", "insert_mode"]
 C-s = [":w"]
 A-x = "extend_to_line_bounds"
 X = ["extend_line_up", "extend_to_line_bounds"]
+C-space = [":toggle lsp.display-inlay-hints"]
 
 [keys.select]
 A-x = "extend_to_line_bounds"
