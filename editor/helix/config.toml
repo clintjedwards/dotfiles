@@ -5,7 +5,7 @@ rulers = [120]
 color-modes = true
 text-width = 120
 true-color = true
-insert-file-newline = true
+insert-final-newline = true
 
 [editor.cursor-shape]
 insert = "bar"
