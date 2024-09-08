@@ -17,14 +17,33 @@ printf "\e[34m├ \e[0m %s%s\n" "$(success "lock.png")"
 ln -s /home/clintjedwards/Documents/dotfiles/i3/lock.sh /home/clintjedwards/.config/i3/lock.sh
 printf "\e[34m├ \e[0m %s%s\n" "$(success "lock.sh")"
 
-ln -s /home/clintjedwards/Documents/dotfiles/.alacritty.yml /home/clintjedwards/.alacritty.yml
-printf "\e[34m├ \e[0m %s%s\n" "$(success "alacritty.yml")"
+ln -s /home/clintjedwards/Documents/dotfiles/files/alacritty.toml /home/clintjedwards/.alacritty.toml
+printf "\e[34m├ \e[0m %s%s\n" "$(success "alacritty.toml")"
 
-ln -s /home/clintjedwards/Documents/dotfiles/.Xresources /home/clintjedwards/.Xresources
-printf "\e[34m├ \e[0m %s%s\n" "$(success ".Xresources")"
+ln -s /home/clintjedwards/Documents/dotfiles/files/gitconfig /home/clintjedwards/.gitconfig
+printf "\e[34m├ \e[0m %s%s\n" "$(success "gitconfig")"
 
-ln -s /home/clintjedwards/Documents/dotfiles/.gitconfig /home/clintjedwards/.gitconfig
-printf "\e[34m├ \e[0m %s%s\n" "$(success ".gitconfig")"
+ln -s /home/clintjedwards/Documents/dotfiles/files/gpg-agent.conf /home/clintjedwards/.gnupg/gpg-agent.conf
+printf "\e[34m├ \e[0m %s%s\n" "$(success "gpg-agent.conf")"
+
+ln -s /home/clintjedwards/Documents/dotfiles/files/commit.sh /home/clintjedwards/.bin/commit.sh
+printf "\e[34m├ \e[0m %s%s\n" "$(success "commit.sh")"
+
+ln -s /home/clintjedwards/Documents/dotfiles/files/editor/helix /home/clintjedwards/.config/helix
+printf "\e[34m├ \e[0m %s%s\n" "$(success "helix")"
+
+rm -rf /home/clintjedwards/.config/hypr
+ln -s /home/clintjedwards/Documents/dotfiles/files/hypr /home/clintjedwards/.config/hypr
+printf "\e[34m├ \e[0m %s%s\n" "$(success "hyperland")"
+
+ln -s /home/clintjedwards/Documents/dotfiles/files/waybar /home/clintjedwards/.config/waybar
+printf "\e[34m├ \e[0m %s%s\n" "$(success "waybar")"
+
+ln -s /home/clintjedwards/Documents/dotfiles/files/zsh/zshrc /home/clintjedwards/.zshrc
+printf "\e[34m├ \e[0m %s%s\n" "$(success "zshrc")"
+
+ln -s /home/clintjedwards/Documents/dotfiles/files/zsh/gitstatus /home/clintjedwards/.oh-my-zsh/plugins/gitstatus
+printf "\e[34m├ \e[0m %s%s\n" "$(success "gitstatus")"
 
 rm /home/clintjedwards/.zshrc
 ln -s /home/clintjedwards/Documents/dotfiles/zsh/.zshrc /home/clintjedwards/.zshrc
@@ -33,12 +52,6 @@ printf "\e[34m├ \e[0m %s%s\n" "$(success ".zshrc")"
 ln -s /home/clintjedwards/Documents/dotfiles/zsh/gitstatus /home/clintjedwards/.oh-my-zsh/plugins/gitstatus
 printf "\e[34m├ \e[0m %s%s\n" "$(success "gitstatus")"
 
-sudo ln -s /home/clintjedwards/Documents/dotfiles/30-touchpad.conf /usr/share/X11/xorg.conf.d/30-touchpad.conf
-printf "\e[34m├ \e[0m %s%s\n" "$(success "30-touchpad.conf")"
-
-ln -s /home/clintjedwards/Documents/dotfiles/vscode/settings.json /home/clintjedwards/.config/Code/User/settings.json
-printf "\e[34m├ \e[0m %s%s\n" "$(success "vscode settings.json")"
-
-ln -s /home/clintjedwards/Documents/dotfiles/wildcard.clintjedwards.home.crt /home/clintjedwards/wildcard.clintjedwards.home.crt
+ln -s /home/clintjedwards/Documents/dotfiles/files/wildcard.clintjedwards.home.crt /home/clintjedwards/wildcard.clintjedwards.home.crt
 printf "\e[34m├ \e[0m %s%s\n" "$(success "home cert")"
 sudo trust anchor --store ~/wildcard.clintjedwards.home.crt
