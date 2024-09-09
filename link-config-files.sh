@@ -2,50 +2,53 @@
 
 source ./common.sh
 
-ln -s /home/clintjedwards/Documents/dotfiles/i3/config /home/clintjedwards/.config/i3/config
-printf "\e[34m├ \e[0m %s%s\n" "$(success "i3 config")"
+#!/bin/bash
 
-ln -s /home/clintjedwards/Documents/dotfiles/i3/scripts /home/clintjedwards/.config/i3/scripts
-printf "\e[34m├ \e[0m %s%s\n" "$(success "i3 scripts dir")"
+source ./common.sh
 
-ln -s /home/clintjedwards/Documents/dotfiles/i3/i3blocks.conf /home/clintjedwards/.config/i3/i3blocks.conf
-printf "\e[34m├ \e[0m %s%s\n" "$(success "i3blocks.conf")"
+# Function to create symbolic links, removing any existing file or symlink
+create_symlink() {
+  local target=$1
+  local link=$2
+  local name=$3
 
-ln -s /home/clintjedwards/Documents/dotfiles/i3/lock.png /home/clintjedwards/.config/i3/lock.png
-printf "\e[34m├ \e[0m %s%s\n" "$(success "lock.png")"
+  if [ -e "$link" ] || [ -L "$link" ]; then
+    rm -rf "$link"
+  fi
 
-ln -s /home/clintjedwards/Documents/dotfiles/i3/lock.sh /home/clintjedwards/.config/i3/lock.sh
-printf "\e[34m├ \e[0m %s%s\n" "$(success "lock.sh")"
+  ln -s "$target" "$link"
+  printf "\e[34m├ \e[0m %s%s\n" "$(success "$name")"
+}
 
-ln -s /home/clintjedwards/Documents/dotfiles/files/alacritty.toml /home/clintjedwards/.alacritty.toml
-printf "\e[34m├ \e[0m %s%s\n" "$(success "alacritty.toml")"
+# Alacritty
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/alacritty.toml" "/home/clintjedwards/.alacritty.toml" "alacritty.toml"
 
-ln -s /home/clintjedwards/Documents/dotfiles/files/gitconfig /home/clintjedwards/.gitconfig
-printf "\e[34m├ \e[0m %s%s\n" "$(success "gitconfig")"
+# Git config
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/gitconfig" "/home/clintjedwards/.gitconfig" "gitconfig"
 
-ln -s /home/clintjedwards/Documents/dotfiles/files/gpg-agent.conf /home/clintjedwards/.gnupg/gpg-agent.conf
-printf "\e[34m├ \e[0m %s%s\n" "$(success "gpg-agent.conf")"
+# GPG Agent
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/gpg-agent.conf" "/home/clintjedwards/.gnupg/gpg-agent.conf" "gpg-agent.conf"
 
-ln -s /home/clintjedwards/Documents/dotfiles/files/commit.sh /home/clintjedwards/.bin/commit.sh
-printf "\e[34m├ \e[0m %s%s\n" "$(success "commit.sh")"
+# Commit script
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/commit.sh" "/home/clintjedwards/.bin/commit.sh" "commit.sh"
 
-ln -s /home/clintjedwards/Documents/dotfiles/files/editor/helix /home/clintjedwards/.config/helix
-printf "\e[34m├ \e[0m %s%s\n" "$(success "helix")"
+# Helix config
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/editor/helix" "/home/clintjedwards/.config/helix" "helix"
 
-rm -rf /home/clintjedwards/.config/hypr
-ln -s /home/clintjedwards/Documents/dotfiles/files/hypr /home/clintjedwards/.config/hypr
-printf "\e[34m├ \e[0m %s%s\n" "$(success "hyperland")"
+# Hyperland config
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/hypr" "/home/clintjedwards/.config/hypr" "hyperland"
 
-ln -s /home/clintjedwards/Documents/dotfiles/files/waybar /home/clintjedwards/.config/waybar
-printf "\e[34m├ \e[0m %s%s\n" "$(success "waybar")"
+# Waybar config
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/waybar" "/home/clintjedwards/.config/waybar" "waybar"
 
-rm /home/clintjedwards/.zshrc
-ln -s /home/clintjedwards/Documents/dotfiles/files/zsh/zshrc /home/clintjedwards/.zshrc
-printf "\e[34m├ \e[0m %s%s\n" "$(success "zshrc")"
+# Zsh config
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/zsh/zshrc" "/home/clintjedwards/.zshrc" "zshrc"
 
-ln -s /home/clintjedwards/Documents/dotfiles/files/zsh/gitstatus /home/clintjedwards/.oh-my-zsh/plugins/gitstatus
-printf "\e[34m├ \e[0m %s%s\n" "$(success "gitstatus")"
+# Gitstatus plugin
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/zsh/gitstatus" "/home/clintjedwards/.oh-my-zsh/plugins/gitstatus" "gitstatus"
 
-ln -s /home/clintjedwards/Documents/dotfiles/files/wildcard.clintjedwards.home.crt /home/clintjedwards/wildcard.clintjedwards.home.crt
-printf "\e[34m├ \e[0m %s%s\n" "$(success "home cert")"
+# Home certificate
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/wildcard.clintjedwards.home.crt" "/home/clintjedwards/wildcard.clintjedwards.home.crt" "home cert"
+
+# Store home certificate as trust anchor
 sudo trust anchor --store ~/wildcard.clintjedwards.home.crt

@@ -28,10 +28,10 @@ packages=(
     "fzf"
     "gdu"
     "git"
-    "less"
     "helix"
     "htop"
     "kanshi"
+    "less"
     "mpv"
     "npm"
     "obsidian"
@@ -42,7 +42,7 @@ packages=(
     "ttf-font-awesome"
     "ttf-meslo-nerd"
     "waybar"
-    "zsh"
+    "zsh"    
 )
 
 for package_name in "${packages[@]}"; do
@@ -57,7 +57,7 @@ for package_name in "${packages[@]}"; do
         if yay -Qs "$package_name" > /dev/null; then
             printf "\e[34m├ \e[0m %s%s\n" "$(success "$package_name" installed)"
         else
-            printf "\e[34m├ \e[0m %s%s\n" "$(failed "$package_name" couldn\'t be installed)"
+            printf "\e[34m├ \e[0m %s%s\n $package_name couldn\'t be installed)"
         fi
     fi
 done
@@ -69,4 +69,3 @@ mkdir -p ~/.bin/node
 npm config set prefix /home/clintjedwards/.bin/node
 
 printf "\e[34m├ \e[0m %s%s\n" "$(success "Installed Node JS")"
-
