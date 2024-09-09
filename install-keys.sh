@@ -7,10 +7,11 @@ echo
 
 headline "Installing SSH and GPG Key"
 
+mkdir /home/clintjedwards/.ssh
 cp /mnt/safe/software/id_rsa.gpg  .
 gpg --output id_rsa --decrypt --passphrase="$decrypt_password" --yes --batch id_rsa.gpg
-mv id_rsa ~/Documents/clintjedwards/.ssh/id_rsa
-sudo chmod 600 ~/Documents/clintjedwards/.ssh/id_rsa
+mv id_rsa /home/clintjedwards/.ssh/id_rsa
+sudo chmod 600 /home/clintjedwards/.ssh/id_rsa
 rm ./id_rsa.gpg
 
 printf "\e[34m├ \e[0m %s%s\n" "$(success "Installed SSH Key")"

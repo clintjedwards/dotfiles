@@ -39,17 +39,11 @@ printf "\e[34m├ \e[0m %s%s\n" "$(success "hyperland")"
 ln -s /home/clintjedwards/Documents/dotfiles/files/waybar /home/clintjedwards/.config/waybar
 printf "\e[34m├ \e[0m %s%s\n" "$(success "waybar")"
 
+rm /home/clintjedwards/.zshrc
 ln -s /home/clintjedwards/Documents/dotfiles/files/zsh/zshrc /home/clintjedwards/.zshrc
 printf "\e[34m├ \e[0m %s%s\n" "$(success "zshrc")"
 
 ln -s /home/clintjedwards/Documents/dotfiles/files/zsh/gitstatus /home/clintjedwards/.oh-my-zsh/plugins/gitstatus
-printf "\e[34m├ \e[0m %s%s\n" "$(success "gitstatus")"
-
-rm /home/clintjedwards/.zshrc
-ln -s /home/clintjedwards/Documents/dotfiles/zsh/.zshrc /home/clintjedwards/.zshrc
-printf "\e[34m├ \e[0m %s%s\n" "$(success ".zshrc")"
-
-ln -s /home/clintjedwards/Documents/dotfiles/zsh/gitstatus /home/clintjedwards/.oh-my-zsh/plugins/gitstatus
 printf "\e[34m├ \e[0m %s%s\n" "$(success "gitstatus")"
 
 ln -s /home/clintjedwards/Documents/dotfiles/files/wildcard.clintjedwards.home.crt /home/clintjedwards/wildcard.clintjedwards.home.crt

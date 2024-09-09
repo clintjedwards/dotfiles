@@ -28,10 +28,12 @@ packages=(
     "fzf"
     "gdu"
     "git"
+    "less"
     "helix"
     "htop"
     "kanshi"
     "mpv"
+    "npm"
     "obsidian"
     "pavucontrol"
     "ripgrep"
@@ -39,8 +41,8 @@ packages=(
     "sysstat"
     "ttf-font-awesome"
     "ttf-meslo-nerd"
-    "tuigreetd"
     "waybar"
+    "zsh"
 )
 
 for package_name in "${packages[@]}"; do
@@ -67,3 +69,4 @@ mkdir -p ~/.bin/node
 npm config set prefix /home/clintjedwards/.bin/node
 
 printf "\e[34m├ \e[0m %s%s\n" "$(success "Installed Node JS")"
+

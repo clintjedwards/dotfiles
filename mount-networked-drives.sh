@@ -41,3 +41,6 @@ fi
 sudo mount -a
 printf "\e[34m├ \e[0m %s%s\n" "$(success 'mounted /mnt/safe to //10.0.1.9/safe')"
 printf "\e[34m├ \e[0m %s%s\n" "$(success 'mounted /mnt/media to //10.0.1.9/media')"
+
+sudo systemctl daemon-reload
+
