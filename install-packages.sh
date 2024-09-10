@@ -22,6 +22,7 @@ headline "Installing packages"
 ## Insert packages here.
 packages=(
     "acpi"
+    "brightnessctl"
     "dog"
     "eza"
     "firefox"
@@ -42,7 +43,7 @@ packages=(
     "ttf-font-awesome"
     "ttf-meslo-nerd"
     "waybar"
-    "zsh"    
+    "zsh"
 )
 
 for package_name in "${packages[@]}"; do
