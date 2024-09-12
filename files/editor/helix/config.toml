@@ -1,3 +1,5 @@
+# These are settings for helix-ext which adds some much needed features left out by the original helix in favor
+# of plugins. Namely a file-tree. And the ability to move selections.
 theme = "eastwood"
 
 [editor]
@@ -6,6 +8,7 @@ color-modes = true
 text-width = 120
 true-color = true
 insert-final-newline = true
+rainbow-brackets = false # helix-ext
 
 [editor.cursor-shape]
 insert = "bar"
@@ -15,6 +18,10 @@ select = "underline"
 [editor.lsp]
 auto-signature-help = true
 display-messages = true
+
+[editor.indent-guides]
+render = false
+rainbow-option = "dim" # helix-ext
 
 [editor.statusline]
 left = ["mode", "spinner", "version-control", "file-name"]
@@ -26,8 +33,10 @@ esc = ["collapse_selection", "normal_mode"]
 [keys.normal]
 C-s = [":w"]
 X = ["extend_line_up", "extend_to_line_bounds"]
-C-space = [":toggle lsp.display-inlay-hints"]
+C-space = [":toggle lsp.display-inlay-hints"]#, ":toggle rainbow-brackets", ":toggle indent-guides.render"]
+# Put rainbow-brackets and indent-guides in here once https://github.com/helix-editor/helix/issues/8853 merges
 esc = ["collapse_selection", "keep_primary_selection"]
+C-tab = ["open_or_focus_explorer"] # ctrl + tab to open it, q to close it.
 
 [keys.select]
 X = ["extend_line_up", "extend_to_line_bounds"]
