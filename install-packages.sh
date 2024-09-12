@@ -29,7 +29,7 @@ packages=(
     "fzf"
     "gdu"
     "git"
-    "helix"
+    "helix-ext"
     "htop"
     "kanshi"
     "less"
