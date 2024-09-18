@@ -9,6 +9,7 @@ text-width = 120
 true-color = true
 insert-final-newline = true
 rainbow-brackets = false # helix-ext
+line-number = "relative"
 
 [editor.cursor-shape]
 insert = "bar"
