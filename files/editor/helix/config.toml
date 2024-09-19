@@ -30,6 +30,7 @@ left = ["mode", "spinner", "version-control", "file-name"]
 [keys.insert]
 C-s = ["normal_mode", ":w", "insert_mode"]
 esc = ["collapse_selection", "normal_mode"]
+C-v = [":clipboard-paste-before"]
 
 [keys.normal]
 C-s = [":w"]
@@ -38,6 +39,8 @@ C-space = [":toggle lsp.display-inlay-hints"]#, ":toggle rainbow-brackets", ":to
 # Put rainbow-brackets and indent-guides in here once https://github.com/helix-editor/helix/issues/8853 merges
 esc = ["collapse_selection", "keep_primary_selection"]
 C-tab = ["open_or_focus_explorer"] # ctrl + tab to open it, q to close it.
+C-v = [":clipboard-paste-before"]
+y = ["yank", "yank_to_clipboard"]
 
 [keys.select]
 X = ["extend_line_up", "extend_to_line_bounds"]
