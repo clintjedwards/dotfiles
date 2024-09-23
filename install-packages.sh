@@ -23,6 +23,7 @@ headline "Installing packages"
 packages=(
     "acpi"
     "brightnessctl"
+    "bat"
     "dog"
     "eza"
     "firefox"
@@ -63,7 +64,7 @@ for package_name in "${packages[@]}"; do
     fi
 done
 
-mkdir ~/.bin
+mkdir -p ~/.bin
 
 headline "Installing node"
 mkdir -p ~/.bin/node
