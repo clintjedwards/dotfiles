@@ -11,6 +11,9 @@ insert-final-newline = true
 line-number = "relative"
 auto-pairs = false
 
+[editor.smart-tab]
+enable = false
+
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
