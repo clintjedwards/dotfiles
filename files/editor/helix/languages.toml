@@ -14,14 +14,8 @@ language-servers = ["gopls"]
 
 [[language]]
 name = "markdown"
-language-servers = ["harper-ls"]
 
 # LSP Settings
-
-[language-server.harper-ls]
-command = "harper-ls"
-args = ["--stdio"]
-
 [language-server.rust-analyzer.config.check]
 command = "clippy"
 

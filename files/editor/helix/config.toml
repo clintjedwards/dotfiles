@@ -10,6 +10,7 @@ true-color = true
 insert-final-newline = true
 line-number = "relative"
 auto-pairs = false
+end-of-line-diagnostics = "hint"
 
 [editor.smart-tab]
 enable = false
@@ -28,6 +29,10 @@ render = false
 
 [editor.statusline]
 left = ["mode", "spinner", "version-control", "file-name"]
+
+[editor.inline-diagnostics]
+cursor-line  = "hint"
+other-lines  = "error"
 
 [keys.insert]
 C-s = ["normal_mode", ":w", "insert_mode"]
