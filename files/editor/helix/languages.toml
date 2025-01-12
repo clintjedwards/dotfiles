@@ -14,6 +14,8 @@ language-servers = ["gopls"]
 
 [[language]]
 name = "markdown"
+auto-format = true
+language-servers = ["marksman", "mpls"]
 
 # LSP Settings
 [language-server.rust-analyzer.config.check]
@@ -46,3 +48,7 @@ constantValues = true
 functionTypeParameters = true
 parameterNames = true
 rangeVariableTypes = true
+
+[language-server.mpls]
+command = "mpls"
+args = ["--dark-mode", "--enable-emoji"]
