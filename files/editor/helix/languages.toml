@@ -17,6 +17,11 @@ name = "markdown"
 auto-format = true
 language-servers = ["marksman", "mpls"]
 
+[[language]]
+name = "typst"
+auto-format = true
+formatter.command = "typstyle"
+
 # LSP Settings
 [language-server.rust-analyzer.config.check]
 command = "clippy"

@@ -21,7 +21,7 @@ normal = "block"
 select = "underline"
 
 [editor.lsp]
-auto-signature-help = true
+auto-signature-help = false
 display-messages = true
 
 [editor.indent-guides]
@@ -32,7 +32,6 @@ left = ["mode", "spinner", "version-control", "file-name"]
 
 [editor.inline-diagnostics]
 cursor-line  = "hint"
-other-lines  = "error"
 
 [keys.insert]
 C-s = ["normal_mode", ":w", "insert_mode"]
