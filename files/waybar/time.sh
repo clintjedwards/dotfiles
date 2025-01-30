@@ -13,4 +13,4 @@ addSuffix() {
 # Get the date in required format
 DATE=$(date +"%A, %B $(addSuffix) %I:%M:%S %P")
 
-echo $DATE
+echo "  $DATE"
