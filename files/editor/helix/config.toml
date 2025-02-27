@@ -11,6 +11,7 @@ insert-final-newline = true
 line-number = "relative"
 auto-pairs = false
 end-of-line-diagnostics = "hint"
+auto-completion = false # ctrl+x to force
 
 [editor.smart-tab]
 enable = false
@@ -37,6 +38,7 @@ cursor-line  = "hint"
 C-s = ["normal_mode", ":w", "insert_mode"]
 esc = ["collapse_selection", "normal_mode"]
 C-v = [":clipboard-paste-before"]
+C-space = ["completion"]
 
 [keys.normal]
 C-s = [":w"]
