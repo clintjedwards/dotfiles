@@ -57,8 +57,11 @@ alias ssh='TERM=xterm-256color ssh'
 
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border=none --no-separator --no-scrollbar --no-info'
 
-update-dotfiles() {
+sync-dotdocs() {
     git -C "$HOME/Documents/dotfiles" add -A
     git -C "$HOME/Documents/dotfiles" commit -m "update"
     git -C "$HOME/Documents/dotfiles" push origin master
+    git -C "$HOME/Documents/documentation" add -A
+    git -C "$HOME/Documents/documentation" commit -m "update"
+    git -C "$HOME/Documents/documentation" push origin master
 }
