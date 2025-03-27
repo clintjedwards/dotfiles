@@ -19,6 +19,10 @@ layout = ["diff", "line-numbers", "spacer"]
 [editor.smart-tab]
 enable = false
 
+[editor.auto-save]
+focus-lost = true
+after-delay.enable = true
+
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
