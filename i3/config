@@ -141,7 +141,7 @@ exec_always --no-startup-id xinput set-prop "PIXA3854:00 093A:0274 Touchpad" "li
 exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec ghostty
 
 # kill focused window
 bindsym $mod+Shift+q kill
