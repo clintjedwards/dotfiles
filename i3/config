@@ -138,7 +138,6 @@ bindsym $mod+r mode "resize"
 ######################################
 
 exec_always --no-startup-id xinput set-prop "PIXA3854:00 093A:0274 Touchpad" "libinput Tapping Enabled" 0
-exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 
 # start a terminal
 bindsym $mod+Return exec ghostty
