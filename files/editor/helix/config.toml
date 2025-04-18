@@ -11,7 +11,9 @@ insert-final-newline = true
 line-number = "relative"
 auto-pairs = false
 end-of-line-diagnostics = "hint"
-auto-completion = false # ctrl+x to force
+auto-completion = false # ctrl+space to force
+trim-trailing-whitespace = true
+trim-final-newlines = true
 
 [editor.gutters]
 layout = ["diff", "line-numbers", "spacer"]
@@ -55,6 +57,12 @@ C-space = [":toggle lsp.display-inlay-hints"]#, ":toggle rainbow-brackets", ":to
 esc = ["collapse_selection", "keep_primary_selection"]
 C-v = [":clipboard-paste-before"]
 y = ["yank", "yank_to_clipboard"]
+C-r = [
+    ":write-all",
+    ":insert-output scooter >/dev/tty",
+    ":redraw",
+    ":reload-all"
+]
 
 [keys.select]
 X = ["extend_line_up", "extend_to_line_bounds"]
@@ -68,8 +76,6 @@ e = [
   ":insert-output echo \"x1b[?1049h\" > /dev/tty",
   ":open %sh{cat /tmp/unique-file-h21a434}",
   ":redraw",
-  ":set mouse false",
-  ":set mouse true",
 ]
 E = [
   ":sh rm -f /tmp/unique-file-u41ae14",
@@ -77,6 +83,5 @@ E = [
   ":insert-output echo \"x1b[?1049h\" > /dev/tty",
   ":open %sh{cat /tmp/unique-file-u41ae14}",
   ":redraw",
-  ":set mouse false",
-  ":set mouse true",
 ]
+
