@@ -23,6 +23,11 @@ auto-format = true
 formatter.command = "typstyle"
 language-servers = ["codebook"]
 
+[[language]]
+name = "html"
+auto-format = true
+language-servers = ["superhtml"]
+
 # LSP Settings
 [language-server.rust-analyzer.config.check]
 command = "clippy"
@@ -62,3 +67,7 @@ args = ["--dark-mode", "--enable-emoji"]
 [language-server.codebook]
 command = "codebook-lsp"
 args = ["serve"]
+
+[language-server.superhtml]
+command = "superhtml"
+args = ["lsp"]
