@@ -1,0 +1,32 @@
+#!/bin/bash
+# Pre-commit hook to block TODO(cje) or TODO(clintjedwards)
+
+# Get list of staged files (only added/modified)
+files=$(git diff --cached --name-only --diff-filter=ACM)
+
+
+if git rev-parse --show-toplevel | grep -q "/Documents/dotfiles"; then
+    exit 0
+fi
+
+# Grep for TODO markers in staged content
+found=0
+for file in $files; do
+    # Skip binary files
+    if file "$file" | grep -q "binary"; then
+        continue
+    fi
+
+    # Check staged version of the file (not working directory!)
+    if git show ":$file" | grep -E "TODO\((cje|clintjedwards)\)"; then
+        echo "❌ Commit blocked: Found TODO(cje) or TODO(clintjedwards) in $file"
+        found=1
+    fi
+done
+
+if [ "$found" -ne 0 ]; then
+    echo "Please remove or resolve these TODOs before committing."
+    exit 1
+fi
+
+exit 0

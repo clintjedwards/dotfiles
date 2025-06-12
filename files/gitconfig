@@ -37,3 +37,4 @@
     autocorrect = prompt
 [core]
     pager = less -F -X
+	hooksPath = /home/clintjedwards/Documents/dotfiles/files/git-hooks
