@@ -1,0 +1,49 @@
+add_newline = true
+
+format = """
+$hostname\
+$directory$git_branch\
+$git_status\
+$git_state\
+$kubernetes\
+$jobs\
+$ssh\
+$status\
+$cmd_duration\
+$character"""
+
+[hostname]
+ssh_only = true
+format = '[$ssh_symbol](bold blue) | [$hostname](bold red) '
+disabled = false
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold blue"
+format = "[$path]($style)"
+
+[git_branch]
+truncation_length = 25
+format = ' [|](dimmed) [$symbol$branch]($style) '
+symbol = ' '
+style = "bold purple"
+
+[git_status]
+style = "bold yellow"
+format = '([${ahead_behind}${modified}${staged}${untracked}${conflicted} ]($style))'
+ahead = "⇡${count}"
+behind = "⇣${count}"
+modified = "M"
+staged = "+"
+untracked = "?"
+conflicted = "×"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bold red"
+
+[cmd_duration]
+min_time = 5000  # only show if > 5s
+format = '[⏱ $duration]($style) '
+style = "bold yellow"
