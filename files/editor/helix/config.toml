@@ -50,6 +50,7 @@ C-v = [":clipboard-paste-before"]
 C-space = ["completion"]
 
 [keys.normal]
+Z = { Z = ":wq" }
 C-s = [":w"]
 X = ["extend_line_up", "extend_to_line_bounds"]
 C-space = [":toggle lsp.display-inlay-hints"]#, ":toggle rainbow-brackets", ":toggle indent-guides.render"]
@@ -84,4 +85,3 @@ E = [
   ":open %sh{cat /tmp/unique-file-u41ae14}",
   ":redraw",
 ]
-

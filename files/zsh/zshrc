@@ -1,37 +1,15 @@
-export ZSH="/home/${USER}/.oh-my-zsh"
-
-plugins=(
-         git-auto-fetch # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-auto-fetch
-         docker # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
-         httpie # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/httpie
-	 ssh-agent
-	 gpg-agent
-	 fzf
-	 )
-
-source $ZSH/oh-my-zsh.sh
-
-# Load custom prompt
-# A combination of miloshadzic with gitstatus in terminal colors
-# https://github.com/ohmyzsh/ohmyzsh/blob/master/themes/miloshadzic.zsh-theme
-source $ZSH/plugins/gitstatus/gitstatus.prompt.zsh
-PROMPT='%{$fg[cyan]%}%1~%{$reset_color%}%{$fg[red]%}|%{$reset_color%}$GITSTATUS_PROMPT%{$fg[cyan]%}⇒%{$reset_color%} '
-
 # Add personal bin path to path
-export PATH=$PATH:~/.bin
+export PATH=$PATH:$HOME/.bin
 
 # Make go packages executable
-export PATH=$PATH:~/go/bin
+export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:/usr/local/go/bin
 
 # Make rust packages executable
-export PATH=$PATH:~/.cargo/bin
-
-# Make python packages executable
-# export PATH=$PATH:~/.local/bin
+export PATH=$PATH:$HOME/.cargo/bin
 
 # Make node packages executable
-export PATH=$PATH:~/.bin/node/bin
+export PATH=$PATH:$HOME/.bin/node/bin
 
 # Use $EDITOR for any quick edits
 export EDITOR="hx"
@@ -39,6 +17,49 @@ export VISUAL="hx"
 
 # Use Firefox for default browser
 export BROWSER="firefox"
+
+# Start and reuse gpg agent
+export GPG_TTY=$(tty)
+gpgconf --launch gpg-agent >/dev/null
+
+# History file
+HISTFILE=~/.zsh_history
+
+# Set very large history sizes
+HISTSIZE=1000000           # Lines kept in memory
+SAVEHIST=1000000           # Lines written to HISTFILE
+
+# History behavior tweaks
+setopt INC_APPEND_HISTORY  # Append to history file as commands are run
+setopt SHARE_HISTORY       # Share history between sessions
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
+
+setopt autocd             # lets you type a directory name to cd into it
+setopt extended_glob      # smarter filename matching
+
+# Start and reuse ssh agent
+export SSH_ENV="$HOME/.ssh/environment"
+
+start_ssh_agent() {
+  echo "Initializing new SSH agent..."
+  ssh-agent -s | sed 's/^echo/#echo/' > "$SSH_ENV"
+  chmod 600 "$SSH_ENV"
+  source "$SSH_ENV" > /dev/null
+  ssh-add ~/.ssh/id_rsa 2>/dev/null
+}
+
+if [ -f "$SSH_ENV" ]; then
+  source "$SSH_ENV" > /dev/null
+  ps -p $SSH_AGENT_PID > /dev/null || start_ssh_agent
+else
+  start_ssh_agent
+fi
+
 
 #aliases
 alias ls='eza'
@@ -55,7 +76,14 @@ alias http='xh'
 # This fixes the issue where remote servers don't have alacritty terminfo
 alias ssh='TERM=xterm-256color ssh'
 
+# This ensures you’re in emacs keybinding mode (which you need for prefix-history search)
+bindkey -e
+
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border=none --no-separator --no-scrollbar --no-info'
+
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+source ~/.zsh-history-substring-search/zsh-history-substring-search.zsh
 
 sync-dotdocs() {
     git -C "$HOME/Documents/dotfiles" add -A
@@ -65,3 +93,28 @@ sync-dotdocs() {
     git -C "$HOME/Documents/documentation" commit -m "update"
     git -C "$HOME/Documents/documentation" push origin master
 }
+
+fkill() {
+  ps -ef \
+    | fzf --header="Select a process to kill" \
+          --preview='ps -fp $(echo {} | awk "{print \$2}")' \
+          --preview-window=up:wrap \
+          --ansi \
+    | awk '{print $2}' \
+    | xargs -r kill
+}
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# Needs to remain after bindkeys and before starship
+autoload -Uz compinit
+compinit
+
+# Use menu selection UI for completions
+zstyle ':completion:*' menu select
+
+# Highlight the current selection in the list
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+eval "$(starship init zsh)"
