@@ -2,7 +2,8 @@ add_newline = true
 
 format = """
 $hostname\
-$directory$git_branch\
+$directory\
+$git_branch\
 $git_status\
 $git_state\
 $kubernetes\
@@ -25,13 +26,13 @@ format = "[$path]($style)"
 
 [git_branch]
 truncation_length = 25
-format = ' [|](dimmed) [$symbol$branch]($style) '
-symbol = ' '
+format = '[|](dimmed)[$symbol$branch]($style)'
+symbol = ''
 style = "bold purple"
 
 [git_status]
 style = "bold yellow"
-format = '([${ahead_behind}${modified}${staged}${untracked}${conflicted} ]($style))'
+format = '([ ${ahead_behind}${modified}${staged}${untracked}${conflicted} ]($style))'
 ahead = "⇡${count}"
 behind = "⇣${count}"
 modified = "M"
