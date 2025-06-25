@@ -96,13 +96,23 @@ sync-dotdocs() {
 }
 
 fkill() {
-  ps -ef \
+  ps -e -o pid=,tty=,user=,args= \
+    | awk '$1 > 2 && $2 != "?"' \
     | fzf --header="Select a process to kill" \
           --preview='ps -fp $(echo {} | awk "{print \$2}")' \
           --preview-window=up:wrap \
           --ansi \
-    | awk '{print $2}' \
+    | awk '{print $1}' \
     | xargs -r kill
+}
+
+gitch() {
+  local branch_name="$1"
+  if git rev-parse --verify --quiet "$branch_name" > /dev/null 2>&1; then
+    git switch "$branch_name"
+  else
+    git switch -c "$branch_name"
+  fi
 }
 
 bindkey '^[[A' history-substring-search-up
