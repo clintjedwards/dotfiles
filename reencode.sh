@@ -131,6 +131,7 @@ encode_one() {
   fi
 
   mv -- "$tmp" "$out"
+  chmod 0777 "$out"
   sync -f "$outdir" 2>/dev/null || true
 
   if [ -s "$out" ]; then
