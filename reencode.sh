@@ -20,9 +20,9 @@ is_video() {
 }
 
 already_xchr() {
-  case "$1" in
-    *.xchr.mkv) return 0 ;;
-    *) return 1 ;;
+  case "${1,,}" in
+    *.xchr.*) return 0 ;;    # any extension after .xchr
+    *)        return 1 ;;
   esac
 }
 
@@ -95,13 +95,13 @@ encode_one() {
   if [ "$vcodec" = "hevc" ]; then
     echo "Source is already HEVC — remuxing instead of re-encoding."
     (
-      ffmpeg -y -i "$in" -map 0 -c copy \
+      ffmpeg -y -i "$in" -map "0:v?" -map "0:a?" -map "0:s?" -c copy \
         -f matroska -progress - -nostats -loglevel error -- "$tmp"
     ) | progress_bar "${src_dur:-0}"
     echo
   else
     (
-      ffmpeg -y -i "$in" -map 0 -c:v libx265 -crf 23 -c:a copy \
+      ffmpeg -y -i "$in" -map "0:v?" -map "0:a?" -map "0:s?" -c:v libx265 -crf 23 -c:a copy \
         -f matroska -progress - -nostats -loglevel error -- "$tmp"
     ) | progress_bar "${src_dur:-0}"
     echo

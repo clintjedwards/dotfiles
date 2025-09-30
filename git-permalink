@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# github-permalink
+# Usage:
+#   git-permalink
+#   git-permalink path/to/file
+#   git-permalink path/to/file:12
+#   git-permalink path/to/file:12-34
+
+urlencode() {
+  # RFC3986 with "/" kept safe for paths.
+  local s="$1" out= ch hex
+  for ((i=0; i<${#s}; i++)); do
+    ch="${s:i:1}"
+    case "$ch" in
+      [-a-zA-Z0-9._~/]) out+="$ch" ;;                 # keep / unencoded; put '-' first so it's literal
+      *) printf -v hex '%%%02X' "'$ch"; out+="$hex" ;;
+    esac
+  done
+  printf '%s' "$out"
+}
+
+normalize_remote_to_https() {
+  local u="${1%.git}"
+  if [[ "$u" =~ ^git@([^:]+):(.*)$ ]]; then
+    printf 'https://%s/%s' "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}"
+  elif [[ "$u" =~ ^https?://([^/]+)/(.*)$ ]]; then
+    printf 'https://%s/%s' "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}"
+  else
+    printf '%s' "$u"
+  fi
+}
+
+
+relpath_from_repo_root() {
+  # Resolve a user-supplied path (relative or absolute) to a path
+  # relative to the repo root, regardless of current working dir.
+  local file="$1"
+  local root
+  root="$(git rev-parse --show-toplevel)"
+
+  # Normalize leading ./
+  [[ "$file" == ./* ]] && file="${file#./}"
+
+  # Compute absolute path for the *intended* file location (no fs checks)
+  local abs
+  if [[ "$file" = /* ]]; then
+    abs="$file"
+  else
+    abs="$(pwd)/$file"
+  fi
+
+  # Prefer python3 (doesn't require the path to exist)
+  if command -v python3 >/dev/null 2>&1; then
+    python3 - <<EOF
+import os
+root = os.path.abspath("$root")
+absf = os.path.abspath("$abs")
+print(os.path.relpath(absf, root))
+EOF
+    return
+  fi
+
+  # Fallback to realpath -m (portable-ish) if present
+  if command -v realpath >/dev/null 2>&1; then
+    # -m: canonicalize without requiring the path to exist
+    realpath -m --relative-to="$root" "$abs"
+    return
+  fi
+
+  # Last-resort: join PWD relative to root with the user path
+  # (won't collapse .., but handles common cases)
+  local cwd_rel="$PWD"
+  cwd_rel="${cwd_rel#"$root"/}"
+  if [[ "$cwd_rel" == "$PWD" ]]; then
+    printf '%s\n' "$file"
+  else
+    printf '%s/%s\n' "$cwd_rel" "$file"
+  fi
+}
+
+# --- Repo info ---
+remote_url="$(git config --get remote.origin.url || true)"
+if [[ -z "$remote_url" ]]; then
+  echo "No remote.origin.url found. Are you in a GitHub repo?" >&2
+  exit 1
+fi
+base_url="$(normalize_remote_to_https "$remote_url")"
+commit="$(git rev-parse HEAD)"
+
+# --- No-arg: repo at commit ---
+if [[ $# -eq 0 ]]; then
+  printf '%s/tree/%s\n' "$base_url" "$commit"
+  exit 0
+fi
+
+# --- Parse FILE[:start[-end]] ---
+arg="$1"
+file="$arg"; start=""; end=""
+if [[ "$arg" == *:* ]]; then
+  file="${arg%%:*}"
+  range="${arg#*:}"
+  if [[ "$range" =~ ^([0-9]+)-([0-9]+)$ ]]; then
+    start="${BASH_REMATCH[1]}"; end="${BASH_REMATCH[2]}"
+  elif [[ "$range" =~ ^([0-9]+)$ ]]; then
+    start="${BASH_REMATCH[1]}"
+  else
+    echo "Bad line range: '$range' (use N or N-M)" >&2
+    exit 2
+  fi
+fi
+
+relpath="$(relpath_from_repo_root "$file")"
+encoded="$(urlencode "$relpath")"
+
+anchor=""
+if [[ -n "$start" && -n "$end" ]]; then
+  anchor="#L${start}-L${end}"
+elif [[ -n "$start" ]]; then
+  anchor="#L${start}"
+fi
+
+printf '%s/blob/%s/%s%s\n' "$base_url" "$commit" "$encoded" "$anchor"

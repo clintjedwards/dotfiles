@@ -85,3 +85,4 @@ E = [
   ":open %sh{cat /tmp/unique-file-u41ae14}",
   ":redraw",
 ]
+G = ":run-shell-command git-permalink \"%{buffer_name}:%{selection_line_start}-%{selection_line_end}\" | xclip -selection clipboard"
