@@ -62,7 +62,7 @@ rangeVariableTypes = true
 
 [language-server.mpls]
 command = "mpls"
-args = ["--dark-mode", "--enable-emoji"]
+args = ["--dark-mode", "--enable-emoji", "--no-auto", "--enable-footnotes"]
 
 [language-server.codebook]
 command = "codebook-lsp"
