@@ -1,12 +1,49 @@
-# https://jvns.ca/blog/2024/02/16/popular-git-config-options/#pull-ff-only-or-pull-rebase-true
 [user]
     name = Clint J Edwards
     email = clint.j.edwards@gmail.com
     signingkey = 98CB4A5207195923
+[commit]
+    gpgsign = true
+
+[gpg]
+    program = gpg
+
+[core]
+    pager = less -F -X
+    hooksPath = /home/clintjedwards/Documents/dotfiles/files/git-hooks
+
+[help]
+    autocorrect = prompt
+
+[merge]
+    conflictstyle = zdiff3
+
+[pull]
+    rebase = true
+
+[push]
+    autoSetupRemote = true
+
+[rebase]
+    autostash = true
+
+# Allow file:// remotes for local-only experiments.
+[protocol "file"]
+    allow = always
+
+# Prefer SSH for GitHub instead of HTTPS.
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
+# Aliases
+# - logp: compact graph log with relative time and author.
+# - squash: reset to merge-base of default branch, re-add, and commit.
+# - feature: create/switch feature branches, tracking origin when present.
+# - submit: force-with-lease push; optional `--web/-w` to open existing PR.
+# - show-stack: visualize ancestry path from default branch to HEAD.
+# - land: push current branch to default branch.
 [alias]
-    amend = commit --amend -C HEAD
     logp = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    icommit = !~/.bin/commit.sh
     squash = "!f() { \
         MAIN_BRANCH=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5); \
         if [ -z \"$MAIN_BRANCH\" ]; then \
@@ -17,24 +54,56 @@
         git add -A && \
         git commit; \
     }; f"
-[commit]
-    gpgsign = true
-[gpg]
-    program = gpg
-[url "git@github.com:"]
-    insteadOf = https://github.com/
-[pull]
-	rebase = true
-[protocol "file"]
-	allow = always
-[merge]
-    conflictstyle = zdiff3
-[push]
-	autoSetupRemote = true
-[rebase]
-    autostash = true
-[help]
-    autocorrect = prompt
-[core]
-    pager = less -F -X
-	hooksPath = /home/clintjedwards/Documents/dotfiles/files/git-hooks
+    feature = "!f() { \
+        set -e; \
+        new=\"$1\"; \
+        if [ -z \"$new\" ]; then echo \"usage: git feature <branch>\" >&2; exit 2; fi; \
+        parent=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true); \
+        if git show-ref --verify --quiet \"refs/heads/$new\"; then \
+            git switch \"$new\"; exit 0; \
+        fi; \
+        if git ls-remote --exit-code --heads origin \"$new\" >/dev/null 2>&1; then \
+            git switch --track -c \"$new\" \"origin/$new\"; exit 0; \
+        fi; \
+        git switch -c \"$new\"; \
+        if [ -n \"$parent\" ]; then git config \"branch.$new.cje-parent\" \"$parent\"; fi; \
+    }; f"
+    submit = "!f(){ \\\n  set -e; \\\n  web=0; \\\n  case \"$1\" in --web|-w) web=1; shift ;; esac; \\\n  head=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true); \\\n  [ -n \"$head\" ] || { echo \"detached HEAD; cannot submit\" >&2; exit 1; }; \\\n  echo \"git push -u --force-with-lease origin $head\" >&2; \\\n  git push -u --force-with-lease origin \"$head\"; \\\n  [ \"$web\" -eq 1 ] || exit 0; \\\n  command -v gh >/dev/null 2>&1 || { echo \"gh not installed; cannot open PR\" >&2; exit 1; }; \\\n  urls=$(gh pr list --head \"$head\" --state open --json url --jq \".[].url\" 2>/dev/null || true); \\\n  count=$(printf \"%s\\n\" \"$urls\" | sed \"/^$/d\" | wc -l | tr -d \" \"); \\\n  if [ \"$count\" -eq 1 ]; then \\\n    gh pr view --web \"$(printf \"%s\" \"$urls\")\"; \\\n    exit 0; \\\n  elif [ \"$count\" -eq 0 ]; then \\\n    echo \"No OPEN PR found for $head (not creating one).\" >&2; \\\n    echo \"PRs for this head (any state):\" >&2; \\\n    gh pr list --head \"$head\" --state all || true; \\\n    exit 2; \\\n  else \\\n    echo \"Multiple OPEN PRs found for $head; refusing to choose:\" >&2; \\\n    printf \"%s\\n\" \"$urls\" >&2; \\\n    exit 2; \\\n  fi; \\\n}; f"
+    show-stack = "!f() { \
+        set -e; \
+        git fetch -q origin >/dev/null 2>&1 || true; \
+        trunk_ref=$(git symbolic-ref -q refs/remotes/origin/HEAD 2>/dev/null || true); \
+        if [ -n \"$trunk_ref\" ]; then \
+            trunk=${trunk_ref#refs/remotes/origin/}; \
+        else \
+            trunk=$(git remote show origin 2>/dev/null | sed -n 's/^[[:space:]]*HEAD branch: //p' | head -n1); \
+        fi; \
+        if [ -z \"$trunk\" ]; then \
+            echo \"could not determine origin default branch\" >&2; exit 1; \
+        fi; \
+        base=\"origin/$trunk\"; \
+        if ! git rev-parse --verify -q \"$base\" >/dev/null; then base=\"$trunk\"; fi; \
+        git log --graph --decorate --oneline --boundary --ancestry-path \"$base..HEAD\"; \
+    }; f"
+    land = "!f() { \
+        set -e; \
+        if [ -n \"$(git status --porcelain)\" ]; then \
+            echo \"working tree not clean; commit/stash first\" >&2; exit 1; \
+        fi; \
+        current=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true); \
+        if [ -z \"$current\" ]; then \
+            echo \"not on a branch (detached HEAD); cannot land\" >&2; exit 1; \
+        fi; \
+        git fetch -q origin >/dev/null 2>&1 || true; \
+        trunk_ref=$(git symbolic-ref -q refs/remotes/origin/HEAD 2>/dev/null || true); \
+        if [ -n \"$trunk_ref\" ]; then \
+            trunk=${trunk_ref#refs/remotes/origin/}; \
+        else \
+            trunk=$(git remote show origin 2>/dev/null | sed -n 's/^[[:space:]]*HEAD branch: //p' | head -n1); \
+        fi; \
+        if [ -z \"$trunk\" ]; then \
+            echo \"could not determine origin default branch\" >&2; exit 1; \
+        fi; \
+        echo \"git push origin $current:$trunk\" >&2; \
+        git push origin \"$current\":\"$trunk\"; \
+    }; f"
