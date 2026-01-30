@@ -115,6 +115,11 @@ gitch() {
   fi
 }
 
+# Run ls when I change into a directory
+chpwd() {
+  ls
+}
+
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
