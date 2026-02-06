@@ -19,13 +19,14 @@
     conflictstyle = zdiff3
 
 [pull]
-    rebase = true
+	rebase = true
+	ff = only
 
 [push]
     autoSetupRemote = true
 
 [rebase]
-    autostash = true
+	autoStash = true
 
 # Allow file:// remotes for local-only experiments.
 [protocol "file"]
@@ -37,3 +38,35 @@
 
 [alias]
     logp = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	stacklog = "!trunk=$(git trunk); [ -n \"$trunk\" ] || { echo \"could not detect trunk (origin/HEAD missing)\"; exit 1; }; git log --oneline --decorate --graph --boundary \"$trunk\"..HEAD"
+    stack = town append
+	append = town append
+	compress = town compress
+	contribute = town contribute
+	diff-parent = town diff-parent
+	down = town down
+	hack = town hack
+	delete = town delete
+	observe = town observe
+	park = town park
+	prepend = town prepend
+	propose = "!title=$(git log -1 --pretty=%s); body=$(git log -1 --pretty=%b); printf \"%s\" \"$body\" | git town propose --title \"$title\" --body-file -"
+	rename = town rename
+	repo = town repo
+	set-parent = town set-parent
+	ship = town ship
+	sync = town sync
+	up = town up
+	trunk = "!trunk=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null); echo \"${trunk#origin/}\""
+[fetch]
+	prune = true
+	pruneTags = true
+[git-town]
+	sync-feature-strategy = rebase
+	sync-prototype-strategy = rebase
+	sync-perennial-strategy = rebase
+	ship-strategy = fast-forward
+	ship-delete-tracking-branch = true
+	sync-push-branches = true
+	sync-tags = true
+	sync-upstream = true

@@ -1,3 +1,7 @@
+# zsh completion system
+autoload -Uz compinit
+compinit
+
 # Add personal bin path to path
 export PATH=$PATH:$HOME/.bin
 
@@ -60,7 +64,6 @@ else
   start_ssh_agent
 fi
 
-
 #aliases
 alias ls='eza'
 alias cat='bat -p'
@@ -119,6 +122,9 @@ gitch() {
 chpwd() {
   ls
 }
+
+# Git town completions
+source <(git town completions zsh)
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
