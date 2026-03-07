@@ -25,6 +25,10 @@ enable = false
 focus-lost = true
 after-delay.enable = true
 
+[editor.auto-reload]
+enable = true
+prompt-if-modified = true
+
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
@@ -81,9 +85,3 @@ esc = ["collapse_selection", "keep_primary_selection", "normal_mode"]
 y = ":clipboard-yank"
 p = ":clipboard-paste-after"
 P = ":clipboard-paste-before"
-
-
-[keys.normal.space]
-# Allow me to get github permalinks from my code.
-G = ":run-shell-command git-permalink \"%{buffer_name}:%{selection_line_start}-%{selection_line_end}\" | xclip -selection clipboard"
-l = ":reflow"
