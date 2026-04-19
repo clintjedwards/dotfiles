@@ -72,7 +72,7 @@ alias printscr='flameshot gui'
 alias df='duf'
 alias du='gdu'
 alias top='htop'
-alias dig='dog'
+alias dig='doggo'
 alias code='hx'
 alias http='xh'
 
