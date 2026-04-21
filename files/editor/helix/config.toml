@@ -14,6 +14,8 @@ end-of-line-diagnostics = "hint"
 auto-completion = false # ctrl+space to force
 trim-trailing-whitespace = true
 trim-final-newlines = true
+indent-style = "spaces"
+tab-width = 4
 
 [editor.gutters]
 layout = ["diff", "line-numbers", "spacer"]
@@ -76,6 +78,9 @@ C-r = [
     ":redraw",
     ":reload-all"
 ]
+
+[keys.normal.space]
+"A-w" = ":reflow"
 
 [keys.select]
 X = ["extend_line_up", "extend_to_line_bounds"]
