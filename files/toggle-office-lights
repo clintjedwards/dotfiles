@@ -1,0 +1,4 @@
+#!/bin/bash
+STATE=$(curl -sf http://home.clintjedwards.home/api/devices | jq -r '.devices[] | select(.id=="plug_desk-lights_office") | .state.on')
+[ "$STATE" = "true" ] && ON=false || ON=true
+curl -sfX PATCH -H "Content-Type: application/json" -d "{\"on\":$ON}" http://home.clintjedwards.home/api/devices/plug_desk-lights_office
