@@ -239,7 +239,7 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 ## App shortcuts
-bindsym Print exec flameshot gui
+bindsym Insert exec flameshot gui
 
 ##########################################
 # configuration for workspace behaviour: #

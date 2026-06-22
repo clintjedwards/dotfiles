@@ -1,5 +1,3 @@
-# These are settings for helix-ext which adds some much needed features left out by the original helix in favor
-# of plugins. Namely a file-tree. And the ability to move selections.
 theme = "eastwood"
 
 [editor]
@@ -66,7 +64,6 @@ y = ":clipboard-yank"             # yank → system clipboard
 p = ":clipboard-paste-after"      # paste after → system clipboard
 P = ":clipboard-paste-before"     # paste before → system clipboard
 
-# Put rainbow-brackets and indent-guides in here once https://github.com/helix-editor/helix/issues/8853 merges
 C-space = [":toggle lsp.display-inlay-hints", ":toggle rainbow-brackets", ":toggle indent-guides.render"]
 
 esc = ["collapse_selection", "keep_primary_selection"]
