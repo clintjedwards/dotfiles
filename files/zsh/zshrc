@@ -123,9 +123,6 @@ chpwd() {
   ls
 }
 
-# Git town completions
-source <(git town completions zsh)
-
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
