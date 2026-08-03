@@ -263,7 +263,7 @@ set $ws10 "10"
 #############################################
 
 # set powersavings for display:
-exec --no-startup-id xset s 480 dpms 600 600 600
+exec --no-startup-id xset s off -dpms
 
 # correct displays (makes it so docked position starts correctly)
 exec_always --no-startup-id autorandr -c

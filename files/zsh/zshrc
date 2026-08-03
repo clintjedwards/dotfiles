@@ -86,7 +86,6 @@ export FZF_DEFAULT_OPTS='--height 40% --reverse --border=none --no-separator --n
 
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
-source ~/.zsh-history-substring-search/zsh-history-substring-search.zsh
 source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 sync-dotdocs() {
@@ -102,7 +101,7 @@ fkill() {
   ps -e -o pid=,tty=,user=,args= \
     | awk '$1 > 2 && $2 != "?"' \
     | fzf --header="Select a process to kill" \
-          --preview='ps -fp $(echo {} | awk "{print \$2}")' \
+          --preview='ps -fp $(echo {} | awk "{print \$1}")' \
           --preview-window=up:wrap \
           --ansi \
     | awk '{print $1}' \
@@ -123,8 +122,8 @@ chpwd() {
   ls
 }
 
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+bindkey '^[[A' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
 
 # Needs to remain after bindkeys and before starship
 autoload -Uz compinit
