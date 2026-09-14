@@ -1,0 +1,47 @@
+name: discord-monday-starcraft-boomers
+
+on:
+  schedule:
+    - cron: "17 15 * * 1"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to Discord
+        env:
+          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          test -n "$WEBHOOK" || { echo "DISCORD_WEBHOOK secret is not set"; exit 1; }
+          MESSAGES=(
+            "hot damn, it's time to rev up those lings — it's starcraft time"
+            "You must construct additional pylons."
+            "Spawn more overlords, we are going to need the supply."
+            "Nuclear launch detected."
+            "Not enough minerals, but more than enough of us to cheese something."
+            "My life for Aiur. My dignity for a ladder win."
+            "The zerg are massing. Resistance is optional but encouraged."
+            "SCVs reporting for duty. Boomers, assemble."
+            "Our APM has not improved. Glorious."
+            "Additional supply depots required. Also snacks."
+            "The army is mobilizing. Numbers to be confirmed."
+            "Ready to roll out. Same as it ever was."
+            "In the rear with the gear."
+            "Build orders have been forgotten. We ride anyway."
+            "Carrier has arrived. Well. It is en route."
+            "The Swarm hungers."
+            "We move unseen. We strike unannounced."
+            "4-pool strategies are being drafted. Bring shame."
+            "You require more vespene gas. And friends. Mostly gas."
+            "Adjutant: operations are now available."
+          )
+          CTA="-# *emoji this message to confirm you're in for this coming Thursday*"
+          MESSAGE="${MESSAGES[RANDOM % ${#MESSAGES[@]}]}"
+          BODY=$(printf '%s\n\n%s' "$MESSAGE" "$CTA")
+          echo "picked: $MESSAGE"
+          curl -sSf -X POST "$WEBHOOK" \
+            -H "Content-Type: application/json" \
+            --data "$(jq -n --arg c "$BODY" '{content: $c}')"
