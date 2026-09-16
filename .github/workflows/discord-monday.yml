@@ -42,7 +42,7 @@ jobs:
             "Adjutant: your youth is no longer available."
             "The Protoss had psionic mastery. We have muscle memory and regret."
           )
-          CTA="-# *emoji this message to confirm you're in for this coming Thursday*"
+          CTA="-# *emoji this message to confirm you're in for this coming Friday*"
           MESSAGE="${MESSAGES[RANDOM % ${#MESSAGES[@]}]}"
           BODY=$(printf '%s\n\n%s' "$MESSAGE" "$CTA")
           echo "picked: $MESSAGE"
