@@ -1,0 +1,32 @@
+name: discord-friday-starcraft-boomers
+
+on:
+  schedule:
+    # 18:30 ET every Friday. GitHub cron is UTC only, so both offsets are
+    # scheduled and the ET hour guard below drops the wrong one.
+    - cron: "30 22 * * 5"
+    - cron: "30 23 * * 5"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to Discord
+        env:
+          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "schedule" ]; then
+            hour_et=$(TZ=America/New_York date +%H)
+            if [ "$hour_et" != "18" ]; then exit 0; fi
+          fi
+          test -n "$WEBHOOK" || { echo "DISCORD_WEBHOOK secret is not set"; exit 1; }
+          MESSAGE="Reminder for starcraft in 30 mins"
+          CTA="-# *I made this because fuck <@88085639920119808> in particular*"
+          BODY=$(printf '%s\n\n%s' "$MESSAGE" "$CTA")
+          curl -sSf -X POST "$WEBHOOK" \
+            -H "Content-Type: application/json" \
+            --data "$(jq -n --arg c "$BODY" '{content: $c}')"
