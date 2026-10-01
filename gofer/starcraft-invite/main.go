@@ -1,0 +1,68 @@
+package main
+
+import (
+	"log"
+	"strings"
+
+	sdk "github.com/clintjedwards/gofer/sdk/go/config"
+)
+
+var messages = []string{
+	"hot damn, it's time to rev up those lings — it's starcraft time",
+	"Our reflexes are gone, our backs hurt, and the Overmind still calls.",
+	"You must construct additional pylons. You must also construct a reason to keep going.",
+	"Nuclear launch detected. Honestly, a mercy at this point.",
+	"Fenix died for this. Try to look like it was worth it.",
+	"We were promised flying cars. We got carpal tunnel and a 38 percent win rate.",
+	"Time to feed Nick and peer pressure him into making phoenix",
+	"Somewhere a twelve year old is preparing to end us. Show up anyway.",
+	"My life for Aiur. My spine for this chair.",
+	"The zerg are massing. So is our cholesterol.",
+	"Not enough minerals. Not enough time. Not enough cartilage.",
+	"SCVs reporting for duty. Knees reporting for repair.",
+	"Additional supply depots required. Also ibuprofen.",
+	"Tassadar sacrificed everything and I still cannot survive a cheese rush.",
+	"Our APM peaked two presidencies ago. Ride the memory.",
+	"In the rear with the gear, and increasingly, in bed by ten.",
+	"Build orders forgotten. Joints audible. Spirits technically alive.",
+	"The Swarm hungers. We also hunger, but for a nap first.",
+	"Carrier has arrived. It took a while. It has a bad hip now.",
+	"4-pool drafted. Dignity: already conceded.",
+	"Kerrigan betrayed everyone and still had better macro than us.",
+	"We move unseen, mostly because nobody looks at people our age.",
+	"Adjutant: your youth is no longer available.",
+	"The Protoss had psionic mastery. We have muscle memory and regret.",
+}
+
+const script = `
+set -eu
+apk add --no-cache curl jq >/dev/null
+
+test -n "$WEBHOOK" || { echo "WEBHOOK is not set"; exit 1; }
+
+MESSAGE=$(printf '%s\n' "$MESSAGES" | shuf -n 1)
+CTA="-# *emoji this message to confirm you're in for this coming Thursday*"
+BODY=$(printf '%s\n\n%s' "$MESSAGE" "$CTA")
+echo "picked: $MESSAGE"
+
+curl -sSf -X POST "$WEBHOOK" \
+  -H "Content-Type: application/json" \
+  --data "$(jq -n --arg c "$BODY" '{content: $c}')"
+`
+
+func main() {
+	err := sdk.NewPipeline("starcraft-invite", "Starcraft Invite").
+		Description("Posts a random starcraft message to Discord asking who is in for Thursday.").
+		Tasks(
+			sdk.NewTask("post", "alpine:3").
+				Description("Post a random roll call message to Discord.").
+				Command("sh", "-c", script).
+				Variables(map[string]string{
+					"WEBHOOK":  sdk.PipelineSecret("discord-webhook"),
+					"MESSAGES": strings.Join(messages, "\n"),
+				}),
+		).Finish()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
