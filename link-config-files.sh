@@ -47,6 +47,9 @@ create_symlink "/home/clintjedwards/Documents/dotfiles/files/zsh/zshrc" "/home/c
 # Gitstatus plugin
 create_symlink "/home/clintjedwards/Documents/dotfiles/files/zsh/gitstatus" "/home/clintjedwards/.oh-my-zsh/plugins/gitstatus" "gitstatus"
 
+# Claude global instructions
+create_symlink "/home/clintjedwards/Documents/dotfiles/files/CLAUDE.md" "/home/clintjedwards/CLAUDE.md" "CLAUDE.md"
+
 # Home certificate
 create_symlink "/home/clintjedwards/Documents/dotfiles/files/wildcard.clintjedwards.home.crt" "/home/clintjedwards/wildcard.clintjedwards.home.crt" "home cert"
 
