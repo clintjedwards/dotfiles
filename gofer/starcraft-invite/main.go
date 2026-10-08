@@ -49,6 +49,15 @@ curl -sSf -X POST "$WEBHOOK" \
   --data "$(jq -n --arg c "$BODY" '{content: $c}')"
 `
 
+// Setup:
+//
+//	gofer up -d ./gofer/starcraft-invite
+//	printf '%s' "$DISCORD_WEBHOOK_URL" | gofer secret pipeline put starcraft-invite discord-webhook @
+//	gofer pipeline subscribe starcraft-invite cron monday_morning -s expression="17 15 * * 1 *"
+//
+// The cron extension only runs on UTC, so 15:17 UTC on Monday is 11:17 EDT or 10:17 EST. There's no hour check
+// here since the exact time of a Monday morning roll call doesn't matter. Use printf rather than echo for the
+// secret; the CLI keeps a trailing newline and that breaks curl.
 func main() {
 	err := sdk.NewPipeline("starcraft-invite", "Starcraft Invite").
 		Description("Posts a random starcraft message to Discord asking who is in for Thursday.").
