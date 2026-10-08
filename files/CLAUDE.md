@@ -13,9 +13,9 @@ Read `README.md` for project context.
 - Prefer simple over clever
 - Security by default
 - Question complexity; prefer 100 lines over 1000
-- Don't write comments unless asked
 - Consistent formatting
 - Maintain existing styles
+- When adding a dependency, check for and use its latest version; don't settle for an older one just because it's already in the lockfile
 
 ## Writing Style
 

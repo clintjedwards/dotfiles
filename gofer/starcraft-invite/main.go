@@ -42,7 +42,8 @@ test -n "$WEBHOOK" || { echo "WEBHOOK is not set"; exit 1; }
 
 MESSAGE=$(printf '%s\n' "$MESSAGES" | shuf -n 1)
 CTA="-# *emoji this message to confirm you're in for this coming Thursday*"
-BODY=$(printf '%s\n\n%s' "$MESSAGE" "$CTA")
+# <@&801361771183996948> is the starcraftBoomers role, so the whole group gets pinged.
+BODY=$(printf '<@&801361771183996948> %s\n\n%s' "$MESSAGE" "$CTA")
 echo "picked: $MESSAGE"
 
 curl -sSf -X POST "$WEBHOOK" \

@@ -18,8 +18,10 @@ fi
 test -n "$WEBHOOK" || { echo "WEBHOOK is not set"; exit 1; }
 
 MESSAGE="Reminder for starcraft in 30 mins"
+# <@88085639920119808> is the Discord user _yourself.
 CTA="-# *I made this because fuck <@88085639920119808> in particular*"
-BODY=$(printf '%s\n\n%s' "$MESSAGE" "$CTA")
+# <@&801361771183996948> is the starcraftBoomers role, so the whole group gets pinged.
+BODY=$(printf '<@&801361771183996948> %s\n\n%s' "$MESSAGE" "$CTA")
 
 curl -sSf -X POST "$WEBHOOK" \
   -H "Content-Type: application/json" \
