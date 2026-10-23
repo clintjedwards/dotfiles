@@ -30,9 +30,9 @@ curl -sSf -X POST "$WEBHOOK" \
 
 // Setup:
 //
-//	gofer up -d ./gofer/starcraft-reminder
+//	gofer up ./gofer/starcraft-reminder
 //	printf '%s' "$DISCORD_WEBHOOK_URL" | gofer secret pipeline put starcraft-reminder discord-webhook @
-//	gofer pipeline subscribe starcraft-reminder cron thursday_1830_et -s expression="30 22,23 * * 4 *"
+//	gofer pipeline subscribe starcraft-reminder cron thursday-1830-et -s expression="30 22,23 * * 4 *"
 //
 // The cron extension only runs on UTC, so the expression fires at both 22:30 and 23:30 UTC on Thursday. That
 // covers 18:30 ET in both EDT and EST, and the hour check at the top of the script drops whichever one isn't

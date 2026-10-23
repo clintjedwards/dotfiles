@@ -51,9 +51,9 @@ curl -sSf -X POST "$WEBHOOK" \
 
 // Setup:
 //
-//	gofer up -d ./gofer/starcraft-invite
+//	gofer up ./gofer/starcraft-invite
 //	printf '%s' "$DISCORD_WEBHOOK_URL" | gofer secret pipeline put starcraft-invite discord-webhook @
-//	gofer pipeline subscribe starcraft-invite cron monday_morning -s expression="17 15 * * 1 *"
+//	gofer pipeline subscribe starcraft-invite cron monday-morning -s expression="17 15 * * 1 *"
 //
 // The cron extension only runs on UTC, so 15:17 UTC on Monday is 11:17 EDT or 10:17 EST. There's no hour check
 // here since the exact time of a Monday morning roll call doesn't matter. Use printf rather than echo for the

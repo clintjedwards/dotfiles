@@ -16,6 +16,8 @@ Read `README.md` for project context.
 - Consistent formatting
 - Maintain existing styles
 - When adding a dependency, check for and use its latest version; don't settle for an older one just because it's already in the lockfile
+- Mirror the project's coding style as closely as popular; spacing, comments, where certain functions are kept, as much as reasonable.
+- Always attempt to find the common formatter and run it after changing code.
 
 ## Writing Style
 

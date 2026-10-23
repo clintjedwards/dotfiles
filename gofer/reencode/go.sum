@@ -1,0 +1,4 @@
+github.com/clintjedwards/gofer/sdk/go v0.0.0-20261021035005-8be0240e7101 h1:PXHS2PUnl91TYNrdOAzLkqrxZ1Cwwu3wcI24aytUq/0=
+github.com/clintjedwards/gofer/sdk/go v0.0.0-20261021035005-8be0240e7101/go.mod h1:OcwC3HLOllKJCCiaGtzZx2Kq6QqHeHnB6Zop59rGyJU=
+github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
+github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
