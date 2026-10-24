@@ -43,14 +43,15 @@ printf '%s' "$BACKUP_SCRIPT" | ssh -i "$dir/key" \
 //	gofer up ./gofer/nas-backup
 //	gofer secret pipeline put nas-backup ssh-key @ < ./gofer_nas_backup
 //	ssh-keyscan -t ed25519 nas.clintjedwards.home | gofer secret pipeline put nas-backup known-hosts @
-//	gofer pipeline subscribe nas-backup cron every-six-months -s expression="0 10 15 2,8 * *"
+//	gofer pipeline subscribe nas-backup cron every-six-months -s expression="0 10 15-21 2,8 4 *"
 //
 // On nas, the restic user has the restic binary in ~/bin (kept current by restic self-update), the GCS key in
 // ~/.config/gcs-key.json and the repo password in ~/.config/restic-password, all only readable by restic. Put
 // ./gofer_nas_backup.pub in its authorized_keys, prefixed with restrict,from="10.0.1.15".
 //
-// reencode runs on the 1st of Jan, May and Sep, so this runs mid Feb and Aug to stay out of its way. Cron is UTC, so
-// that's 3 or 4am MT depending on daylight time.
+// reencode runs every Monday, so this runs on the third Thursday of Feb and Aug to stay out of its way. Cron fields
+// all have to match, so the 15-21 day range plus Thursday picks out exactly one day. Cron is UTC, so that's 3 or 4am
+// MT depending on daylight time.
 func main() {
 	err := sdk.NewPipeline("nas-backup", "NAS Backup").
 		Description("Backs up nas to Google Cloud Storage with restic.").

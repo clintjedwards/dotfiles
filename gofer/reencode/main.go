@@ -67,10 +67,11 @@ printf '%s' "$REENCODE_SCRIPT" | ssh -i "$dir/key" \
 //	gofer up ./gofer/reencode
 //	gofer secret pipeline put reencode ssh-key @ < ./gofer_reencode
 //	ssh-keyscan -t ed25519 nas.clintjedwards.home | gofer secret pipeline put reencode known-hosts @
-//	gofer pipeline subscribe reencode cron every-four-months -s expression="0 10 1 1,5,9 * *"
+//	gofer pipeline subscribe reencode cron weekly -s expression="0 9 * * 1 *"
 //
 // Put ./gofer_reencode.pub in home's authorized_keys on nas, prefixed with restrict,from="10.0.1.15". Cron is UTC,
-// so this runs at 3 or 4am MT depending on daylight time.
+// so this runs Mondays at 2am MT, or 3am during daylight time. Running weekly keeps each run short since there's
+// only a week's worth of new files to get through.
 func main() {
 	err := sdk.NewPipeline("reencode", "Re-encode Media").
 		Description("Re-encodes videos on nas to HEVC to save space.").
