@@ -149,27 +149,40 @@ finish_output() {
   touch --reference="$in" -- "$out"
 }
 
-encode_one() {
-  local in="$1" outdir="$2"
+output_path() {
+  local fname
+  fname="$(basename -- "$1")"
+  echo "$2/${fname%.*}.xchr.mkv"
+}
+
+# Decided up front so the progress counts only include files that will actually be worked on.
+needs_encode() {
+  local in="$1" outdir="$2" out
 
   if ! is_video "$in"; then
-    return 0
+    return 1
   fi
   if already_xchr "$in"; then
-    return 0
+    return 1
   fi
   if on_skip_list "$in"; then
-    echo "Skip (on skip list): $in"; return 0
+    echo "Skip (on skip list): $in"; return 1
   fi
+
+  out="$(output_path "$in" "$outdir")"
+  if [ -e "$out" ]; then
+    echo "Skip (output exists): $out"; return 1
+  fi
+  return 0
+}
+
+encode_one() {
+  local in="$1" outdir="$2"
 
   local fname base out
   fname="$(basename -- "$in")"
   base="${fname%.*}"
-  out="$outdir/${base}.xchr.mkv"
-
-  if [ -e "$out" ]; then
-    echo "Skip (output exists): $out"; return 0
-  fi
+  out="$(output_path "$in" "$outdir")"
 
   echo "Source: $in"
   echo "Target: $out"
@@ -300,16 +313,31 @@ run_one() {
 }
 
 if [ -f "$INPUT_PATH" ]; then
-  run_one "$INPUT_PATH" "$OUTDIR"
+  if needs_encode "$INPUT_PATH" "$OUTDIR"; then
+    run_one "$INPUT_PATH" "$OUTDIR"
+  fi
 elif [ -d "$INPUT_PATH" ]; then
   # We hold the lock, so these are from a killed run.
   find "$OUTDIR" -maxdepth 1 -name '*.xchr.tmp.*.mkv' -type f -delete
   shopt -s nullglob
+  queue=()
   for f in "$INPUT_PATH"/*; do
     [ -f "$f" ] || continue
-    run_one "$f" "$OUTDIR"
+    needs_encode "$f" "$OUTDIR" && queue+=("$f")
   done
   shopt -u nullglob
+
+  # Long runs are hard to judge otherwise. Failed files count as finished.
+  total=${#queue[@]}
+  echo "Files to process: $total"
+  finished=0
+  for f in "${queue[@]}"; do
+    echo
+    echo "=== File $(( finished + 1 ))/$total ==="
+    run_one "$f" "$OUTDIR"
+    finished=$(( finished + 1 ))
+    echo "Progress: $finished finished, $(( total - finished )) to go, $total total"
+  done
 else
   echo "ERROR: Not a file or directory: $INPUT_PATH"
   exit 1
