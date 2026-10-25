@@ -18,7 +18,8 @@ SKIP_LIST_NAME=".reencode-skip"
 CURRENT_TMP=""
 TOTAL_BYTES_BEFORE=0
 TOTAL_BYTES_AFTER=0
-FAILURES=0
+# Listed again in the summary, since the error itself is easy to lose in a long log.
+FAILED=()
 
 cleanup_tmp() {
   if [ -n "$CURRENT_TMP" ]; then
@@ -300,15 +301,16 @@ print_summary() {
     printf "After:  %s\n" "$(bytes_to_human "$TOTAL_BYTES_AFTER")"
     printf "Saved:  %s (%d%%)\n" "$(bytes_to_human "$saved")" "$(( saved * 100 / TOTAL_BYTES_BEFORE ))"
   fi
-  if (( FAILURES > 0 )); then
-    echo "Failed: $FAILURES file(s)"
+  if (( ${#FAILED[@]} > 0 )); then
+    echo "Failed: ${#FAILED[@]} file(s)"
+    printf '  %s\n' "${FAILED[@]}"
   fi
 }
 
 run_one() {
   if ! encode_one "$1" "$2"; then
     echo "Failed on: $1"
-    FAILURES=$(( FAILURES + 1 ))
+    FAILED+=("$1")
   fi
 }
 
@@ -344,4 +346,4 @@ else
 fi
 
 print_summary
-(( FAILURES == 0 ))
+(( ${#FAILED[@]} == 0 ))
