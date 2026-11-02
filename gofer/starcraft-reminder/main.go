@@ -32,15 +32,15 @@ curl -sSf -X POST "$WEBHOOK" \
 //
 //	gofer up ./gofer/starcraft-reminder
 //	printf '%s' "$DISCORD_WEBHOOK_URL" | gofer secret pipeline put starcraft-reminder discord-webhook @
-//	gofer pipeline subscribe starcraft-reminder cron thursday-1830-et -s expression="30 22,23 * * 4 *"
+//	gofer pipeline subscribe starcraft-reminder cron friday-1830-et -s expression="30 22,23 * * 5 *"
 //
-// The cron extension only runs on UTC, so the expression fires at both 22:30 and 23:30 UTC on Thursday. That
+// The cron extension only runs on UTC, so the expression fires at both 22:30 and 23:30 UTC on Friday. That
 // covers 18:30 ET in both EDT and EST, and the hour check at the top of the script drops whichever one isn't
 // 18:00 ET. Use printf rather than echo for the secret; the CLI keeps a trailing newline and that breaks curl.
 // To test it outside the schedule, skip the hour check with: gofer run start starcraft-reminder -v FORCE=true
 func main() {
 	err := sdk.NewPipeline("starcraft-reminder", "Starcraft Reminder").
-		Description("Posts a 30 minute warning to Discord before Thursday starcraft at 19:00 ET.").
+		Description("Posts a 30 minute warning to Discord before Friday starcraft at 19:00 ET.").
 		Tasks(
 			sdk.NewTask("post", "alpine:3").
 				Description("Post the reminder to Discord.").

@@ -39,7 +39,7 @@ apk add --no-cache curl jq >/dev/null
 test -n "$WEBHOOK" || { echo "WEBHOOK is not set"; exit 1; }
 
 MESSAGE=$(printf '%s\n' "$MESSAGES" | shuf -n 1)
-CTA="-# *emoji this message to confirm you're in for this coming Thursday*"
+CTA="-# *emoji this message to confirm you're in for this coming Friday*"
 # <@&801361771183996948> is the starcraftBoomers role, so the whole group gets pinged.
 BODY=$(printf '<@&801361771183996948> %s\n\n%s' "$MESSAGE" "$CTA")
 echo "picked: $MESSAGE"
@@ -60,7 +60,7 @@ curl -sSf -X POST "$WEBHOOK" \
 // secret; the CLI keeps a trailing newline and that breaks curl.
 func main() {
 	err := sdk.NewPipeline("starcraft-invite", "Starcraft Invite").
-		Description("Posts a random starcraft message to Discord asking who is in for Thursday.").
+		Description("Posts a random starcraft message to Discord asking who is in for Friday.").
 		Tasks(
 			sdk.NewTask("post", "alpine:3").
 				Description("Post a random roll call message to Discord.").
