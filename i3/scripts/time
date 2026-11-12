@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Function to add suffix to day
+# Function to add suffix to day. The <sup> tags need markup=pango in i3blocks.
 addSuffix() {
   case "$(date +%-d)" in
-    1|21|31) echo $(date +%-d)"st" ;;
-    2|22) echo $(date +%-d)"nd" ;;
-    3|23) echo $(date +%-d)"rd" ;;
-    *) echo $(date +%-d)"th" ;;
+    1|21|31) echo $(date +%-d)"<sup>st</sup>" ;;
+    2|22) echo $(date +%-d)"<sup>nd</sup>" ;;
+    3|23) echo $(date +%-d)"<sup>rd</sup>" ;;
+    *) echo $(date +%-d)"<sup>th</sup>" ;;
   esac
 }
 

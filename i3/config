@@ -4,13 +4,7 @@
 # config starts here: #
 #######################
 
-#font pango:Hack 9
 font pango:Inconsolata Light 11
-
-# default i3 tiling mode:
-workspace_layout default
-
-exec --no-startup-id picom --config ~/.config/picom/picom.conf
 
 ##############################
 # extra options for windows: #
@@ -18,17 +12,11 @@ exec --no-startup-id picom --config ~/.config/picom/picom.conf
 set $mod Mod1
 
 #border indicator on windows:
-new_window pixel 1
-
-# thin borders
-hide_edge_borders none
+default_border pixel 1
 
 # Set inner/outer gaps
 #gaps inner 6
 #gaps outer 3
-
-# show window title bars (not officially supported with i3gaps)
-#default_border normal
 
 # window title alignment
 #title_align center
@@ -51,16 +39,16 @@ bindsym $mod+9    workspace  $ws9
 bindsym $mod+0    workspace  $ws10
 
 # switch to workspace with numpad keys
-bindcode $mod+87 workspace 1
-bindcode $mod+88 workspace 2
-bindcode $mod+89 workspace 3
-bindcode $mod+83 workspace 4
-bindcode $mod+84 workspace 5
-bindcode $mod+85 workspace 6
-bindcode $mod+79 workspace 7
-bindcode $mod+80 workspace 8
-bindcode $mod+81 workspace 9
-bindcode $mod+90 workspace 10
+bindcode $mod+87 workspace $ws1
+bindcode $mod+88 workspace $ws2
+bindcode $mod+89 workspace $ws3
+bindcode $mod+83 workspace $ws4
+bindcode $mod+84 workspace $ws5
+bindcode $mod+85 workspace $ws6
+bindcode $mod+79 workspace $ws7
+bindcode $mod+80 workspace $ws8
+bindcode $mod+81 workspace $ws9
+bindcode $mod+90 workspace $ws10
 
 # switch to workspace with numlock numpad keys
 bindcode $mod+Mod2+87 workspace $ws1
@@ -86,52 +74,41 @@ bindsym $mod+Shift+8    move container to workspace  $ws8
 bindsym $mod+Shift+9    move container to workspace  $ws9
 bindsym $mod+Shift+0    move container to workspace  $ws10
 
-# move focused container to workspace with numpad keys
-bindcode $mod+Shift+Mod2+87 	move container to workspace  $ws1
-bindcode $mod+Shift+Mod2+88 	move container to workspace  $ws2
-bindcode $mod+Shift+Mod2+89 	move container to workspace  $ws3
-bindcode $mod+Shift+Mod2+83 	move container to workspace  $ws4
-bindcode $mod+Shift+Mod2+84 	move container to workspace  $ws5
-bindcode $mod+Shift+Mod2+85 	move container to workspace  $ws6
-bindcode $mod+Shift+Mod2+79 	move container to workspace  $ws7
-bindcode $mod+Shift+Mod2+80 	move container to workspace  $ws8
-bindcode $mod+Shift+Mod2+81 	move container to workspace  $ws9
-bindcode $mod+Shift+Mod2+90 	move container to workspace  $ws10
+# move focused container to workspace with numlock numpad keys
+bindcode $mod+Shift+Mod2+87     move container to workspace  $ws1
+bindcode $mod+Shift+Mod2+88     move container to workspace  $ws2
+bindcode $mod+Shift+Mod2+89     move container to workspace  $ws3
+bindcode $mod+Shift+Mod2+83     move container to workspace  $ws4
+bindcode $mod+Shift+Mod2+84     move container to workspace  $ws5
+bindcode $mod+Shift+Mod2+85     move container to workspace  $ws6
+bindcode $mod+Shift+Mod2+79     move container to workspace  $ws7
+bindcode $mod+Shift+Mod2+80     move container to workspace  $ws8
+bindcode $mod+Shift+Mod2+81     move container to workspace  $ws9
+bindcode $mod+Shift+Mod2+90     move container to workspace  $ws10
 
 # move focused container to workspace with numpad keys
-bindcode $mod+Shift+87 	 move container to workspace  $ws1
-bindcode $mod+Shift+88 	 move container to workspace  $ws2
-bindcode $mod+Shift+89 	 move container to workspace  $ws3
-bindcode $mod+Shift+83 	 move container to workspace  $ws4
-bindcode $mod+Shift+84 	 move container to workspace  $ws5
-bindcode $mod+Shift+85 	 move container to workspace  $ws6
-bindcode $mod+Shift+79 	 move container to workspace  $ws7
-bindcode $mod+Shift+80 	 move container to workspace  $ws8
-bindcode $mod+Shift+81 	 move container to workspace  $ws9
-bindcode $mod+Shift+90 	 move container to workspace  $ws10
+bindcode $mod+Shift+87   move container to workspace  $ws1
+bindcode $mod+Shift+88   move container to workspace  $ws2
+bindcode $mod+Shift+89   move container to workspace  $ws3
+bindcode $mod+Shift+83   move container to workspace  $ws4
+bindcode $mod+Shift+84   move container to workspace  $ws5
+bindcode $mod+Shift+85   move container to workspace  $ws6
+bindcode $mod+Shift+79   move container to workspace  $ws7
+bindcode $mod+Shift+80   move container to workspace  $ws8
+bindcode $mod+Shift+81   move container to workspace  $ws9
+bindcode $mod+Shift+90   move container to workspace  $ws10
 
 # resize window (you can also use the mouse for that):
 mode "resize" {
-# These bindings trigger as soon as you enter the resize mode
-# Pressing left will shrink the window's width.
-# Pressing right will grow the window's width.
-# Pressing up will shrink the window's height.
-# Pressing down will grow the window's height.
-    bindsym j resize shrink width 10 px or 10 ppt
-    bindsym k resize grow height 10 px or 10 ppt
-    bindsym l resize shrink height 10 px or 10 ppt
-    bindsym ntilde resize grow width 10 px or 10 ppt
-
-# same bindings, but for the arrow keys
-	bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Left resize shrink width 10 px or 10 ppt
     bindsym Down resize grow height 10 px or 10 ppt
     bindsym Up resize shrink height 10 px or 10 ppt
     bindsym Right resize grow width 10 px or 10 ppt
 
 # back to normal: Enter or Escape
-	bindsym Return mode "default"
+    bindsym Return mode "default"
     bindsym Escape mode "default"
-	bindsym $mod+r mode "default"
+    bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -139,10 +116,6 @@ bindsym $mod+r mode "resize"
 ######################################
 # keybindings for different actions: #
 ######################################
-
-exec --no-startup-id dunst
-exec_always --no-startup-id xinput set-prop "PIXA3854:00 093A:0274 Touchpad" "libinput Tapping Enabled" 0
-exec --no-startup-id xset r rate 175 20
 
 # Toggle office lights
 bindsym XF86Launch7 exec --no-startup-id ~/.bin/toggle-office-lights
@@ -159,19 +132,16 @@ bindsym $mod+Shift+q kill
 # exit-menu
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 
-# Lock the system
-exec_always --no-startup-id xss-lock -- ~/.config/i3/lock.sh
-bindsym $mod+Shift+z exec ~/.config/i3/lock.sh
+# Lock the screen. loginctl goes through xss-lock, so the same locker runs
+# whether we lock by hand, on idle, or right before suspend.
+bindsym $mod+Shift+z exec --no-startup-id loginctl lock-session
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to update i3)
-bindsym $mod+Shift+r restart, exec --no-startup-id autorandr -c
-
-# Backlight control
-bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5
-bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5
+# autorandr runs from exec_always below, so it isn't repeated here.
+bindsym $mod+Shift+r restart
 
 # change focus
 bindsym $mod+j focus left
@@ -206,8 +176,6 @@ bindsym $mod+v split v
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-exec --no-startup-id dunst
-
 # change container layout (stacked, tabbed, toggle split)
 #bindsym $mod+s layout stacking
 #bindsym $mod+g layout tabbed
@@ -225,18 +193,10 @@ bindsym $mod+a focus parent
 # open new empty workspace
 bindsym $mod+Shift+n exec ~/.config/i3/scripts/empty_workspace
 
-# Multimedia Keys
-
-# volume
+# volume (the mini keyboard sends these)
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -SIGRTMIN+10 i3blocks
-
-# audio control
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
 
 ## App shortcuts
 bindsym Insert exec flameshot gui
@@ -262,36 +222,23 @@ set $ws10 "10"
 # autostart applications/services on login: #
 #############################################
 
-# set powersavings for display:
-exec --no-startup-id xset s off -dpms
+exec --no-startup-id dunst
+
+# Blank the screen after 10 minutes idle, which xss-lock turns into a lock.
+# DPMS stays off so the monitor never powers down; it doesn't always come back.
+exec --no-startup-id xset s 600 600 -dpms
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock.sh
 
 # correct displays (makes it so docked position starts correctly)
 exec_always --no-startup-id autorandr -c
-exec_always --no-startup-id xfce4-power-manager
+
 ##################
 # floating rules #
 ##################
 
-# set floating (nontiling) for apps needing it
-for_window [class="Yad" instance="yad"] floating enable
-for_window [class="Galculator" instance="galculator"] floating enable
-for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
-
-# set floating (nontiling) for special apps
-for_window [class="Xsane" instance="xsane"] floating enable
-for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
-for_window [class="qt5ct" instance="qt5ct"] floating enable
-for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
-for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
-for_window [class="Pamac-manager"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Blueman-manager"] floating enable
 for_window [window_role="About"] floating enable
-
-# set border of floating window
-for_window [class="urxvt"] border pixel 1
-
-# set size of floating window
-#for_window [window_role="(?i)GtkFileChooserDialog"] resize set 640 480 #to set size of file choose dialog
-#for_window [class=".*"] resize set 640 480 #to change size of all floating windows
 
 # set position of floating window
 for_window [class=".*"] move position center
@@ -301,60 +248,53 @@ for_window [class=".*"] move position center
 ######################################
 
 # Define colors variables:
-set $darkbluetrans	#08052be6
-set $darkblue		#08052b
-set $lightblue		#5294e2
-set $urgentred		#e53935
-set $white		#ffffff
-set $black		#000000
-set $purple		#e345ff
-set $darkgrey		#383c4a
-set $grey		#b0b5bd
-set $mediumgrey		#8b8b8b
-set $yellowbrown	#e1b700
+set $darkblue       #08052b
+set $lightblue      #5294e2
+set $urgentred      #e53935
+set $white      #ffffff
+set $black      #000000
+set $purple     #e345ff
+set $darkgrey       #383c4a
+set $grey       #b0b5bd
+set $mediumgrey     #8b8b8b
+set $yellowbrown    #e1b700
 
 # define colors for windows:
-#class		        	border		bground		text		indicator	child_border
-client.focused		    $lightblue	$darkblue	$white		$purple		$mediumgrey
-client.unfocused	    $darkblue	$darkblue	$grey		$purple		$darkgrey
-client.focused_inactive	$darkblue	$darkblue	$grey		$purple		$black
-client.urgent		    $urgentred	$urgentred	$white		$purple		$yellowbrown
+#class                  border      bground     text        indicator   child_border
+client.focused          $lightblue  $darkblue   $white      $purple     $mediumgrey
+client.unfocused        $darkblue   $darkblue   $grey       $purple     $darkgrey
+client.focused_inactive $darkblue   $darkblue   $grey       $purple     $black
+client.urgent           $urgentred  $urgentred  $white      $purple     $yellowbrown
 
 ############################################
 # bar settings (input comes from i3blocks) #
 ############################################
 
-# Start i3bar to display a workspace bar
-# (plus the system information i3status finds out, if available)
 bar {
-		font pango:Droid Sans Mono Regular 10
-		status_command i3blocks -c ~/.config/i3/i3blocks.conf
-	    position top
-		tray_output primary
-		tray_padding 0
+    font pango:Droid Sans Mono 10
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    position top
+    tray_output primary
+    tray_padding 0
+    strip_workspace_numbers yes
 
-strip_workspace_numbers yes
-		    colors {
-		    separator          $purple
-		    background         $darkgrey
-		    statusline         $white
-		focused_workspace	$mediumgrey	   	$grey		$darkgrey	$purple
-		active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
-		inactive_workspace	$darkgrey   		$darkgrey	$grey		$purple
-		urgent_workspace	$urgentred	    	$urgentred	$white		$purple
-	}
+    colors {
+        separator          $purple
+        background         $darkgrey
+        statusline         $white
+        focused_workspace  $mediumgrey  $grey       $darkgrey  $purple
+        active_workspace   $lightblue   $mediumgrey $darkgrey  $purple
+        inactive_workspace $darkgrey    $darkgrey   $grey      $purple
+        urgent_workspace   $urgentred   $urgentred  $white     $purple
+    }
 }
 
 #####################################
 # Application menu handled by rofi: #
 #####################################
 
-## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
-
 bindsym $mod+d exec rofi -modi drun -show drun \
-		-config ~/.config/rofi/launchers/type-4/style-4.rasi
+        -config ~/.config/rofi/launchers/type-4/style-4.rasi
 
 bindsym $mod+t exec rofi -show window \
-		-config ~/.config/rofi/config.rasi
-
-exec_always mkfifo /tmp/xobpipe && tail -f /tmp/xobpipe | xob -t 2170 & disown
+        -config ~/.config/rofi/config.rasi

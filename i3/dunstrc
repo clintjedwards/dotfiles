@@ -1,75 +1,79 @@
+# Dunst notification config. Colors match the i3 bar so notifications look
+# like they belong to the desktop. See `man 5 dunst` for every option.
+
 [global]
     monitor = 0
     follow = mouse
-    width = 320
-    height = 120
+
+    # Geometry
+    width = (280, 420)
+    height = (0, 200)
     origin = top-right
-    offset = 15x15
-    scale = 0
+    offset = (16, 40)
     notification_limit = 5
+    gap_size = 6
 
-    progress_bar = true
-    progress_bar_height = 8
-    progress_bar_frame_width = 1
-    progress_bar_min_width = 150
-    progress_bar_max_width = 300
-
-    indicate_hidden = yes
-    transparency = 10
-    separator_height = 2
+    # Look
+    font = Droid Sans Mono 10
     padding = 12
     horizontal_padding = 14
-    text_icon_padding = 10
+    text_icon_padding = 12
     frame_width = 2
-    frame_color = "#89b4fa"
+    corner_radius = 6
+    separator_height = 2
     separator_color = frame
-    sort = yes
+    line_height = 2
 
-    font = JetBrainsMono Nerd Font 10
-    line_height = 0
+    # Text
     markup = full
     format = "<b>%s</b>\n%b"
     alignment = left
     vertical_alignment = center
-    show_age_threshold = 60
     ellipsize = middle
     ignore_newline = no
+    show_age_threshold = 60
     stack_duplicates = true
     hide_duplicate_count = false
     show_indicators = yes
 
+    # Icons
     icon_position = left
     min_icon_size = 32
     max_icon_size = 48
 
+    # Progress bars (volume, brightness, etc.)
+    progress_bar = true
+    progress_bar_height = 6
+    progress_bar_frame_width = 0
+    progress_bar_min_width = 150
+    progress_bar_max_width = 400
+    progress_bar_corner_radius = 3
+    highlight = "#5294e2"
+
+    # History and interaction
     sticky_history = yes
     history_length = 20
-
-    dmenu = /usr/bin/dmenu -p dunst:
+    dmenu = /usr/bin/rofi -dmenu -p dunst
     browser = /usr/bin/xdg-open
-
-    title = Dunst
-    class = Dunst
-    corner_radius = 8
-
     mouse_left_click = close_current
     mouse_middle_click = do_action, close_current
     mouse_right_click = close_all
 
 [urgency_low]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
-    frame_color = "#89b4fa"
+    background = "#383c4a"
+    foreground = "#b0b5bd"
+    frame_color = "#8b8b8b"
     timeout = 5
 
 [urgency_normal]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
-    frame_color = "#89b4fa"
+    background = "#383c4a"
+    foreground = "#ffffff"
+    frame_color = "#5294e2"
     timeout = 8
 
 [urgency_critical]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
-    frame_color = "#f38ba8"
+    background = "#383c4a"
+    foreground = "#ffffff"
+    frame_color = "#e53935"
+    highlight = "#e53935"
     timeout = 0
