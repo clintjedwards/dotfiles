@@ -71,8 +71,8 @@ pacman_packages=(
     # Virtual machines
     qemu-base libvirt virt-manager edk2-ovmf dnsmasq iptables
 
-    # Local LLM, used by sync-dotdocs to write commit messages for private
-    # repos. The cuda build is for the desktop's nvidia card.
+    # Local LLM, used by sync-dotdocs to write commit messages. The cuda
+    # build is for the desktop's nvidia card.
     ollama-cuda
 )
 

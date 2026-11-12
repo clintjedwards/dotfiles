@@ -87,19 +87,15 @@ source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Local model used for private repos. install.sh pulls the same one.
+# Local model that writes commit messages. install.sh pulls the same one.
 SYNC_LOCAL_MODEL="gemma4:12b"
 
-# Commit and push everything in a repo, with a generated commit message.
-#
-# _sync-repo <repo> [private]
-#
-# Normally Claude writes the message from the staged diff. Pass "private" for
-# repos whose contents shouldn't leave this machine; the local ollama model
-# writes it instead. If either one fails, the message falls back to a list of
-# changed files so syncing never gets stuck on it.
+# Commit and push everything in a repo, with a commit message written by the
+# local ollama model from the staged diff. It runs on this machine, so the
+# diff never leaves it. If the model fails, the message falls back to a list
+# of changed files so syncing never gets stuck on it.
 _sync-repo() {
-    local repo=$1 private=${2:-} msg files diff
+    local repo=$1 msg files diff
     git -C "$repo" add -A
     if git -C "$repo" diff --cached --quiet; then
         echo "$repo: nothing to commit"
@@ -113,17 +109,12 @@ _sync-repo() {
     # file.
     diff=$(git -C "$repo" diff --cached --stat --patch | head -c 40000)
 
-    if [ "$private" = private ]; then
-        # keep_alive 0 unloads the model from the GPU as soon as it's done.
-        msg=$(jq -n --arg model "$SYNC_LOCAL_MODEL" --arg sys "$prompt" --arg diff "$diff" \
-            '{model: $model, system: $sys, prompt: $diff, stream: false, keep_alive: 0,
-              options: {temperature: 0.2, num_ctx: 16384}}' |
-            curl -sf --max-time 120 http://localhost:11434/api/generate -d @- |
-            jq -r '.response // empty' 2>/dev/null)
-    else
-        msg=$(echo "$diff" |
-            claude -p --model haiku --tools "" --no-session-persistence "$prompt" 2>/dev/null)
-    fi
+    # keep_alive 0 unloads the model from the GPU as soon as it's done.
+    msg=$(jq -n --arg model "$SYNC_LOCAL_MODEL" --arg sys "$prompt" --arg diff "$diff" \
+        '{model: $model, system: $sys, prompt: $diff, stream: false, keep_alive: 0,
+          options: {temperature: 0.2, num_ctx: 16384}}' |
+        curl -sf --max-time 120 http://localhost:11434/api/generate -d @- |
+        jq -r '.response // empty' 2>/dev/null)
 
     if [ -z "$msg" ]; then
         files=$(git -C "$repo" diff --cached --name-only)
@@ -138,7 +129,7 @@ $(git -C "$repo" diff --cached --name-status)"
 
 sync-dotdocs() {
     _sync-repo "$HOME/Documents/dotfiles"
-    _sync-repo "$HOME/Documents/documentation" private
+    _sync-repo "$HOME/Documents/documentation"
 }
 
 fkill() {
