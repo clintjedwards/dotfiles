@@ -28,6 +28,16 @@ Applies to code comments, commit messages, docs, and anything else written into 
 - Skip filler and marketing words (e.g. "robust", "seamless", "leverage", "comprehensive")
 - Say why, not just what; don't narrate what the code already makes obvious
 
+## Changing The Local System
+
+Most config on this machine is a symlink into `~/Documents/dotfiles`, and `~/Documents/dotfiles/install.sh` is what sets up a new machine. Anything changed outside the repo is lost on the next install, so the repo is the source of truth.
+
+- Before editing a config file, check whether it's a symlink (`readlink`). If it is, edit the file in the dotfiles repo.
+- Never replace a symlink with a regular file; that quietly splits the config away from the repo.
+- New config worth keeping goes into the dotfiles repo, gets symlinked into place, and gets an entry in the `links` list in `install.sh`, so a fresh install sets it up too.
+- The same goes for packages, services, and system files under `/etc`: add them to `install.sh` instead of only changing this machine.
+- If something only exists on this machine and isn't tracked in the dotfiles repo, point it out rather than assuming it's fine.
+
 ## Communication
 
 - Direct, clear, concise answers

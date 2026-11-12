@@ -97,7 +97,12 @@ links=(
     "files/eastwood_theme.ghostty:$HOME/.config/ghostty/eastwood.theme"
     "files/editor/helix:$HOME/.config/helix"
     "files/flameshot.ini:$HOME/.config/flameshot/flameshot.ini"
-    "files/CLAUDE.md:$HOME/CLAUDE.md"
+    # Global agent instructions. Claude Code only reads AGENTS.md when no
+    # CLAUDE.md exists in the working dir or above, so a project with its own
+    # CLAUDE.md would skip ~/AGENTS.md. ~/.claude/CLAUDE.md always loads, so it
+    # just imports AGENTS.md to make sure Claude sees it everywhere.
+    "files/AGENTS.md:$HOME/AGENTS.md"
+    "files/claude/CLAUDE.md:$HOME/.claude/CLAUDE.md"
     "files/toggle-office-lights:$HOME/.bin/toggle-office-lights"
     "git-permalink:$HOME/.bin/git-permalink"
     "i3:$HOME/.config/i3"
