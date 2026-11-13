@@ -1,0 +1,3 @@
+# Folders mpv-sampler plays from, one per line. Only the files directly
+# inside each one are used; subfolders are not searched.
+/mnt/safe/weow

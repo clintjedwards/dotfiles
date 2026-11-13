@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+#
+# Copy files to weow on the NAS. Thunar's right-click "Upload to weow" runs
+# this without a terminal, so results also go to a desktop notification.
+#
+#   upload-to-weow FILE...
+#
+# Nothing in weow is ever overwritten. If any file's name is already there, it
+# says which one and uploads nothing.
+
+set -uo pipefail
+
+dest="/mnt/safe/weow"
+
+notify() {
+    echo "$1" >&2
+    notify-send -a upload-to-weow "Upload to weow" "$1" || true
+}
+
+if [[ $# -eq 0 ]]; then
+    echo "usage: upload-to-weow FILE..." >&2
+    exit 1
+fi
+
+if [[ ! -d $dest ]]; then
+    notify "$dest isn't there. Is the NAS mounted?"
+    exit 1
+fi
+
+# Check everything before copying anything, so a clash stops the whole upload
+# instead of leaving it half done.
+for file in "$@"; do
+    if [[ ! -f $file ]]; then
+        notify "Not a file, nothing uploaded: $file"
+        exit 1
+    fi
+    if [[ -e $dest/${file##*/} ]]; then
+        notify "Already in weow, nothing uploaded: ${file##*/}"
+        exit 1
+    fi
+done
+
+added=0
+failed=0
+for file in "$@"; do
+    name="${file##*/}"
+    # Copy under a hidden name, then rename, so a copy that's still going or
+    # died halfway never looks like a finished file.
+    if cp -- "$file" "$dest/.$name.part" && mv -- "$dest/.$name.part" "$dest/$name"; then
+        added=$((added + 1))
+    else
+        rm -f -- "$dest/.$name.part"
+        failed=$((failed + 1))
+    fi
+done
+
+msg="Uploaded $added"
+[[ $failed -eq 0 ]] || msg+=", $failed failed to copy"
+notify "$msg"
+[[ $failed -eq 0 ]]

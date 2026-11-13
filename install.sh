@@ -11,9 +11,26 @@
 # there's a history of what ran when. Full command output for the current run
 # goes to a temp log, which is printed if a step fails.
 #
+# Before running it, the fresh install needs:
+#   - A normal user with sudo. archinstall does this when you add a user and
+#     give them sudo; a bare pacstrap of base doesn't even include sudo.
+#   - NetworkManager as the network setup (archinstall's "NetworkManager"
+#     option). This script enables it, and a second network manager like iwd
+#     or systemd-networkd would fight with it after the reboot.
+#   - The headers for every installed kernel, e.g. linux-zen-headers for
+#     linux-zen. The nvidia driver is built against them, and without them it
+#     doesn't build. nvidia-utils also blacklists nouveau, so the card ends up
+#     with no driver and X won't start. Only matters on machines with nvidia.
+#   - git, to clone this repo.
+#
 # Run as your normal user (not root) from anywhere:
 #   git clone https://github.com/clintjedwards/dotfiles ~/Documents/dotfiles
 #   ~/Documents/dotfiles/install.sh
+#
+# If a step fails (usually an AUR build), fix it and run the script again; it
+# picks up where it left off. Reboot only after a clean run, because the
+# display manager is enabled late. Rebooting before that gives you a plain
+# text login instead of ly and i3.
 #
 # Other modes, neither of which changes anything:
 #   install.sh --check   show which steps are done and which would run
@@ -36,9 +53,9 @@ pacman_packages=(
     cpupower pacman-contrib networkmanager cups system-config-printer acpi
 
     # Desktop: X, i3, and the things the i3 config calls
-    xorg-server xorg-xinit xorg-xrandr xorg-xauth xorg-xev ly
+    xorg-server xorg-xinit xorg-xrandr xorg-xauth xorg-xev xorg-xset ly
     i3-wm i3blocks i3lock xss-lock dunst rofi autorandr arandr
-    flameshot xclip imagemagick lxappearance thunar sysstat
+    flameshot xclip imagemagick lxappearance thunar sysstat libnotify
 
     # Audio and bluetooth
     pipewire pipewire-alsa pipewire-pulse wireplumber gst-plugin-pipewire
@@ -51,7 +68,7 @@ pacman_packages=(
     ttf-inconsolata ttf-dejavu ttf-meslo-nerd woff2-font-awesome
 
     # Shell and CLI tools
-    zsh starship fzf eza bat ripgrep duf gdu htop doggo xh jq yazi vim
+    zsh starship fzf eza bat ripgrep duf gdu htop doggo xh jq yazi vim glow
 
     # Apps
     ghostty firefox obsidian signal-desktop mpv gimp inkscape
@@ -105,6 +122,10 @@ links=(
     "files/claude/CLAUDE.md:$HOME/.claude/CLAUDE.md"
     "files/toggle-office-lights:$HOME/.bin/toggle-office-lights"
     "git-permalink:$HOME/.bin/git-permalink"
+    # Finds sampler.lua and its list of folders through this link, so mpv's
+    # own config isn't touched.
+    "files/mpv-sampler/mpv-sampler:$HOME/.bin/mpv-sampler"
+    "files/upload-to-weow:$HOME/.bin/upload-to-weow"
     "i3:$HOME/.config/i3"
     "i3/dunstrc:$HOME/.config/dunst/dunstrc"
     "files/autorandr:$HOME/.config/autorandr"
@@ -348,6 +369,70 @@ link_configs() {
     done
 }
 
+# Right-click "Upload to weow" on any file in thunar. uca.xml isn't linked from
+# this repo because thunar replaces the file whenever actions are edited in
+# its settings, which would break the link. So the action gets added to
+# whatever's already there instead. Thunar runs the command without a shell,
+# so the path has to be absolute.
+THUNAR_UCA="$HOME/.config/Thunar/uca.xml"
+add_thunar_action_done() {
+    grep -F '<unique-id>upload-to-weow</unique-id>' "$THUNAR_UCA"
+}
+add_thunar_action() {
+    mkdir -p "$(dirname "$THUNAR_UCA")"
+    if [ ! -f "$THUNAR_UCA" ]; then
+        printf '<?xml version="1.0" encoding="UTF-8"?>\n<actions>\n</actions>\n' >"$THUNAR_UCA"
+    fi
+
+    local tmp
+    tmp="$(mktemp "$THUNAR_UCA.XXXXXX")"
+    {
+        grep -v '</actions>' "$THUNAR_UCA"
+        cat <<EOF
+<action>
+	<icon>document-send</icon>
+	<name>Upload to weow</name>
+	<submenu></submenu>
+	<unique-id>upload-to-weow</unique-id>
+	<command>$HOME/.bin/upload-to-weow %F</command>
+	<description>Copy to weow on the NAS</description>
+	<range></range>
+	<patterns>*</patterns>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+</actions>
+EOF
+    } >"$tmp"
+    mv "$tmp" "$THUNAR_UCA"
+
+    # A running thunar keeps its old list of actions until it restarts.
+    thunar -q || true
+}
+
+# Older copies of mpv-sampler kept their cache in ~/.vlc_durations* and put
+# the lua script in mpv's own scripts folder, where its keys took over every
+# mpv window. Carry the cached durations over so nothing gets probed again,
+# then remove the old files. This can go once no machine has them.
+SAMPLER_CACHE="$HOME/.cache/mpv-sampler"
+cleanup_old_sampler_done() {
+    [ ! -e ~/.vlc_durations_meta.tsv ] && [ ! -e ~/.vlc_durations.txt ] &&
+        [ ! -e ~/.config/mpv/scripts/mpv_sampler.lua ]
+}
+cleanup_old_sampler() {
+    if [ -f ~/.vlc_durations_meta.tsv ]; then
+        mkdir -p "$SAMPLER_CACHE"
+        # When both have the same file, the later line wins, so the new
+        # cache goes second.
+        cat ~/.vlc_durations_meta.tsv "$SAMPLER_CACHE/meta.tsv" 2>/dev/null >"$SAMPLER_CACHE/meta.tsv.new" || true
+        mv "$SAMPLER_CACHE/meta.tsv.new" "$SAMPLER_CACHE/meta.tsv"
+    fi
+    rm -f ~/.vlc_durations_meta.tsv ~/.vlc_durations.txt ~/.config/mpv/scripts/mpv_sampler.lua
+}
+
 link_keyboard_conf_done() {
     [ "$(readlink "$KEYBOARD_CONF")" = "$DOTFILES/files/xorg/20-keyboard-repeat.conf" ]
 }
@@ -493,6 +578,8 @@ all_steps() {
     "$run" "Install fonts" install_fonts
     "$run" "Install rofi themes" install_rofi_themes
     "$run" "Link config files" link_configs
+    "$run" "Add thunar upload action" add_thunar_action
+    "$run" "Clean up old mpv sampler files" cleanup_old_sampler
     "$run" "Link keyboard repeat config" link_keyboard_conf
     "$run" "Trust home network certificate" trust_home_cert
     "$run" "Enable services" enable_services

@@ -1,0 +1,184 @@
+#!/usr/bin/env bash
+#
+# Play random short clips from a pile of videos and images in mpv, one after
+# another, using sampler.lua next to this script.
+#
+#   mpv-sampler             play clips from the library
+#   mpv-sampler update      re-index the library; run it after adding files
+#   mpv-sampler mix DIR...  index and play only the given directories
+#
+# The library is every file directly inside the folders listed in the
+# directories file next to this script. See README.md for the full rundown.
+#
+# sampler.lua builds the whole playlist up front, picking a random start point
+# in each file, so it needs every file's duration before playback starts.
+# Running ffprobe over a big library on a network share is slow, so durations
+# are cached in meta.tsv, keyed on mtime and size, and only new or changed
+# files get probed again. update and mix share that cache.
+
+set -euo pipefail
+
+here="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+config="$here/directories"
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/mpv-sampler"
+library="$cache_dir/library.txt"
+meta="$cache_dir/meta.tsv"
+
+# Images have no duration of their own; this is how long each one is shown.
+image_seconds=30
+
+declare -A known=() seen=() scanned=()
+found=()
+
+die() {
+    echo "mpv-sampler: $*" >&2
+    exit 1
+}
+
+load_meta() {
+    [[ -f $meta ]] || return 0
+    local path mtime size dur
+    while IFS=$'\t' read -r path mtime size dur; do
+        known[$path]="$mtime|$size|$dur"
+    done <"$meta"
+}
+
+# Write back what we know, dropping files that were in a scanned directory
+# last time but aren't anymore, so deleted files don't pile up forever.
+# Written to a temp file and moved into place so a reader never sees half a file.
+save_meta() {
+    local tmp path mtime size dur
+    tmp="$(mktemp "$meta.XXXXXX")"
+    for path in "${!known[@]}"; do
+        if [[ -n ${scanned[${path%/*}]:-} && -z ${seen[$path]:-} ]]; then
+            continue
+        fi
+        IFS='|' read -r mtime size dur <<<"${known[$path]}"
+        printf '%s\t%s\t%s\t%s\n' "$path" "$mtime" "$size" "$dur" >>"$tmp"
+    done
+    mv "$tmp" "$meta"
+}
+
+# index DIR...: fills found[] with "path|duration" for every media file
+# directly inside the given directories. Subdirectories are not searched.
+index() {
+    local dir abs files entry path mtime size dur prev i probed reused
+    for dir in "$@"; do
+        if [[ ! -d $dir ]]; then
+            echo "warning: '$dir' isn't a directory, skipping it" >&2
+            continue
+        fi
+        abs="$(realpath "$dir")"
+        scanned[$abs]=1
+        echo "Scanning $abs"
+
+        # find prints mtime and size itself, which saves a stat per file.
+        mapfile -d '' files < <(find -L "$abs" -maxdepth 1 -type f -not -name '.*' \( \
+            -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi' -o -iname '*.mov' -o -iname '*.webm' -o \
+            -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.gif' -o -iname '*.bmp' \
+            \) -printf '%p\t%Ts\t%s\0')
+
+        probed=0
+        reused=0
+        for i in "${!files[@]}"; do
+            entry="${files[$i]}"
+            IFS=$'\t' read -r path mtime size <<<"$entry"
+            seen[$path]=1
+
+            dur=""
+            prev="${known[$path]:-}"
+            if [[ $prev == "$mtime|$size|"?* ]]; then
+                dur="${prev##*|}"
+                reused=$((reused + 1))
+            else
+                case "${path,,}" in
+                *.jpg | *.jpeg | *.png | *.webp | *.gif | *.bmp) dur=$image_seconds ;;
+                *) dur="$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$path" 2>/dev/null || true)" ;;
+                esac
+                probed=$((probed + 1))
+            fi
+            printf '\r[%d/%d] %d probed, %d cached' "$((i + 1))" "${#files[@]}" "$probed" "$reused"
+
+            if [[ -z $dur || $dur == N/A ]]; then
+                printf '\nwarning: no duration for %s, skipping it (corrupt or unsupported?)\n' "$path" >&2
+                continue
+            fi
+            known[$path]="$mtime|$size|$dur"
+            found+=("$path|$dur")
+        done
+        echo
+    done
+}
+
+# Same arguments for both modes. The script is passed in here instead of being
+# linked into ~/.config/mpv/scripts, so its key bindings (f, r, arrows, etc.)
+# don't take over every other time mpv is used.
+run_mpv() {
+    mpv --idle=yes --force-window=yes --script="$here/sampler.lua" \
+        --script-opts-append=sampler-library="$library" "$@"
+}
+
+# Prints the library directories, skipping comments and blank lines.
+library_dirs() {
+    [[ -f $config ]] || die "$config is missing. List the folders to sample in it, one per line"
+    grep -Ev '^[[:space:]]*(#|$)' "$config" || die "$config doesn't list any directories"
+}
+
+cmd_update() {
+    local dirs
+    mapfile -t dirs < <(library_dirs)
+    [[ ${#dirs[@]} -gt 0 ]] || exit 1
+
+    load_meta
+    index "${dirs[@]}"
+    save_meta
+
+    local tmp
+    tmp="$(mktemp "$library.XXXXXX")"
+    if [[ ${#found[@]} -gt 0 ]]; then
+        printf '%s\n' "${found[@]}" >"$tmp"
+    fi
+    mv "$tmp" "$library"
+    echo "Indexed ${#found[@]} files into $library"
+}
+
+cmd_play() {
+    if [[ ! -s $library ]]; then
+        cmd_update
+    fi
+    run_mpv
+}
+
+# Plays only the given directories. The library index is left alone, so f and F
+# inside mpv still pull from the whole library.
+cmd_mix() {
+    [[ $# -gt 0 ]] || die "usage: mpv-sampler mix DIR..."
+
+    load_meta
+    index "$@"
+    save_meta
+    [[ ${#found[@]} -gt 0 ]] || die "no usable media in the given directories"
+
+    # Global, not local, because the EXIT trap runs after this function returns.
+    mix_file="$(mktemp "$cache_dir/mix.XXXXXX")"
+    trap 'rm -f "$mix_file"' EXIT
+    printf '%s\n' "${found[@]}" >"$mix_file"
+
+    echo "Playing ${#found[@]} files"
+    run_mpv --script-opts-append=sampler-mix="$mix_file"
+}
+
+mkdir -p "$cache_dir"
+
+case "${1:-}" in
+"") cmd_play ;;
+update) cmd_update ;;
+mix)
+    shift
+    cmd_mix "$@"
+    ;;
+*)
+    echo "usage: mpv-sampler [update | mix DIR...]" >&2
+    exit 1
+    ;;
+esac
