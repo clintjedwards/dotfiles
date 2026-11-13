@@ -78,6 +78,7 @@ C-r = [
 
 [keys.normal.space]
 "A-w" = ":reflow"
+m = ":lsp-workspace-command open-preview" # markdown preview from mpls
 
 [keys.select]
 X = ["extend_line_up", "extend_to_line_bounds"]

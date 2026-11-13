@@ -113,8 +113,12 @@ index() {
 # Same arguments for both modes. The script is passed in here instead of being
 # linked into ~/.config/mpv/scripts, so its key bindings (f, r, arrows, etc.)
 # don't take over every other time mpv is used.
+#
+# mpv shows a still image for --image-display-duration (5s by default) and then
+# moves on, whatever length the EDL clip claims, so that has to be set too.
 run_mpv() {
     mpv --idle=yes --force-window=yes --script="$here/sampler.lua" \
+        --image-display-duration="$image_seconds" \
         --script-opts-append=sampler-library="$library" "$@"
 }
 

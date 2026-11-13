@@ -68,7 +68,7 @@ pacman_packages=(
     ttf-inconsolata ttf-dejavu ttf-meslo-nerd woff2-font-awesome
 
     # Shell and CLI tools
-    zsh starship fzf eza bat ripgrep duf gdu htop doggo xh jq yazi vim glow
+    zsh starship fzf eza bat ripgrep duf gdu htop doggo xh jq yazi vim
 
     # Apps
     ghostty firefox obsidian signal-desktop mpv gimp inkscape
@@ -126,6 +126,7 @@ links=(
     # own config isn't touched.
     "files/mpv-sampler/mpv-sampler:$HOME/.bin/mpv-sampler"
     "files/upload-to-weow:$HOME/.bin/upload-to-weow"
+    "files/mpv/upload-to-weow.lua:$HOME/.config/mpv/scripts/upload-to-weow.lua"
     "i3:$HOME/.config/i3"
     "i3/dunstrc:$HOME/.config/dunst/dunstrc"
     "files/autorandr:$HOME/.config/autorandr"

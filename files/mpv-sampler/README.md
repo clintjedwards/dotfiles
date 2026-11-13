@@ -43,12 +43,13 @@ mix session switches to the whole library.
 | `Enter`, `→`  | Next clip                                          |
 | `←`           | Previous clip                                      |
 | `↑`, `↓`      | Seek 60 seconds forward or back within the clip    |
+| `U`, then `y` | Upload this file to weow (see below)               |
 
 Images show for 30 seconds. Files shorter than 200 seconds play in full, and
 `r` doesn't do anything on them.
 
-These keys only apply in mpv windows opened by `mpv-sampler`. Opening a video
-in mpv any other way gets the normal mpv keys.
+Apart from `U`, these keys only apply in mpv windows opened by `mpv-sampler`.
+Opening a video in mpv any other way gets the normal mpv keys, plus `U`.
 
 ## How it stays fast
 
@@ -74,8 +75,24 @@ Neither file belongs in this repo, since they list every file name.
 - **Nothing plays**: run `mpv-sampler update` in a terminal and read the
   output. The usual cause is the NAS not being mounted.
 
-## Related
+## Uploading to weow
 
-`upload-to-weow` (in `files/`) copies files to `/mnt/safe/weow` and is what
-Thunar's right-click "Upload to weow" runs. It refuses to overwrite: if any of
-the selected files already exists there, it says which one and copies nothing.
+`upload-to-weow` (in `files/`) copies files to `/mnt/safe/weow`. There are
+three ways to run it:
+
+- **In mpv**: press `U` (Shift+U), then `y` to confirm, to upload the file
+  that's playing. The prompt names the file and gives up after 10 seconds, or
+  when you press `n`, so a stray keypress can't upload anything. This works
+  in every mpv window, not just the sampler. In the sampler it uploads the
+  whole source file, not just the clip. The result shows on screen when the
+  copy finishes, and mpv keeps playing in the meantime. The key comes from
+  `files/mpv/upload-to-weow.lua`, which `install.sh` links into
+  `~/.config/mpv/scripts`.
+- **In Thunar**: right-click one or more files and pick "Upload to weow".
+- **In a terminal**: `upload-to-weow FILE...`
+
+It never overwrites anything. If any of the files already exists in weow, it
+says which one and copies nothing, so a sampler session playing from weow
+itself will just tell you the file is already there. Results also show up as
+a desktop notification. Files are copied under a hidden name and renamed when
+done, so a copy that fails partway never looks like a finished file.
