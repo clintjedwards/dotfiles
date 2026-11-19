@@ -65,7 +65,7 @@ pacman_packages=(
     nvidia-open-dkms nvidia-utils nvidia-settings mesa-utils
 
     # Fonts
-    ttf-inconsolata ttf-dejavu ttf-meslo-nerd woff2-font-awesome
+    ttf-inconsolata ttf-dejavu ttf-droid ttf-meslo-nerd woff2-font-awesome
 
     # Shell and CLI tools
     zsh starship fzf eza bat ripgrep duf gdu htop doggo xh jq yazi vim
