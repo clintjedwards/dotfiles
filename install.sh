@@ -79,7 +79,7 @@ pacman_packages=(
     ttf-inconsolata ttf-dejavu ttf-droid ttf-meslo-nerd woff2-font-awesome
 
     # Shell and CLI tools
-    zsh starship fzf eza bat ripgrep duf gdu htop doggo xh jq yazi vim
+    zsh starship fzf eza bat ripgrep duf gdu htop doggo xh jq yazi vim fastfetch
 
     # Apps
     ghostty firefox obsidian signal-desktop mpv gimp inkscape yt-dlp flatpak
@@ -88,7 +88,11 @@ pacman_packages=(
     go gopls rustup rust-analyzer npm typescript-language-server
     bash-language-server marksman dprint typst typstyle hurl tidy github-cli
     docker docker-buildx lazydocker terraform ansible-core aws-cli-v2
-    python-pip python-tinycss2 websocat vhs gram musl
+    python-pip python-tinycss2 websocat vhs gram musl codebook-lsp
+
+    # OpenSSL 3 libraries next to the system's OpenSSL 4. See
+    # install_aur_packages for why.
+    openssl-3
 )
 
 aur_packages=(
@@ -184,11 +188,12 @@ case "$MACHINE" in
         # (with ZFS for the root), firmware, and a pile of base packages.
         pacman_packages+=(
             vulkan-intel intel-media-driver sof-firmware
-            brightnessctl power-profiles-daemon
+            brightnessctl power-profiles-daemon tailscale ufw
         )
         # power-profiles-daemon instead of cpupower; they fight over the
-        # same CPU settings.
-        services+=(power-profiles-daemon.service)
+        # same CPU settings. ufw blocks incoming connections, since the
+        # laptop joins networks I don't control.
+        services+=(power-profiles-daemon.service tailscaled.service ufw.service)
         links+=("machines/laptop/Xresources:$HOME/.Xresources")
         system_links+=("machines/laptop/xorg/30-touchpad.conf:/etc/X11/xorg.conf.d/30-touchpad.conf")
         diff_ignore+=(
@@ -334,11 +339,21 @@ update_system() {
 }
 
 # pacman -T prints whichever of the given packages aren't installed.
+#
+# Anything already installed as some other package's dependency gets marked
+# explicit too. Otherwise removing that other package with -Rs takes it
+# along; CachyOS's fish and i3 configs had pulled in zsh, fzf, eza, bat, and
+# cifs-utils that way.
+installed_as_dep() {
+    comm -12 <(pacman -Qqd | sort) <(printf '%s\n' "$@" | sort -u)
+}
 install_packages_done() {
-    [ -z "$(pacman -T "${pacman_packages[@]}")" ]
+    [ -z "$(pacman -T "${pacman_packages[@]}")" ] &&
+        [ -z "$(installed_as_dep "${pacman_packages[@]}")" ]
 }
 install_packages() {
     sudo pacman -S --needed --noconfirm "${pacman_packages[@]}"
+    sudo pacman -D --asexplicit "${pacman_packages[@]}"
 }
 
 install_yay_done() {
@@ -353,10 +368,18 @@ install_yay() {
 }
 
 install_aur_packages_done() {
-    [ -z "$(pacman -T "${aur_packages[@]}")" ]
+    [ -z "$(pacman -T "${aur_packages[@]}")" ] &&
+        [ -z "$(installed_as_dep "${aur_packages[@]}")" ]
 }
+# arch-manwarn 1.4.1 locks an openssl-sys that refuses to build against
+# OpenSSL 4, which Arch moved to. Pointing the build at the openssl-3 package
+# fixes it. This applies to every AUR build here, but only Rust crates that
+# use openssl-sys read these. Drop it, and openssl-3 from pacman_packages,
+# once the AUR package updates its Cargo.lock.
 install_aur_packages() {
-    yay -S --needed --noconfirm "${aur_packages[@]}"
+    OPENSSL_INCLUDE_DIR=/usr/include/openssl-3 OPENSSL_LIB_DIR=/usr/lib/openssl-3 \
+        yay -S --needed --noconfirm "${aur_packages[@]}"
+    sudo pacman -D --asexplicit "${aur_packages[@]}"
 }
 
 install_flatpaks_done() {
