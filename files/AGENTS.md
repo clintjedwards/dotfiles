@@ -27,6 +27,13 @@ Applies to code comments, commit messages, docs, and anything else written into 
 - No em-dashes; use commas, semicolons, or separate sentences instead
 - Skip filler and marketing words (e.g. "robust", "seamless", "leverage", "comprehensive")
 - Say why, not just what; don't narrate what the code already makes obvious
+- Comments describe the code as it is now; don't summarize how it used to work or compare it to the old approach unless that history actually helps the next reader (e.g. explains a non-obvious constraint). Ask if unsure
+
+## Git
+
+- Don't run any git command that changes state (add, restore, commit, tag, push, stash, etc.) unless I ask for it. Leave
+  changes in the working tree and give me the commands to run instead. Read-only commands like status, diff, and log
+  are fine.
 
 ## Changing The Local System
 
