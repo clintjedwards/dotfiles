@@ -74,12 +74,6 @@ bindsym $mod+r mode "resize"
 # keybindings for different actions: #
 ######################################
 
-# Toggle office lights
-bindsym XF86Launch7 exec --no-startup-id ~/.bin/toggle-office-lights
-
-# Sometimes the monitor wont start, give it a kick.
-bindsym $mod+F8 exec xrandr --auto
-
 # start a terminal
 bindsym $mod+Return exec ghostty
 
@@ -97,7 +91,6 @@ bindsym $mod+Shift+z exec --no-startup-id loginctl lock-session
 bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to update i3)
-# autorandr runs from exec_always below, so it isn't repeated here.
 bindsym $mod+Shift+r restart
 
 # change focus
@@ -148,7 +141,7 @@ bindsym $mod+a focus parent
 # open new empty workspace
 bindsym $mod+Shift+n exec ~/.config/i3/scripts/empty_workspace
 
-# volume (the mini keyboard sends these)
+# volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -SIGRTMIN+10 i3blocks
@@ -164,12 +157,8 @@ exec --no-startup-id dunst
 
 # No idle lock; locking is manual ($mod+Shift+z) or on suspend. The idle timer
 # only counts keyboard and mouse input, so it locked during videos and calls.
-# DPMS stays off so the monitor never powers down; it doesn't always come back.
-exec --no-startup-id xset s off -dpms
+# Screen blanking is per machine, in machines/*/i3.conf.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock.sh
-
-# correct displays (makes it so docked position starts correctly)
-exec_always --no-startup-id autorandr -c
 
 ##################
 # floating rules #
@@ -211,7 +200,8 @@ client.urgent           $urgentred  $urgentred  $white      $purple     $yellowb
 
 bar {
     font pango:Droid Sans Mono 10
-    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    # Each machine has its own blocks (the laptop adds wifi and battery).
+    status_command i3blocks -c ~/.config/machine/i3blocks.conf
     position top
     tray_output primary
     tray_padding 0
@@ -237,3 +227,10 @@ bindsym $mod+d exec rofi -modi drun -show drun \
 
 bindsym $mod+t exec rofi -show window \
         -config ~/.config/rofi/config.rasi
+
+#############################################
+# per machine settings:                     #
+#############################################
+
+# install.sh links ~/.config/machine to machines/desktop or machines/laptop.
+include ~/.config/machine/i3.conf

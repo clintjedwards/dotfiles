@@ -32,6 +32,11 @@
 # display manager is enabled late. Rebooting before that gives you a plain
 # text login instead of ly and i3.
 #
+# Most config is shared. The few things that differ between the desktop and
+# the laptop live in machines/<name>/, and the lists below get extra entries
+# for that machine at the end of the Packages section. The machine comes from
+# `hostnamectl chassis` (desktop or laptop); set DOTFILES_MACHINE to override.
+#
 # Other modes, neither of which changes anything:
 #   install.sh --check   show which steps are done and which would run
 #   install.sh --diff    list installed packages that aren't tracked below
@@ -42,6 +47,12 @@ DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG="$(mktemp -t dotfiles-install.XXXXXX.log)"
 HISTORY="$HOME/.local/state/dotfiles/install.log"
 
+MACHINE="${DOTFILES_MACHINE:-$(hostnamectl chassis)}"
+if [ ! -d "$DOTFILES/machines/$MACHINE" ]; then
+    echo "No machines/$MACHINE in the dotfiles. Set DOTFILES_MACHINE to one of: $(ls "$DOTFILES/machines")"
+    exit 1
+fi
+
 ##############
 # Packages   #
 ##############
@@ -50,7 +61,7 @@ pacman_packages=(
     # System
     base-devel git openssh rsync wget unzip zip man-db less tree strace
     net-tools cifs-utils nfs-utils dosfstools gptfdisk mdadm zram-generator
-    cpupower pacman-contrib networkmanager cups system-config-printer acpi
+    pacman-contrib networkmanager cups system-config-printer acpi
 
     # Desktop: X, i3, and the things the i3 config calls
     xorg-server xorg-xinit xorg-xrandr xorg-xauth xorg-xev xorg-xset ly
@@ -61,8 +72,8 @@ pacman_packages=(
     pipewire pipewire-alsa pipewire-pulse wireplumber gst-plugin-pipewire
     libpulse pavucontrol bluez bluez-utils blueman
 
-    # Graphics
-    nvidia-open-dkms nvidia-utils nvidia-settings mesa-utils
+    # Graphics; the drivers themselves are per machine below
+    mesa-utils
 
     # Fonts
     ttf-inconsolata ttf-dejavu ttf-droid ttf-meslo-nerd woff2-font-awesome
@@ -71,32 +82,18 @@ pacman_packages=(
     zsh starship fzf eza bat ripgrep duf gdu htop doggo xh jq yazi vim
 
     # Apps
-    ghostty firefox obsidian signal-desktop mpv gimp inkscape
-    obs-studio openscad yt-dlp flatpak
+    ghostty firefox obsidian signal-desktop mpv gimp inkscape yt-dlp flatpak
 
     # Development
     go gopls rustup rust-analyzer npm typescript-language-server
     bash-language-server marksman dprint typst typstyle hurl tidy github-cli
     docker docker-buildx lazydocker terraform ansible-core aws-cli-v2
     python-pip python-tinycss2 websocat vhs gram musl
-
-    # Keyboards and microcontrollers
-    qmk avrdude avr-binutils avr-libc dfu-programmer dfu-util
-    arm-none-eabi-binutils arm-none-eabi-gcc arm-none-eabi-newlib
-    riscv64-elf-binutils riscv64-elf-gcc riscv64-elf-newlib
-
-    # Virtual machines
-    qemu-base libvirt virt-manager edk2-ovmf dnsmasq iptables
-
-    # Local LLM, used by sync-dotdocs to write commit messages. The cuda
-    # build is for the desktop's nvidia card.
-    ollama-cuda
 )
 
 aur_packages=(
-    claude-code aseprite brother-hll2340dw ebgaramond-otf mpls-git
-    proton-ge-custom-bin rpfm-bin scooter terraform-ls vial-appimage
-    arch-manwarn
+    claude-code brother-hll2340dw ebgaramond-otf mpls-git
+    scooter terraform-ls arch-manwarn
 )
 
 flatpak_apps=(
@@ -113,6 +110,8 @@ links=(
     "files/ghostty.config:$HOME/.config/ghostty/config"
     "files/eastwood_theme.ghostty:$HOME/.config/ghostty/eastwood.theme"
     "files/editor/helix:$HOME/.config/helix"
+    # i3 includes this machine's i3.conf and bar from here.
+    "machines/$MACHINE:$HOME/.config/machine"
     "files/flameshot.ini:$HOME/.config/flameshot/flameshot.ini"
     # Global agent instructions. Claude Code only reads AGENTS.md when no
     # CLAUDE.md exists in the working dir or above, so a project with its own
@@ -129,7 +128,11 @@ links=(
     "files/mpv/upload-to-weow.lua:$HOME/.config/mpv/scripts/upload-to-weow.lua"
     "i3:$HOME/.config/i3"
     "i3/dunstrc:$HOME/.config/dunst/dunstrc"
-    "files/autorandr:$HOME/.config/autorandr"
+)
+
+# Same format as links, but under /etc, so they're linked with sudo.
+system_links=(
+    "files/xorg/20-keyboard-repeat.conf:/etc/X11/xorg.conf.d/20-keyboard-repeat.conf"
 )
 
 # Things --diff shouldn't flag: the Arch installer sets these up (kernels,
@@ -145,14 +148,59 @@ diff_ignore=(
 )
 
 services=(
-    NetworkManager.service bluetooth.service cpupower.service
-    fstrim.timer ly@tty2.service ollama.service
+    NetworkManager.service bluetooth.service fstrim.timer ly@tty2.service
 )
 
-# Keep in sync with SYNC_LOCAL_MODEL in files/zsh/zshrc.
-OLLAMA_MODEL="gemma4:12b"
+# Only the desktop runs ollama. Keep in sync with SYNC_LOCAL_MODEL in
+# files/zsh/zshrc.
+OLLAMA_MODEL=""
 
-KEYBOARD_CONF=/etc/X11/xorg.conf.d/20-keyboard-repeat.conf
+case "$MACHINE" in
+    desktop)
+        pacman_packages+=(
+            nvidia-open-dkms nvidia-utils nvidia-settings cpupower
+
+            # Local LLM, used by sync-dotdocs to write commit messages.
+            ollama-cuda
+
+            # Keyboards and microcontrollers
+            qmk avrdude avr-binutils avr-libc dfu-programmer dfu-util
+            arm-none-eabi-binutils arm-none-eabi-gcc arm-none-eabi-newlib
+            riscv64-elf-binutils riscv64-elf-gcc riscv64-elf-newlib
+
+            # Virtual machines
+            qemu-base libvirt virt-manager edk2-ovmf dnsmasq iptables
+
+            # Recording and 3D modeling
+            obs-studio openscad
+        )
+        aur_packages+=(vial-appimage proton-ge-custom-bin rpfm-bin)
+        services+=(cpupower.service ollama.service)
+        links+=("machines/desktop/autorandr:$HOME/.config/autorandr")
+        OLLAMA_MODEL="gemma4:12b"
+        ;;
+    laptop)
+        # The laptop runs CachyOS, whose installer brings its own kernels
+        # (with ZFS for the root), firmware, and a pile of base packages.
+        pacman_packages+=(
+            vulkan-intel intel-media-driver sof-firmware
+            brightnessctl power-profiles-daemon
+        )
+        # power-profiles-daemon instead of cpupower; they fight over the
+        # same CPU settings.
+        services+=(power-profiles-daemon.service)
+        links+=("machines/laptop/Xresources:$HOME/.Xresources")
+        system_links+=("machines/laptop/xorg/30-touchpad.conf:/etc/X11/xorg.conf.d/30-touchpad.conf")
+        diff_ignore+=(
+            linux-cachyos linux-cachyos-headers linux-cachyos-zfs
+            linux-cachyos-lts linux-cachyos-lts-headers linux-cachyos-lts-zfs
+            zfs-utils intel-ucode chwd cachyos-keyring cachyos-mirrorlist
+            cachyos-v3-mirrorlist cachyos-v4-mirrorlist cachyos-hooks
+            cachyos-settings cachyos-rate-mirrors systemd-boot-manager
+        )
+        ;;
+esac
+
 HOME_CERT_LABEL='*.clintjedwards.home'
 NAS_SHARES=(safe media)
 
@@ -223,21 +271,24 @@ check_step() {
 # List anything installed on this machine that the lists above don't know
 # about, so the lists can stay in sync with what's actually in use.
 diff_packages() {
-    local ignored tracked
-    ignored="$(printf '%s\n' "${diff_ignore[@]}" | sort)"
+    local known tracked
+    # Both package lists count for both checks, since a package can be in the
+    # AUR on Arch but in a repo on CachyOS (claude-code is).
+    known="$(printf '%s\n' "${diff_ignore[@]}" "${pacman_packages[@]}" "${aur_packages[@]}" | sort -u)"
 
-    tracked="$(printf '%s\n' "${pacman_packages[@]}" | sort)"
     headline "Repo packages installed but not in pacman_packages"
-    comm -23 <(pacman -Qqen | sort) <(sort -u <(echo "$tracked") <(echo "$ignored")) | sed 's/^/  /'
+    comm -23 <(pacman -Qqen | sort) <(echo "$known") | sed 's/^/  /'
 
     # -debug packages come along with AUR builds; nobody installs them on purpose.
-    tracked="$(printf '%s\n' "${aur_packages[@]}" | sort)"
     headline "AUR packages installed but not in aur_packages"
-    comm -23 <(pacman -Qqem | grep -v -- '-debug$' | sort) <(sort -u <(echo "$tracked") <(echo "$ignored")) | sed 's/^/  /'
+    comm -23 <(pacman -Qqem | grep -v -- '-debug$' | sort) <(echo "$known") | sed 's/^/  /'
 
-    tracked="$(printf '%s\n' "${flatpak_apps[@]}" | sort)"
-    headline "Flatpaks installed but not in flatpak_apps"
-    comm -23 <(flatpak list --app --columns=application | sort) <(echo "$tracked") | sed 's/^/  /'
+    # flatpak itself comes from pacman_packages, so it may not be here yet.
+    if command -v flatpak >/dev/null; then
+        tracked="$(printf '%s\n' "${flatpak_apps[@]}" | sort)"
+        headline "Flatpaks installed but not in flatpak_apps"
+        comm -23 <(flatpak list --app --columns=application | sort) <(echo "$tracked") | sed 's/^/  /'
+    fi
 }
 
 summary() {
@@ -266,13 +317,15 @@ clone() {
     GIT_CONFIG_GLOBAL=/dev/null git clone "$@"
 }
 
-# Ours enables multilib, for 32-bit software like steam.
+# Ours enables multilib, for 32-bit software like steam. Each machine has its
+# own because the laptop's CachyOS needs its repos listed too.
+PACMAN_CONF="$DOTFILES/machines/$MACHINE/pacman.conf"
 install_pacman_conf_done() {
-    cmp -s "$DOTFILES/files/pacman.conf" /etc/pacman.conf
+    cmp -s "$PACMAN_CONF" /etc/pacman.conf
 }
 install_pacman_conf() {
     sudo cp /etc/pacman.conf "/etc/pacman.conf.bak.$(date +%s)"
-    sudo install -m 644 "$DOTFILES/files/pacman.conf" /etc/pacman.conf
+    sudo install -m 644 "$PACMAN_CONF" /etc/pacman.conf
 }
 
 # No done check; pacman already does nothing when everything is current.
@@ -434,12 +487,19 @@ cleanup_old_sampler() {
     rm -f ~/.vlc_durations_meta.tsv ~/.vlc_durations.txt ~/.config/mpv/scripts/mpv_sampler.lua
 }
 
-link_keyboard_conf_done() {
-    [ "$(readlink "$KEYBOARD_CONF")" = "$DOTFILES/files/xorg/20-keyboard-repeat.conf" ]
+link_system_configs_done() {
+    local pair
+    for pair in "${system_links[@]}"; do
+        [ "$(readlink "${pair#*:}")" = "$DOTFILES/${pair%%:*}" ] || return 1
+    done
 }
-link_keyboard_conf() {
-    sudo mkdir -p "$(dirname "$KEYBOARD_CONF")"
-    sudo ln -sfn "$DOTFILES/files/xorg/20-keyboard-repeat.conf" "$KEYBOARD_CONF"
+link_system_configs() {
+    local pair dest
+    for pair in "${system_links[@]}"; do
+        dest="${pair#*:}"
+        sudo mkdir -p "$(dirname "$dest")"
+        sudo ln -sfn "$DOTFILES/${pair%%:*}" "$dest"
+    done
 }
 
 # Trust the home network's wildcard cert so internal https sites work.
@@ -581,7 +641,7 @@ all_steps() {
     "$run" "Link config files" link_configs
     "$run" "Add thunar upload action" add_thunar_action
     "$run" "Clean up old mpv sampler files" cleanup_old_sampler
-    "$run" "Link keyboard repeat config" link_keyboard_conf
+    "$run" "Link X config files" link_system_configs
     "$run" "Trust home network certificate" trust_home_cert
     "$run" "Enable services" enable_services
 
@@ -589,7 +649,9 @@ all_steps() {
     "$run" "Install zsh plugins" install_zsh_plugins
     "$run" "Set up rust and node" setup_dev_tools
     "$run" "Build helix" install_helix
-    "$run" "Download local LLM model" pull_ollama_model
+    if [ -n "$OLLAMA_MODEL" ]; then
+        "$run" "Download local LLM model" pull_ollama_model
+    fi
 
     if [ "$run" = check_step ] || [[ "$want_nas" =~ ^[Yy]$ ]]; then
         headline "NAS and keys"

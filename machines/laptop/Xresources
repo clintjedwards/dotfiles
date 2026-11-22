@@ -1,0 +1,9 @@
+! The panel is about 200 DPI, so without this everything draws at the X default
+! 96 and comes out tiny. 144 is 1.5x; 192 (2x) leaves too little room on a 13 inch
+! screen. ly merges ~/.Xresources before i3 starts, so i3, the bar, and every
+! app launched from it pick this up. Linked to ~/.Xresources by install.sh.
+Xft.dpi: 144
+
+! The default 24px cursor, scaled by the same 1.5x.
+Xcursor.theme: capitaine-cursors
+Xcursor.size: 36
