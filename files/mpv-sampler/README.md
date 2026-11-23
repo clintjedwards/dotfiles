@@ -53,9 +53,10 @@ Files added part way through a pass (after an `update`) go on the end of the
 current order, so you still see them this pass. Deleted files are skipped.
 
 None of the sampler keys apply here, since you're watching whole files. mpv's
-usual keys work: `Enter` or `>` for the next file, `<` for the previous one,
-and the arrows to seek. `U` still uploads to weow. The order and progress are
-kept in `~/.cache/mpv-sampler/watch/`.
+usual keys work, plus the arrow keys from `files/mpv/input.conf`: `→` or
+`Enter` for the next file, `←` for the previous one, `↑`/`↓` to seek a minute
+and `Shift+↑`/`Shift+↓` to seek 10 seconds. `U` still uploads to weow. The
+order and progress are kept in `~/.cache/mpv-sampler/watch/`.
 
 ## Keys inside mpv
 
@@ -68,13 +69,16 @@ kept in `~/.cache/mpv-sampler/watch/`.
 | `Enter`, `→`  | Next clip                                          |
 | `←`           | Previous clip                                      |
 | `↑`, `↓`      | Seek 60 seconds forward or back within the clip    |
+| `Shift+↑/↓`   | Seek 10 seconds forward or back within the clip    |
 | `U`, then `y` | Upload this file to weow (see below)               |
 
 Images show for 30 seconds. Files shorter than 200 seconds play in full, and
 `r` doesn't do anything on them.
 
 Apart from `U`, these keys only apply in mpv windows opened by `mpv-sampler`.
-Opening a video in mpv any other way gets the normal mpv keys, plus `U`.
+Opening a video in mpv any other way gets the normal mpv keys, plus `U` and
+the arrow keys from `files/mpv/input.conf` (same as above, except the seeks
+aren't limited to a clip).
 
 ## How it stays fast
 

@@ -121,6 +121,10 @@ pacman_packages=(
     # OpenSSL 3 libraries next to the system's OpenSSL 4. See
     # install_aur_packages for why.
     openssl-3
+
+    # brother-hll2340dw needs it, but its PKGBUILD only adds it on x86_64 and
+    # its .SRCINFO leaves it out, so yay never installs it and the build fails.
+    lib32-glibc
 )
 
 aur_packages=(
@@ -140,7 +144,7 @@ links=(
     "files/gpg-agent.conf:$HOME/.gnupg/gpg-agent.conf"
     "files/starship.toml:$HOME/.config/starship.toml"
     "files/ghostty.config:$HOME/.config/ghostty/config"
-    "files/eastwood_theme.ghostty:$HOME/.config/ghostty/eastwood.theme"
+    "files/eastwood_theme.ghostty:$HOME/.config/ghostty/themes/eastwood"
     "files/editor/helix:$HOME/.config/helix"
     # i3 includes this machine's i3.conf and bar from here.
     "machines/$MACHINE:$HOME/.config/machine"
@@ -158,6 +162,7 @@ links=(
     "files/mpv-sampler/mpv-sampler:$HOME/.bin/mpv-sampler"
     "files/upload-to-weow:$HOME/.bin/upload-to-weow"
     "files/mpv/upload-to-weow.lua:$HOME/.config/mpv/scripts/upload-to-weow.lua"
+    "files/mpv/input.conf:$HOME/.config/mpv/input.conf"
     "i3:$HOME/.config/i3"
     "i3/dunstrc:$HOME/.config/dunst/dunstrc"
 )
@@ -172,7 +177,7 @@ system_links=(
 # installed by hand per machine.
 diff_ignore=(
     base linux linux-lts linux-zen linux-zen-headers linux-firmware
-    amd-ucode efibootmgr dkms yay lib32-glibc
+    amd-ucode efibootmgr dkms yay
 
     # Installed by hand only on machines that need it, so it never lands on
     # a work computer.
@@ -613,6 +618,12 @@ install_helix_done() {
     [ -x ~/.bin/hx ] && [ -n "$(ls -A "$HELIX_SRC/runtime/grammars" 2>/dev/null)" ]
 }
 install_helix() {
+    # The build and --grammar fetch both clone every tree-sitter grammar with
+    # git, in parallel. Same reason as clone(): without this the gitconfig
+    # turns them into ssh clones, which ask about GitHub's host key once per
+    # grammar and need a key this machine may not have yet.
+    local -x GIT_CONFIG_GLOBAL=/dev/null
+
     if [ ! -d "$HELIX_SRC" ]; then
         clone https://github.com/clintjedwards/helix.git "$HELIX_SRC"
     fi
@@ -716,9 +727,13 @@ all_steps() {
         "$run" "Download local LLM model" pull_ollama_model
     fi
 
-    if [ "$run" = check_step ] || [[ "$want_nas" =~ ^[Yy]$ ]]; then
+    if [ "$run" = check_step ] || [[ "$want_nas$want_keys" =~ [Yy] ]]; then
         headline "NAS and keys"
+    fi
+    if [ "$run" = check_step ] || [[ "$want_nas" =~ ^[Yy]$ ]]; then
         "$run" "Mount NAS" setup_nas
+    fi
+    if [ "$run" = check_step ] || [[ "$want_keys" =~ ^[Yy]$ ]]; then
         "$run" "Install SSH and GPG keys" install_keys
     fi
 }
@@ -729,6 +744,7 @@ if [ "$EUID" -eq 0 ]; then
 fi
 
 want_nas=n
+want_keys=n
 
 case "$MODE" in
     --check)
@@ -744,15 +760,25 @@ esac
 mkdir -p "$(dirname "$HISTORY")"
 echo "--- run started $(date '+%F %T')" >>"$HISTORY"
 
-# Ask everything up front so the rest can run unattended. Only ask for the NAS
-# and key passwords if those steps still have work to do.
+# Ask everything up front so the rest can run unattended. Only ask about the
+# NAS and keys if those steps still have work to do. They're separate questions
+# so a machine can mount the NAS without getting the keys.
 NAS_PASSWORD=""
 KEY_PASSWORD=""
-if ! setup_nas_done >/dev/null 2>&1 || ! install_keys_done >/dev/null 2>&1; then
-    read -r -p "Mount the NAS and install SSH/GPG keys from it? [y/N] " want_nas
+nas_ready=y
+if ! setup_nas_done >/dev/null 2>&1; then
+    read -r -p "Mount the NAS? [y/N] " want_nas
     if [[ "$want_nas" =~ ^[Yy]$ ]]; then
         read -r -s -p "NAS password: " NAS_PASSWORD
         echo
+    else
+        nas_ready=n
+    fi
+fi
+# The keys are decrypted from the NAS, so only offer them if it'll be mounted.
+if [ "$nas_ready" = y ] && ! install_keys_done >/dev/null 2>&1; then
+    read -r -p "Install SSH and GPG keys from the NAS? [y/N] " want_keys
+    if [[ "$want_keys" =~ ^[Yy]$ ]]; then
         read -r -s -p "Key decrypt password: " KEY_PASSWORD
         echo
     fi

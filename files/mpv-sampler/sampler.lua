@@ -8,6 +8,7 @@
 --   ENTER / RIGHT   next clip
 --   LEFT            previous clip
 --   UP / DOWN       seek 60s forward / back within the clip
+--   Shift+UP / DOWN seek 10s forward / back within the clip
 
 local sample_duration = 200
 local default_image_duration = 30
@@ -147,8 +148,12 @@ mp.add_key_binding("SPACE", "sampler-pause", function() mp.command("cycle pause"
 mp.add_key_binding("ENTER", "sampler-next", function() mp.command("playlist-next") end)
 mp.add_key_binding("RIGHT", "sampler-next-key", function() mp.command("playlist-next") end)
 mp.add_key_binding("LEFT", "sampler-prev-key", function() mp.command("playlist-prev") end)
-mp.add_key_binding("UP", "sampler-seek-fwd", function() bounded_seek(60) end)
-mp.add_key_binding("DOWN", "sampler-seek-back", function() bounded_seek(-60) end)
+-- Forced, because input.conf binds these keys to plain seeks and input.conf
+-- wins over a script's normal bindings.
+mp.add_forced_key_binding("UP", "sampler-seek-fwd", function() bounded_seek(60) end)
+mp.add_forced_key_binding("DOWN", "sampler-seek-back", function() bounded_seek(-60) end)
+mp.add_forced_key_binding("Shift+UP", "sampler-seek-fwd-short", function() bounded_seek(10) end)
+mp.add_forced_key_binding("Shift+DOWN", "sampler-seek-back-short", function() bounded_seek(-10) end)
 
 -- Start playing right away: the mix if one was given, otherwise the library.
 if mix_path and mix_path ~= "" then

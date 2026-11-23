@@ -3,8 +3,8 @@
 -- writes down which index to start from next time:
 --   - the file that's playing, so quitting halfway resumes it
 --   - the one after it, once a file plays to the end
--- Skipping ahead with > or Enter counts too, since the next file loading
--- saves its own index.
+-- Skipping with the left and right arrows or Enter counts too, since the next
+-- file loading saves its own index.
 
 local position_file = mp.get_opt("watch-position")
 local current = nil
