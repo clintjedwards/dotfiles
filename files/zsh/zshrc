@@ -83,8 +83,17 @@ bindkey -e
 
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border=none --no-separator --no-scrollbar --no-info'
 
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+# Arch keeps fzf's zsh scripts in /usr/share/fzf; Debian and Ubuntu keep them
+# in the docs folder.
+for fzf_dir in /usr/share/fzf /usr/share/doc/fzf/examples; do
+    if [ -f "$fzf_dir/key-bindings.zsh" ]; then
+        source "$fzf_dir/key-bindings.zsh"
+        source "$fzf_dir/completion.zsh"
+        break
+    fi
+done
+unset fzf_dir
+
 source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Local model that writes commit messages. install.sh pulls the same one.

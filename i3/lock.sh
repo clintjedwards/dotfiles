@@ -9,8 +9,18 @@ icon="${1:-$HOME/.config/i3/lock.png}"
 # runtime dir (only readable by us) rather than /tmp.
 image="${XDG_RUNTIME_DIR:-/tmp}/i3lock.png"
 
-if magick import -silent -window root "$image" &&
-    magick "$image" -scale 10% -scale 1000% "$icon" -gravity center -composite "$image"; then
+# ImageMagick 7 puts everything under `magick`. Distros still on 6, like
+# Ubuntu 24.04, only have the separate import and convert commands.
+if command -v magick >/dev/null; then
+    screenshot=(magick import)
+    convert=(magick)
+else
+    screenshot=(import)
+    convert=(convert)
+fi
+
+if "${screenshot[@]}" -silent -window root "$image" &&
+    "${convert[@]}" "$image" -scale 10% -scale 1000% "$icon" -gravity center -composite "$image"; then
     # i3lock reads the image before it forks, so it's safe to remove right after.
     i3lock -i "$image"
     rm -f "$image"
