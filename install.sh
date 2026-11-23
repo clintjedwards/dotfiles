@@ -25,17 +25,19 @@
 #
 # Run as your normal user (not root) from anywhere:
 #   git clone https://github.com/clintjedwards/dotfiles ~/Documents/dotfiles
-#   ~/Documents/dotfiles/install.sh
+#   ~/Documents/dotfiles/install.sh <machine>
 #
 # If a step fails (usually an AUR build), fix it and run the script again; it
 # picks up where it left off. Reboot only after a clean run, because the
 # display manager is enabled late. Rebooting before that gives you a plain
 # text login instead of ly and i3.
 #
-# Most config is shared. The few things that differ between the desktop and
-# the laptop live in machines/<name>/, and the lists below get extra entries
-# for that machine at the end of the Packages section. The machine comes from
-# `hostnamectl chassis` (desktop or laptop); set DOTFILES_MACHINE to override.
+# Most config is shared. The few things that differ between machines live in
+# machines/<name>/, and the lists below get extra entries for that machine at
+# the end of the Packages section. Pass the machine name on the first run.
+# Later runs can leave it out; they reuse the machine ~/.config/machine
+# already points at. With neither, it's `hostnamectl chassis` (desktop or
+# laptop), which can't tell apart machines like the nucbox and the desktop.
 #
 # Other modes, neither of which changes anything:
 #   install.sh --check   show which steps are done and which would run
@@ -47,9 +49,35 @@ DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG="$(mktemp -t dotfiles-install.XXXXXX.log)"
 HISTORY="$HOME/.local/state/dotfiles/install.log"
 
-MACHINE="${DOTFILES_MACHINE:-$(hostnamectl chassis)}"
+usage() {
+    echo "usage: $0 [--check | --diff] [machine]"
+    echo "  (no flag)  set everything up, skipping what's already done"
+    echo "  --check    show what's done and what would run, change nothing"
+    echo "  --diff     list installed packages that aren't tracked here"
+    echo "  machine    one of: $(ls "$DOTFILES/machines" | tr '\n' ' ')"
+    exit 1
+}
+
+MODE=""
+MACHINE=""
+for arg in "$@"; do
+    case "$arg" in
+        --check | --diff) MODE="$arg" ;;
+        -*) usage ;;
+        *) [ -z "$MACHINE" ] || usage; MACHINE="$arg" ;;
+    esac
+done
+
+if [ -z "$MACHINE" ]; then
+    previous="$(readlink "$HOME/.config/machine" 2>/dev/null || true)"
+    if [ -n "$previous" ]; then
+        MACHINE="$(basename "$previous")"
+    else
+        MACHINE="$(hostnamectl chassis)"
+    fi
+fi
 if [ ! -d "$DOTFILES/machines/$MACHINE" ]; then
-    echo "No machines/$MACHINE in the dotfiles. Set DOTFILES_MACHINE to one of: $(ls "$DOTFILES/machines")"
+    echo "No machines/$MACHINE in the dotfiles. Pass one of: $(ls "$DOTFILES/machines" | tr '\n' ' ')"
     exit 1
 fi
 
@@ -182,6 +210,18 @@ case "$MACHINE" in
         services+=(cpupower.service ollama.service)
         links+=("machines/desktop/autorandr:$HOME/.config/autorandr")
         OLLAMA_MODEL="gemma4:12b"
+        ;;
+    nucbox)
+        # GEEKOM IT13 mini PC: i9-13900HK with Iris Xe graphics. X uses the
+        # built-in modesetting driver, so only Vulkan and VA-API (video
+        # decode for mpv and firefox) need adding. The WiFi and bluetooth
+        # firmware comes with linux-firmware. power-profiles-daemon instead
+        # of cpupower, like the laptop.
+        pacman_packages+=(
+            intel-ucode vulkan-intel intel-media-driver sof-firmware
+            power-profiles-daemon
+        )
+        services+=(power-profiles-daemon.service)
         ;;
     laptop)
         # The laptop runs CachyOS, whose installer brings its own kernels
@@ -690,7 +730,7 @@ fi
 
 want_nas=n
 
-case "${1:-}" in
+case "$MODE" in
     --check)
         all_steps check_step
         exit 0
@@ -698,14 +738,6 @@ case "${1:-}" in
     --diff)
         diff_packages
         exit 0
-        ;;
-    "") ;;
-    *)
-        echo "usage: $0 [--check | --diff]"
-        echo "  (no flag)  set everything up, skipping what's already done"
-        echo "  --check    show what's done and what would run, change nothing"
-        echo "  --diff     list installed packages that aren't tracked here"
-        exit 1
         ;;
 esac
 

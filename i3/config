@@ -232,5 +232,5 @@ bindsym $mod+t exec rofi -show window \
 # per machine settings:                     #
 #############################################
 
-# install.sh links ~/.config/machine to machines/desktop or machines/laptop.
+# install.sh links ~/.config/machine to machines/<this machine>.
 include ~/.config/machine/i3.conf
