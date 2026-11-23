@@ -5,6 +5,9 @@ after another. Every clip starts at a random point in its file, so you get a
 running sample of the whole collection instead of watching files start to
 finish.
 
+It also has a `watch` mode for the opposite: going through every file in
+full, in a shuffled order that remembers where you got to.
+
 ## Setup
 
 `install.sh` links `mpv-sampler` into `~/.bin`, which is on the PATH. It
@@ -22,6 +25,8 @@ skipped.
 mpv-sampler              # open mpv and play one clip from every file, shuffled
 mpv-sampler update       # re-scan the folders; run after adding or removing files
 mpv-sampler mix DIR...   # play clips from just these folders, for one session
+mpv-sampler watch        # play every file in full, picking up where you left off
+mpv-sampler watch --reshuffle   # forget watch progress and start a new shuffle
 ```
 
 The first run scans everything before opening mpv, which takes a while on the
@@ -31,6 +36,26 @@ files don't show up until you run `mpv-sampler update`.
 `mix` is for when you want a session focused on a few folders, which don't
 have to be in `directories`. It doesn't touch the main scan, so `f` inside a
 mix session switches to the whole library.
+
+## Watching everything
+
+`mpv-sampler watch` plays the whole library one file at a time, start to
+finish, in a shuffled order, so over time you see all of it. Images are
+included and show for 30 seconds each.
+
+Quit whenever you like. The next `watch` opens the same file at the same
+spot. Each file you finish or skip moves you along. Once you've been through
+everything, the next `watch` shuffles a new order and starts again from the
+first file. `watch --reshuffle` does that right away, throwing out the
+current order and progress.
+
+Files added part way through a pass (after an `update`) go on the end of the
+current order, so you still see them this pass. Deleted files are skipped.
+
+None of the sampler keys apply here, since you're watching whole files. mpv's
+usual keys work: `Enter` or `>` for the next file, `<` for the previous one,
+and the arrows to seek. `U` still uploads to weow. The order and progress are
+kept in `~/.cache/mpv-sampler/watch/`.
 
 ## Keys inside mpv
 
@@ -60,7 +85,8 @@ along with its size and modification time, and a file is only probed again if
 one of those changes. A scan where nothing changed is just a folder listing.
 
 `~/.cache/mpv-sampler/library.txt` is the list of files and lengths from the
-last `update`, which is what `f`, `F` and plain `mpv-sampler` play from.
+last `update`, which is what `f`, `F`, plain `mpv-sampler` and `watch` play
+from.
 Neither file belongs in this repo, since they list every file name.
 
 ## When something's wrong

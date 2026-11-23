@@ -6,6 +6,10 @@
 #   mpv-sampler             play clips from the library
 #   mpv-sampler update      re-index the library; run it after adding files
 #   mpv-sampler mix DIR...  index and play only the given directories
+#   mpv-sampler watch       watch every file in full, in a shuffled order
+#                           that picks up where you left off
+#   mpv-sampler watch --reshuffle
+#                           throw away watch progress and start a new shuffle
 #
 # The library is every file directly inside the folders listed in the
 # directories file next to this script. See README.md for the full rundown.
@@ -23,6 +27,9 @@ config="$here/directories"
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/mpv-sampler"
 library="$cache_dir/library.txt"
 meta="$cache_dir/meta.tsv"
+watch_dir="$cache_dir/watch"
+watch_order="$watch_dir/order.txt"
+watch_position="$watch_dir/position"
 
 # Images have no duration of their own; this is how long each one is shown.
 image_seconds=30
@@ -172,17 +179,79 @@ cmd_mix() {
     run_mpv --script-opts-append=sampler-mix="$mix_file"
 }
 
+# Works through every file in the library in full, one pass at a time. The
+# order is shuffled once per pass and saved, along with how far into it you
+# are, so quitting and coming back carries on from the same file and the same
+# spot in it. --reshuffle drops all of that and starts a new pass.
+#
+# Files added since the pass started go on the end, so they're still seen
+# this pass. Deleted files stay in the order, and mpv skips them when it can't
+# open them; that keeps the saved position pointing at the right entry.
+cmd_watch() {
+    case "${1:-}" in
+    "") ;;
+    --reshuffle) rm -rf "$watch_dir" ;;
+    *) die "usage: mpv-sampler watch [--reshuffle]" ;;
+    esac
+
+    if [[ ! -s $library ]]; then
+        cmd_update
+    fi
+    mkdir -p "$watch_dir"
+
+    local -a files=()
+    local line
+    while IFS= read -r line; do
+        files+=("${line%|*}")
+    done <"$library"
+    [[ ${#files[@]} -gt 0 ]] || die "nothing in the library"
+
+    local pos=0 count=0
+    if [[ -f $watch_order ]]; then
+        count="$(wc -l <"$watch_order")"
+        pos="$(cat "$watch_position" 2>/dev/null || echo 0)"
+        [[ $pos =~ ^[0-9]+$ ]] || pos=0
+    fi
+
+    if [[ $count -eq 0 || $pos -ge $count ]]; then
+        [[ $count -eq 0 ]] || echo "Finished the whole library, starting a new shuffle"
+        printf '%s\n' "${files[@]}" | shuf >"$watch_order"
+        pos=0
+        echo 0 >"$watch_position"
+    else
+        # grep -F -x -v: whole-line, literal matches, so odd characters in
+        # file names can't be read as a pattern.
+        printf '%s\n' "${files[@]}" | grep -Fxv -f "$watch_order" | shuf >>"$watch_order" || true
+    fi
+
+    count="$(wc -l <"$watch_order")"
+    echo "Watching $((pos + 1)) of $count"
+
+    # Resuming partway into a video uses mpv's own watch-later files, kept in
+    # their own folder and limited to the position, so normal mpv use and its
+    # settings are left alone.
+    mpv --force-window=yes --script="$here/watch.lua" \
+        --image-display-duration="$image_seconds" \
+        --script-opts-append=watch-position="$watch_position" \
+        --save-position-on-quit --watch-later-dir="$watch_dir/resume" --watch-later-options=start \
+        --playlist="$watch_order" --playlist-start="$pos"
+}
+
 mkdir -p "$cache_dir"
 
 case "${1:-}" in
 "") cmd_play ;;
 update) cmd_update ;;
+watch)
+    shift
+    cmd_watch "$@"
+    ;;
 mix)
     shift
     cmd_mix "$@"
     ;;
 *)
-    echo "usage: mpv-sampler [update | mix DIR...]" >&2
+    echo "usage: mpv-sampler [update | mix DIR... | watch [--reshuffle]]" >&2
     exit 1
     ;;
 esac
