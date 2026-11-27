@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# Sends a Pushover message when something goes wrong with the RAID. mdadm runs
+# this with the event, the array, and sometimes the drive involved.
+
+set -eu
+
+event=$1
+array=$2
+drive=${3:-}
+
+# mdadm also reports routine things, like how far along a rebuild is.
+case "$event" in
+    Fail | FailSpare | DegradedArray | DeviceDisappeared | SparesMissing | TestMessage) ;;
+    *) exit 0 ;;
+esac
+
+# The keys are in a file only root can read. As arguments they'd show up in ps.
+#
+# A drive that's missing at boot is reported once, before the network is up, so
+# keep trying for a few minutes.
+curl --silent --show-error --fail --max-time 30 --retry 20 --retry-delay 15 \
+    --config /etc/pushover.conf \
+    --form-string "title=RAID alert on ${HOSTNAME%%.*}" \
+    --form-string "message=$event on $array${drive:+, drive $drive}" \
+    --form-string "priority=1" \
+    https://api.pushover.net/1/messages.json >/dev/null

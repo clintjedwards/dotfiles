@@ -1,0 +1,34 @@
+# Copies /boot to the other RAID drive, so the machine can start from either one.
+# /boot can't be in the RAID itself because the firmware reads it before mdadm
+# exists. Run by 95-sync-boot.hook, or by hand after changing something in /boot.
+#
+# The copy is the partition labelled BOOT2. To set one up on a new drive, give it
+# a 512M EFI partition (type ef00), then:
+#   mkfs.fat -F 32 -n BOOT2 /dev/<partition>
+#   bash /usr/local/lib/sync-boot
+# and use efibootmgr to add a firmware entry for \EFI\systemd\systemd-bootx64.efi
+# on it.
+
+set -eu
+
+copy=/dev/disk/by-label/BOOT2
+
+if ! mountpoint -q /boot; then
+    echo "/boot isn't mounted, so there's nothing to copy." >&2
+    exit 1
+fi
+if [ ! -e "$copy" ]; then
+    echo "There's no BOOT2 partition, so /boot has no copy on the other drive." >&2
+    exit 1
+fi
+
+dir=$(mktemp -d)
+trap 'rmdir "$dir"' EXIT
+mount "$copy" "$dir"
+trap 'umount "$dir" && rmdir "$dir"' EXIT
+
+# No --delete, so a fresh, empty /boot can't wipe out the only good copy. FAT
+# stores times to the nearest two seconds and has no owners or permissions.
+# systemd-boot writes random-seed itself, and each copy needs its own.
+rsync -rt --modify-window=1 --exclude=/loader/random-seed \
+    --exclude='/System Volume Information' /boot/ "$dir/"

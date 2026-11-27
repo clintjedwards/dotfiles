@@ -1,0 +1,13 @@
+# Runs after every transaction so nothing that touches /boot can be missed; it's
+# quick when nothing changed. The 95 puts it after mkinitcpio's hook.
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Target = *
+
+[Action]
+Description = Copying /boot to the other drive...
+When = PostTransaction
+Exec = /usr/bin/bash /usr/local/lib/sync-boot

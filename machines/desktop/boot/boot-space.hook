@@ -1,0 +1,16 @@
+# Stop an update that rebuilds the initramfs if /boot can't fit the result.
+# Failing here leaves everything as it was; running out partway through can
+# leave a kernel that won't boot.
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = usr/lib/modules/*/vmlinuz
+Target = usr/lib/firmware/*
+Target = usr/src/*/dkms.conf
+
+[Action]
+Description = Checking that /boot has room...
+When = PreTransaction
+Exec = /usr/bin/bash /usr/local/lib/check-boot-space
+AbortOnFail

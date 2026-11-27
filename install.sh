@@ -172,12 +172,16 @@ system_links=(
     "files/xorg/20-keyboard-repeat.conf:/etc/X11/xorg.conf.d/20-keyboard-repeat.conf"
 )
 
+# Same format again, but copied. Root runs these, so they shouldn't be links to
+# files that can be edited without sudo.
+boot_files=()
+
 # Things --diff shouldn't flag: the Arch installer sets these up (kernels,
 # firmware, bootloader), this script installs them itself, or they get
 # installed by hand per machine.
 diff_ignore=(
-    base linux linux-lts linux-zen linux-zen-headers linux-firmware
-    amd-ucode efibootmgr dkms yay
+    base linux linux-lts linux-lts-headers linux-zen linux-zen-headers
+    linux-firmware amd-ucode efibootmgr dkms yay
 
     # Installed by hand only on machines that need it, so it never lands on
     # a work computer.
@@ -186,6 +190,11 @@ diff_ignore=(
 
 services=(
     NetworkManager.service bluetooth.service fstrim.timer ly@tty2.service
+    # Trims the pacman cache weekly, which otherwise grows forever.
+    paccache.timer
+    # Starts Docker the first time something uses it instead of at boot, so it
+    # costs nothing until it's needed.
+    docker.socket
 )
 
 # Only the desktop runs ollama. Keep in sync with SYNC_LOCAL_MODEL in
@@ -214,6 +223,14 @@ case "$MACHINE" in
         aur_packages+=(vial-appimage proton-ge-custom-bin rpfm-bin)
         services+=(cpupower.service ollama.service)
         links+=("machines/desktop/autorandr:$HOME/.config/autorandr")
+        boot_files+=(
+            "machines/desktop/boot/no-kms.conf:/etc/mkinitcpio.conf.d/no-kms.conf"
+            "machines/desktop/boot/systemd-initramfs.conf:/etc/mkinitcpio.conf.d/systemd-initramfs.conf"
+            "machines/desktop/boot/boot-space.hook:/etc/pacman.d/hooks/boot-space.hook"
+            "machines/desktop/boot/95-sync-boot.hook:/etc/pacman.d/hooks/95-sync-boot.hook"
+            "machines/desktop/boot/sync-boot:/usr/local/lib/sync-boot"
+            "machines/desktop/boot/check-boot-space:/usr/local/lib/check-boot-space"
+        )
         OLLAMA_MODEL="gemma4:12b"
         ;;
     nucbox)
@@ -570,6 +587,49 @@ link_system_configs() {
     done
 }
 
+install_boot_files_done() {
+    local pair
+    for pair in "${boot_files[@]}"; do
+        cmp -s "$DOTFILES/${pair%%:*}" "${pair#*:}" || return 1
+    done
+    grep -qE '\s/boot\s.*nofail' /etc/fstab
+}
+install_boot_files() {
+    local pair
+    for pair in "${boot_files[@]}"; do
+        sudo install -D -m 644 "$DOTFILES/${pair%%:*}" "${pair#*:}"
+    done
+
+    # Without nofail the system won't start when the drive with /boot is gone.
+    if ! grep -qE '\s/boot\s.*nofail' /etc/fstab; then
+        sudo sed -i -E 's#^([^\#]\S*\s+/boot\s+\S+\s+)(\S+)#\1\2,nofail#' /etc/fstab
+    fi
+
+    sudo mkinitcpio -P
+    # The other drive is set up by hand; see the notes in sync-boot.
+    if [ -e /dev/disk/by-label/BOOT2 ]; then
+        sudo bash /usr/local/lib/sync-boot
+    fi
+}
+
+# mdmonitor quits if mdadm has nowhere to send alerts, so without this nothing
+# says when a drive fails.
+RAID="$DOTFILES/machines/desktop/raid"
+setup_raid_alerts_done() {
+    cmp -s "$RAID/raid-alert" /usr/local/lib/raid-alert &&
+        cmp -s "$RAID/alert.conf" /etc/mdadm.conf.d/alert.conf &&
+        [ -f /etc/pushover.conf ]
+}
+setup_raid_alerts() {
+    if [ ! -f /etc/pushover.conf ]; then
+        printf 'form-string = "token=%s"\nform-string = "user=%s"\n' "$PUSHOVER_TOKEN" "$PUSHOVER_USER" |
+            sudo install -m 600 /dev/stdin /etc/pushover.conf
+    fi
+    sudo install -D -m 755 "$RAID/raid-alert" /usr/local/lib/raid-alert
+    sudo install -D -m 644 "$RAID/alert.conf" /etc/mdadm.conf.d/alert.conf
+    sudo systemctl restart mdmonitor.service
+}
+
 # Trust the home network's wildcard cert so internal https sites work.
 # No grep -q here; it exits early, trust gets SIGPIPE, and pipefail would read
 # that as "not found".
@@ -580,8 +640,13 @@ trust_home_cert() {
     sudo trust anchor --store "$DOTFILES/files/wildcard.clintjedwards.home.crt"
 }
 
+# One at a time, because is-enabled with a list succeeds if any of them is.
 enable_services_done() {
-    systemctl is-enabled "${services[@]}" && id -nG | grep -qw docker
+    local service
+    for service in "${services[@]}"; do
+        systemctl is-enabled "$service" || return 1
+    done
+    id -nG | grep -qw docker
 }
 enable_services() {
     sudo systemctl enable "${services[@]}"
@@ -716,8 +781,14 @@ all_steps() {
     "$run" "Add thunar upload action" add_thunar_action
     "$run" "Clean up old mpv sampler files" cleanup_old_sampler
     "$run" "Link X config files" link_system_configs
+    if [ "${#boot_files[@]}" -gt 0 ]; then
+        "$run" "Install boot config" install_boot_files
+    fi
     "$run" "Trust home network certificate" trust_home_cert
     "$run" "Enable services" enable_services
+    if [ "$MACHINE" = desktop ] && { [ "$run" = check_step ] || [ -f /etc/pushover.conf ] || [ -n "$PUSHOVER_TOKEN" ]; }; then
+        "$run" "Set up RAID alerts" setup_raid_alerts
+    fi
 
     headline "Shell and tools"
     "$run" "Install zsh plugins" install_zsh_plugins
@@ -765,6 +836,8 @@ echo "--- run started $(date '+%F %T')" >>"$HISTORY"
 # so a machine can mount the NAS without getting the keys.
 NAS_PASSWORD=""
 KEY_PASSWORD=""
+PUSHOVER_TOKEN=""
+PUSHOVER_USER=""
 nas_ready=y
 if ! setup_nas_done >/dev/null 2>&1; then
     read -r -p "Mount the NAS? [y/N] " want_nas
@@ -780,6 +853,15 @@ if [ "$nas_ready" = y ] && ! install_keys_done >/dev/null 2>&1; then
     read -r -p "Install SSH and GPG keys from the NAS? [y/N] " want_keys
     if [[ "$want_keys" =~ ^[Yy]$ ]]; then
         read -r -s -p "Key decrypt password: " KEY_PASSWORD
+        echo
+    fi
+fi
+
+if [ "$MACHINE" = desktop ] && [ ! -f /etc/pushover.conf ]; then
+    read -r -s -p "Pushover app token for RAID alerts (blank to skip): " PUSHOVER_TOKEN
+    echo
+    if [ -n "$PUSHOVER_TOKEN" ]; then
+        read -r -s -p "Pushover user key: " PUSHOVER_USER
         echo
     fi
 fi

@@ -1,0 +1,17 @@
+# Run by boot-space.hook.
+
+# Enough for new kernels and for mkinitcpio to write each image next to the old
+# one and swap them. Without room for both it overwrites the old image in place.
+min=100
+
+if ! mountpoint -q /boot; then
+    echo "/boot isn't mounted, so a new kernel would be written to the wrong place." >&2
+    exit 1
+fi
+
+# The ! is so that failing to read the free space also counts as too little.
+free=$(df --output=avail -BM /boot | tail -n 1 | tr -dc 0-9)
+if ! [ "$free" -ge "$min" ]; then
+    echo "/boot has ${free}M free and updates need ${min}M. Look for large or leftover files in /boot." >&2
+    exit 1
+fi

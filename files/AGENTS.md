@@ -14,6 +14,9 @@ Read `README.md` for project context.
 - Security by default
 - Question complexity; prefer 100 lines over 1000
 - Consistent formatting
+- Keep lines under 120 characters, in code, comments, and docs alike. That's where my editor's ruler is, and longer
+  lines mean scrolling sideways to read them. A project formatter's own limit wins, and things that can't be broken,
+  like long URLs or table rows, are fine.
 - Maintain existing styles
 - When adding a dependency, check for and use its latest version; don't settle for an older one just because it's already in the lockfile
 - Mirror the project's coding style as closely as popular; spacing, comments, where certain functions are kept, as much as reasonable.
